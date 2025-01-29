@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./*"],
+      "@/lib/*": ["./app/_lib/*"],
+      "@/utils/*": ["./app/_utils/*"]
+    }
+  }
+}
