@@ -1,0 +1,12 @@
+.input-datepicker {
+    @apply flex items-center justify-start gap-2 !w-full h-[50px] bg-gray-100 px-3 py-2 focus:outline-none text-black;
+}
+
+.input-datepicker::-webkit-calendar-picker-indicator {
+    visibility: hidden;
+}
+
+.input-datepicker::before {
+    content: attr(placeholder);
+    @apply text-gray-500;
+}

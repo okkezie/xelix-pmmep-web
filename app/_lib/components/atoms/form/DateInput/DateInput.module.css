@@ -1,0 +1,8 @@
+.input {
+    @apply h-[50px] bg-gray-100 w-full px-3 py-2 rounded-[10px] focus:outline-none text-black text-[12px];
+    @apply lg:text-[14px];
+}
+
+.input::placeholder {
+    @apply text-[12px] lg:text-[14px];
+}

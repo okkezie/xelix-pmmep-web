@@ -1,0 +1,13 @@
+
+.currency-input {
+    @apply !pl-10 rounded-lg;
+    @apply xs-sm:!h-[50px];
+    @apply sm:!h-[40px];
+    @apply !placeholder-gray-500 placeholder:text-12 !text-12;
+    @apply xs-sm:placeholder:!text-16 xs-sm:!text-16;
+    @apply sm:!bg-[transparent] sm:!outline sm:!outline-gray-600 sm:!placeholder-travu-black;
+    @apply sm:placeholder:!text-14 sm:!text-14 sm:focus:outline-gray-600;
+    @apply md:placeholder:!text-16 md:!text-16;
+    @apply xl:placeholder:!text-14 xl:!text-14;
+    @apply bg-gray-100 w-full px-3 py-2 focus:outline-none text-black;
+}
