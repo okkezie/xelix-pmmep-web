@@ -18,8 +18,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.0.2",
-    "xelix-pmmep-web": "file:",
-    "xelix-whistleblower-portal": "file:"
+    "xelix-pmmep-web": "file:"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
