@@ -1,6 +1,6 @@
-import Input from "@/app/_lib/components/atoms/Form2/Input/InputField";
-import Label from "@/app/_lib/components/atoms/Form2/Label";
-import Button from "@/app/_lib/components/atoms/Form2/Button/Button";
+import Input from "@/components/atoms/Form/Input/InputField";
+import Label from "@/components/atoms/Form/Label";
+import Button from "@/components/atoms/Form/Button/Button";
 import Link from "next/link";
 
 export default function ForgotPasswordForm() {
