@@ -1,4 +1,3 @@
-"use client";
 import Input from "@/components/atoms/Form/Input/InputField";
 import Label from "@/components/atoms/Form/Label";
 import Button from "@/components/atoms/Form/Button/Button";

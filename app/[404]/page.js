@@ -3,15 +3,16 @@ import Light404 from "@/assets/images/error/404.svg"
 import Dark404 from "@/assets/images/error/404-dark.svg"
 import Grid01 from "@/assets/images/shape/grid-01.svg"
 import Link from "next/link"
+import Image from "next/image"
 
 export default function NotFound() {
     return (
         <div className="relative z-1 flex min-h-screen flex-col items-center justify-center overflow-hidden p-6">
             <div className="absolute right-0 top-0 -z-1 w-full max-w-[250px] xl:max-w-[450px]">
-                <Grid01 />
+                <Image src={Grid01} alt="Grid" className="w-full h-full object-contain" />
             </div>
             <div className="absolute bottom-0 left-0 -z-1 w-full max-w-[250px] rotate-180 xl:max-w-[450px]">
-                <Grid01 />
+                <Image src={Grid01} alt="Grid" className="w-full h-full object-contain" />
             </div>
 
             <div className="mx-auto w-full max-w-[242px] text-center sm:max-w-[472px]">
@@ -19,8 +20,8 @@ export default function NotFound() {
                     ERROR
                 </h1>
 
-                <Light404 className="dark:hidden" />
-                <Dark404 className="hidden dark:block" />
+                <Image src={Light404} alt="Light" className="dark:hidden" />
+                <Image src={Dark404} alt="Dark" className="hidden dark:block" />
 
                 <p className="mb-6 mt-10 text-base text-gray-700 dark:text-gray-400 sm:text-lg">
                     We can&apos;t seem to find the page you are looking for!

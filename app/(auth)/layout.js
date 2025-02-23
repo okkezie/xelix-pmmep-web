@@ -1,4 +1,5 @@
-import GridShape from "@/public/assets/images/shape/grid-01.svg"
+'use client'
+import GridShape from "@/svgs/grid.svg"
 import ThemeTogglerButton from "@/components/atoms/ThemeTogglerButton/ThemeTogglerButton";
 
 import { ThemeProvider } from "@/contexts/ThemeContext";

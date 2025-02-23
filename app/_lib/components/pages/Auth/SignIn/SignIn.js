@@ -1,4 +1,3 @@
-"use client"
 import Checkbox from "@/components/atoms/Form/Input/Checkbox"
 import Input from "@/components/atoms/Form/Input/InputField"
 import Label from "@/components/atoms/Form/Label"
