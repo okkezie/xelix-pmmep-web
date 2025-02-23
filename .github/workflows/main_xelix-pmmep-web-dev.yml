@@ -28,7 +28,7 @@ jobs:
           npm run test --if-present
 
       - name: Zip artifact for deployment
-        run: tar -zcvf "release.tar.gz" . --exclude "./node_modules/**"
+        run: tar --exclude "./node_modules/**" --exclude "release.tar.gz"" -zcvf "release.tar.gz" *
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
