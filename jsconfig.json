@@ -1,16 +1,18 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@/lib/*": ["./app/_lib/*"],
-      "@/utils/*": ["./app/_lib/utils/*"],
-      "@/data/*": ["./app/_lib/data/*"],
-      "@/components/*": ["./app/_lib/components/*"],
-      "@/contexts/*": ["./app/_lib/contexts/*"],
-      "@/hooks/*": ["./app/_lib/hooks/*"],
-      "@/svgs/*": ["./public/svgs/*"],
-      "@/icons/*": ["./app/_lib/icons/*"],
-      "@/assets/*": ["./public/assets/*"]
+      "@/app/*": ["app/*"],
+      "@/public/*": ["public/*"],
+      "@/lib/*": ["app/_lib/*"],
+      "@/utils/*": ["app/_lib/utils/*"],
+      "@/data/*": ["app/_lib/data/*"],
+      "@/components/*": ["app/_lib/components/*"],
+      "@/contexts/*": ["app/_lib/contexts/*"],
+      "@/hooks/*": ["app/_lib/hooks/*"],
+      "@/svgs/*": ["public/svgs/*"],
+      "@/icons/*": ["app/_lib/icons/*"],
+      "@/assets/*": ["public/assets/*"]
     }
   }
 }
