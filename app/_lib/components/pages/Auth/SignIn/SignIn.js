@@ -1,15 +1,15 @@
-"use client";
-import Checkbox from "@/app/_lib/components/atoms/Form/Input/Checkbox";
-import Input from "@/app/_lib/components/atoms/Form/Input/InputField";
-import Label from "@/components/atoms/Form/Label";
-import Button from "@/app/_lib/components/atoms/Form/Button/Button";
-import { EyeCloseIcon, EyeIcon } from "@/icons/Icons";
-import Link from "next/link";
-import { useState } from "react";
+"use client"
+import Checkbox from "@/components/atoms/Form/Input/Checkbox"
+import Input from "@/components/atoms/Form/Input/InputField"
+import Label from "@/components/atoms/Form/Label"
+import Button from "@/components/atoms/Form/Button/Button"
+import Icon from "@/icons/Icon"
+import Link from "next/link"
+import { useState } from "react"
 
 export default function SignInForm() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
+  const [showPassword, setShowPassword] = useState(false)
+  const [isChecked, setIsChecked] = useState(false)
   return (
     <div className="flex flex-col flex-1 lg:w-1/2 w-full">
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
@@ -41,20 +41,25 @@ export default function SignInForm() {
                       placeholder="Enter your password"
                     />
                     <button
-                      onClick={() => setShowPassword(!showPassword)}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        setShowPassword(!showPassword)
+                      }}
                       className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
                     >
                       {showPassword ? (
-                        <EyeIcon className="fill-gray-500 dark:fill-gray-400" />
+                        <Icon name="EyeIcon" className="fill-gray-500 dark:fill-gray-400" />
                       ) : (
-                        <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400" />
+                        <Icon name="EyeCloseIcon" className="fill-gray-500 dark:fill-gray-400" />
                       )}
                     </button>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <Checkbox checked={isChecked} onChange={setIsChecked} />
+                    <Checkbox checked={isChecked} onChange={(checked) => {
+                      setIsChecked(checked)
+                    }} />
                     <span className="block font-normal text-gray-700 text-theme-sm dark:text-gray-400">
                       Keep me logged in
                     </span>
@@ -77,5 +82,5 @@ export default function SignInForm() {
         </div>
       </div>
     </div>
-  );
+  )
 }

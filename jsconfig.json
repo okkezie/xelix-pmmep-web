@@ -9,7 +9,8 @@
       "@/contexts/*": ["./app/_lib/contexts/*"],
       "@/hooks/*": ["./app/_lib/hooks/*"],
       "@/svgs/*": ["./public/svgs/*"],
-      "@/icons/*": ["./app/_lib/icons/*"]
+      "@/icons/*": ["./app/_lib/icons/*"],
+      "@/assets/*": ["./public/assets/*"]
     }
   }
 }

@@ -1,6 +1,7 @@
-import Light404 from "@/public/assets/images/error/404.svg"
-import Dark404 from "@/public/assets/images/error/404-dark.svg"
-import Grid01 from "@/public/assets/images/shape/grid-01.svg"
+'use client'
+import Light404 from "@/assets/images/error/404.svg"
+import Dark404 from "@/assets/images/error/404-dark.svg"
+import Grid01 from "@/assets/images/shape/grid-01.svg"
 import Link from "next/link"
 
 export default function NotFound() {

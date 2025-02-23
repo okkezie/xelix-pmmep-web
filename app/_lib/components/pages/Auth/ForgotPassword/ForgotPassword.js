@@ -1,7 +1,7 @@
 "use client";
-import Input from "@/app/_lib/components/atoms/Form/Input/InputField";
+import Input from "@/components/atoms/Form/Input/InputField";
 import Label from "@/components/atoms/Form/Label";
-import Button from "@/app/_lib/components/atoms/Form/Button/Button";
+import Button from "@/components/atoms/Form/Button/Button";
 import Link from "next/link";
 
 export default function ForgotPasswordForm() {
@@ -15,17 +15,17 @@ export default function ForgotPasswordForm() {
               Forgot Your Password?
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Enter the email address linked to your account, and we’ll send you
+              Enter the email address linked to your account, and we&apos;ll send you
               a link to reset your password.
             </p>
           </div>
           <div>
           <form>
               <div className="space-y-5">
-                <Label>
+                <Label htmlFor="email">
                 Email <span className="text-error-500">*</span>{" "}
                 </Label>
-                <Input placeholder="info@gmail.com" type="email" />
+                <Input placeholder="info@gmail.com" type="email" name="email" />
 
                 <div>
                   <Button className="w-full" size="sm">

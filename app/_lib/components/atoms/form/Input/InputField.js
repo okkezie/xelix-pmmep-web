@@ -49,7 +49,6 @@ const Input = ({
         className={inputClasses}
       />
 
-      {/* Optional Hint Text */}
       {hint && (
         <p
           className={`mt-1.5 text-xs ${hintClasses}`}
