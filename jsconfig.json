@@ -8,7 +8,8 @@
       "@/components/*": ["./app/_lib/components/*"],
       "@/contexts/*": ["./app/_lib/contexts/*"],
       "@/hooks/*": ["./app/_lib/hooks/*"],
-      "@/svgs/*": ["./public/svgs/*"]
+      "@/svgs/*": ["./public/svgs/*"],
+      "@/icons/*": ["./app/_lib/icons/*"]
     }
   }
 }

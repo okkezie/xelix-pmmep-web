@@ -1,11 +1,11 @@
-import HeaderLogo from "@/components/molecules/HeaderLogo/HeaderLogo"
-import HeaderSearchForm from "@/components/molecules/HeaderSearchForm/HeaderSearchForm"
-import SidebarToggleButton from "@/components/atoms/SidebarToggleButton/SidebarToggleButton"
+import HeaderLogo from "@/components/molecules/Header/HeaderLogo/HeaderLogo"
+import HeaderSearchForm from "@/components/molecules/Header/HeaderSearchForm/HeaderSearchForm"
+import SidebarToggleButton from "@/components/atoms/Header/SidebarToggleButton/SidebarToggleButton"
 import { useState } from "react"
-import ThemeSwitcherButton from "@/components/atoms/ThemeSwitcherButton/ThemeSwitcherButton";
-import HeaderNotification from "@/components/molecules/HeaderNotification/HeaderNotification";
-import HeaderUserIcon from "@/components/molecules/HeaderUserIcon/HeaderUserIcon";
-import HeaderToggleButton from "@/components/atoms/HeaderToggleButton/HeaderToggleButton";
+import ThemeSwitcherButton from "@/components/atoms/Header/HeaderThemeSwitcherButton/HeaderThemeSwitcherButton";
+import HeaderNotification from "@/components/molecules/Header/HeaderNotification/HeaderNotification";
+import HeaderUserIcon from "@/components/molecules/Header/HeaderUserIcon/HeaderUserIcon";
+import HeaderToggleButton from "@/components/atoms/Header/HeaderToggleButton/HeaderToggleButton";
 import clsx from "clsx";
 
 export default function Header({ sidebarToggle, toggleSideBar }) {

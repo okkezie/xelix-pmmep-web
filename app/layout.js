@@ -1,6 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import PageLoader from "@/components/atoms/PageLoader/PageLoader";
+import { ThemeProvider } from "@/contexts/ThemeContext";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -23,8 +25,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable}`}
       >
-        <PageLoader />
-        {children}
+        <ThemeProvider>
+          <PageLoader />
+          {children}
+        </ThemeProvider>
+        
       </body>
     </html>
   )
