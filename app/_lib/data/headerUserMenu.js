@@ -1,5 +1,5 @@
 import Profile from "@/svgs/profile";
-import Settings from "@/public/svgs/sidebar-icons/settings";
+import Settings from "@/svgs/sidebar-icons/settings";
 import Support from "@/svgs/support";   
 
 const headerUserMenu = [

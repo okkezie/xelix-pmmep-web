@@ -3,7 +3,9 @@ import Checkbox from "@/components/atoms/Form/Input/Checkbox"
 import Input from "@/components/atoms/Form/Input/InputField"
 import Label from "@/components/atoms/Form/Label"
 import Button from "@/components/atoms/Form/Button/Button"
-import Icon from "@/icons/Icon"
+import EyeIcon from "@/icons/eye.svg"
+import EyeCloseIcon from "@/icons/eye-close.svg"
+
 import Link from "next/link"
 import { useState } from "react"
 
@@ -48,9 +50,9 @@ export default function SignInForm() {
                       className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
                     >
                       {showPassword ? (
-                        <Icon name="EyeIcon" className="fill-gray-500 dark:fill-gray-400" />
+                        <EyeIcon className="fill-gray-500 dark:fill-gray-400" />
                       ) : (
-                        <Icon name="EyeCloseIcon" className="fill-gray-500 dark:fill-gray-400" />
+                        <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400" />
                       )}
                     </button>
                   </div>
