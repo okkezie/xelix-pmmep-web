@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const Alert= ({
-  variant,
+  variant = "error",
   title,
   message,
   showLink = false,
@@ -12,13 +12,13 @@ const Alert= ({
   const variantClasses = {
     success: {
       container:
-        "border-success-500 bg-success-50 dark:border-success-500/30 dark:bg-success-500/15",
-      icon: "text-success-500",
+        "border-green-500 bg-green-50 dark:border-green-500/30 dark:bg-green-500/15",
+      icon: "text-green-500",
     },
     error: {
       container:
-        "border-error-500 bg-error-50 dark:border-error-500/30 dark:bg-error-500/15",
-      icon: "text-error-500",
+        "border-red-500 bg-red-50 dark:border-red-500/30 dark:bg-red-500/15",
+      icon: "text-red-500",
     },
     warning: {
       container:

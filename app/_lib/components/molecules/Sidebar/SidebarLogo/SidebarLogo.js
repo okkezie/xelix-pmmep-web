@@ -5,7 +5,6 @@ import LogoIcon from "@/assets/images/logo/logo-icon.svg"
 import Image from "next/image"
 
 export default function SidebarLogo({ toggled = false }) {
-    console.log({LogoDark})
     return (
         <div className={`flex items-center gap-2 pt-8 sidebar-header pb-7 ${toggled ? 'justify-center' : 'justify-between'}`}>
             <Link href="/">

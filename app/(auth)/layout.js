@@ -1,11 +1,9 @@
 'use client'
-import GridShape from "@/svgs/grid.svg"
-import ThemeTogglerButton from "@/components/atoms/ThemeTogglerButton/ThemeTogglerButton";
-
-import { ThemeProvider } from "@/contexts/ThemeContext";
-import Image from "next/image";
-import Link from "next/link";
-
+import ThemeTogglerButton from "@/components/atoms/ThemeTogglerButton/ThemeTogglerButton"
+import { ThemeProvider } from "@/contexts/ThemeContext"
+import Image from "next/image"
+import Link from "next/link"
+import { Constants } from "@/utils/Constants"
 import '@/app/globals.css'
 
 export default function AuthLayout({
@@ -37,7 +35,7 @@ export default function AuthLayout({
                 />
               </div>
               <div className="flex flex-col items-center">
-                <Link href="/" className="block mb-4">
+                <Link href={Constants.Paths.Dashboard} className="block mb-4">
                   <Image
                     width={500}
                     height={300}
@@ -46,9 +44,14 @@ export default function AuthLayout({
                     className="w-[300px] h-[300px] object-contain"
                   />
                 </Link>
-                <p className="text-center text-gray-400 dark:text-white/60 text-[30px] leading-[50px]">
-                  Abia State Government,<br />Project Management, Monitoring and Evaluation Platform.
-                </p>
+                <div className="flex flex-col text-center text-gray-400 dark:text-white/60 text-[30px] leading-[60px] gap-6">
+                  <p>
+                    Abia State Government
+                  </p>
+                  <p>
+                    Project Management, Monitoring and Evaluation Platform
+                  </p>
+                </div>
               </div>
             </div>
           </div>

@@ -20,11 +20,11 @@ export class Constants {
     ]
 
     static ApiPaths = {
-        SignIn: "/auth/signin",
-        ForgotPassword: "/auth/forgot-password",
-        ResetPassword: "/auth/reset-password",
-        VerifyEmail: "/auth/verify-email",
-        ChangePassword: "/auth/change-password",
+        SignIn: "/api/auth/login",
+        ForgotPassword: "/api/auth/forgot-password",
+        ResetPassword: "/api/auth/reset-password",
+        VerifyEmail: "/api/auth/verify-email",
+        ChangePassword: "/api/auth/change-password",
     }
 
     static ApiMethods = {
@@ -45,7 +45,21 @@ export class Constants {
         FormData: "multipart/form-data",
     }
     
-}
+    static Cookies = {
+        USER: 'user',
+        TOKEN: 'token',
+        REFRESH_TOKEN: 'refreshToken',
+        USER_ID: 'userId',
+        USER_NAME: 'userName',
+        CLIENT_IP_ADDRESS: 'clientIpAddress',
+        DO_TOKEN_REFRESH: 'doTokenRefresh',
+        IS_AUTHENTICATED: 'isAuthenticated',
+    }
 
+    static Headers = {
+        X_PATH_NAME: 'x-path-name',
+    }
+
+}
 
 

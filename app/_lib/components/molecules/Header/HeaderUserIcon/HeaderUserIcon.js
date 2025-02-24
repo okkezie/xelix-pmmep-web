@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import HeaderUserButton from "@/components/atoms/Header/HeaderUserButton/HeaderUserButton";
 import HeaderUserDropdownList from "@/components/molecules/Header/HeaderUserDropdownList/HeaderUserDropdownList";
 
-export default function HeaderUserIcon() {
+export default function HeaderUserIcon({ user }) {
     const dropdownRef = useRef(null);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     
@@ -20,14 +20,10 @@ export default function HeaderUserIcon() {
         };
     }, [dropdownOpen]);
 
-    const userImg = "/assets/images/user/user-29.jpg";
-    const userName = "MDA1 User";
-    const email = "mda1@abiastate.gov.ng";
-
     return (
         <div className="relative">
-            <HeaderUserButton userImg={userImg} userName={userName} dropdownOpen={dropdownOpen} setDropdownOpen={setDropdownOpen} />
-            <HeaderUserDropdownList dropdownOpen={dropdownOpen} username={userName} email={email} ref={dropdownRef} />
+            <HeaderUserButton user={user} dropdownOpen={dropdownOpen} setDropdownOpen={setDropdownOpen} />
+            <HeaderUserDropdownList dropdownOpen={dropdownOpen} user={user} ref={dropdownRef} />
         </div>
     )
 }

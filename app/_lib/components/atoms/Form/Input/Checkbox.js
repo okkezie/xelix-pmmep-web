@@ -3,9 +3,10 @@ const Checkbox = ({
   label,
   checked,
   id,
-  onChange,
+  onChange = () => {},
   className = "",
   disabled = false,
+  name
 }) => {
   return (
     <label
@@ -20,6 +21,7 @@ const Checkbox = ({
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
         disabled={disabled}
+        name={name}
       />
       {label && (
         <span className="font-medium text-gray-800 text-theme-sm dark:text-white">

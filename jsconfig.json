@@ -10,6 +10,7 @@
       "@/components/*": ["app/_lib/components/*"],
       "@/contexts/*": ["app/_lib/contexts/*"],
       "@/hooks/*": ["app/_lib/hooks/*"],
+      "@/actions/*": ["app/_lib/actions/*"],
       "@/svgs/*": ["public/svgs/*"],
       "@/icons/*": ["app/_lib/icons/*"],
       "@/assets/*": ["public/assets/*"]

@@ -1,14 +1,26 @@
+'use client'
 import Checkbox from "@/components/atoms/Form/Input/Checkbox"
 import Input from "@/components/atoms/Form/Input/InputField"
 import Label from "@/components/atoms/Form/Label"
 import Button from "@/components/atoms/Form/Button/Button"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useActionState, useState } from "react"
+import { authenticate } from "@/actions/authenticate"
+import Alert from "@/components/molecules/Alert/Alert"
+
+const initialState = {
+  error: null,
+  errors: {},
+  email: null,
+  password: null,
+  rememberMe: null
+}
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false)
-  const [isChecked, setIsChecked] = useState(false)
+  const [state, formAction, pending] = useActionState(authenticate, initialState)
+
   return (
     <div className="flex flex-col flex-1 lg:w-1/2 w-full">
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
@@ -21,23 +33,39 @@ export default function SignInForm() {
               Enter your email and password to sign in!
             </p>
           </div>
-          <div>
-            <form>
+          {(state.error || (state.errors && Object.keys(state.errors).length > 0)) && (
+            <Alert
+              variant="error"
+              title={state.error}
+              message={state.errors && Object.entries(state.errors).map(([key, value]) => `${key}: ${value}`).join(" | ")}
+            />
+          )}
+          <div className="mt-8">
+            <form action={formAction}>
               <div className="space-y-6">
                 <div>
                   <Label>
-                    Email <span className="text-error-500">*</span>{" "}
+                    Email <span className="text-red-500">*</span>{" "}
                   </Label>
-                  <Input placeholder="info@gmail.com" type="email" />
+                  <Input 
+                    placeholder="info@gmail.com" 
+                    type="email" 
+                    name="email" 
+                    error={state.errors?.email || state.error} 
+                    hint={state.errors?.email} 
+                  />
                 </div>
                 <div>
                   <Label>
-                    Password <span className="text-error-500">*</span>{" "}
+                    Password <span className="text-red-500">*</span>{" "}
                   </Label>
                   <div className="relative">
                     <Input
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
+                      name="password"
+                      error={state.errors?.password || state.error}
+                      hint={state.errors?.password}
                     />
                     <button
                       onClick={(e) => {
@@ -56,9 +84,7 @@ export default function SignInForm() {
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <Checkbox checked={isChecked} onChange={(checked) => {
-                      setIsChecked(checked)
-                    }} />
+                    <Checkbox name="rememberMe" />
                     <span className="block font-normal text-gray-700 text-theme-sm dark:text-gray-400">
                       Keep me logged in
                     </span>
@@ -71,7 +97,7 @@ export default function SignInForm() {
                   </Link>
                 </div>
                 <div>
-                  <Button className="w-full" size="sm">
+                  <Button className="w-full" size="sm" disabled={pending}>
                     Sign in
                   </Button>
                 </div>

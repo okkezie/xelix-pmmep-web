@@ -1,14 +1,15 @@
 import Image from "next/image";
 
-export default function HeaderUserButton({userImg, userName, dropdownOpen, setDropdownOpen}) {
+export default function HeaderUserButton({user, dropdownOpen, setDropdownOpen}) {
+    const userImg = user?.avatar || "/assets/images/user/user-29.jpg";
     return (
         <button className="flex items-center text-gray-700 dark:text-gray-400" onClick={() => setDropdownOpen(!dropdownOpen)}>
             <span className="mr-3 h-11 w-11 overflow-hidden rounded-full">
-                <Image src={userImg} alt={userName} width={44} height={44} />
+                <Image src={userImg} alt={user?.name} width={44} height={44} />
             </span>
 
             <span className="mr-1 block text-theme-sm font-medium">
-                {userName}
+                {user?.name}
             </span>
 
             <svg 
