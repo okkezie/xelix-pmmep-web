@@ -1,7 +1,8 @@
 import Image from "next/image";
 
 export default function HeaderUserButton({user, dropdownOpen, setDropdownOpen}) {
-    const userImg = user?.avatar || "/assets/images/user/user-29.jpg";
+    const seed = user?.name || "Unknown User"
+    const userImg = user?.avatar || `https://api.dicebear.com/9.x/initials/svg?seed=${seed}`
     return (
         <button className="flex items-center text-gray-700 dark:text-gray-400" onClick={() => setDropdownOpen(!dropdownOpen)}>
             <span className="mr-3 h-11 w-11 overflow-hidden rounded-full">

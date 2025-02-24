@@ -8,7 +8,7 @@ import HeaderUserIcon from "@/components/molecules/Header/HeaderUserIcon/HeaderU
 import HeaderToggleButton from "@/components/atoms/Header/HeaderToggleButton/HeaderToggleButton";
 import clsx from "clsx";
 
-export default function Header({ sidebarToggle, toggleSideBar, user }) {
+export default function Header({ sidebarToggle, toggleSideBar }) {
     const [headerToggle, setHeaderToggle] = useState(true);
     return (
         <header className="sticky top-0 z-99999 flex w-full border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 lg:border-b">
@@ -27,7 +27,7 @@ export default function Header({ sidebarToggle, toggleSideBar, user }) {
                         <ThemeSwitcherButton />
                         <HeaderNotification />
                     </div>
-                    <HeaderUserIcon user={user} />
+                    <HeaderUserIcon />
                 </div>
             </div>
         </header>

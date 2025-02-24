@@ -2,7 +2,7 @@
 import { post } from "@/utils/Api"
 import { Constants } from "@/utils/Constants"
 import { redirect } from "next/navigation"
-import { setCookie } from 'cookies-next/server'
+import { cookies } from "next/headers"
 
 export const authenticate = async (prevState, formData) => {
     const email = formData.get('email')
@@ -40,12 +40,14 @@ const login = async (response, rememberMe) => {
     if (!token || !user) {
         throw new Error("Invalid response from server")
     }
-    await setCookie(Constants.Cookies.TOKEN, token, { httpOnly: true, secure: process.env.NODE_ENV === "production" });
-    await setCookie(Constants.Cookies.USER, JSON.stringify(user), { httpOnly: true, secure: process.env.NODE_ENV === "production" });
-    await setCookie(Constants.Cookies.IS_AUTHENTICATED, "true", { httpOnly: true, secure: process.env.NODE_ENV === "production" });
-    if (rememberMe) {
-        await setCookie(Constants.Cookies.REMEMBER_ME, "true", { httpOnly: true, secure: process.env.NODE_ENV === "production" });
+    const cookieStore = await cookies()
+    cookieStore.set(Constants.Cookies.TOKEN, token);
+    cookieStore.set(Constants.Cookies.USER, JSON.stringify(user));
+    cookieStore.set(Constants.Cookies.IS_AUTHENTICATED, "true");
+    if (rememberMe) { 
+        cookieStore.set(Constants.Cookies.REMEMBER_ME, "true");
     }
+    console.log("Cookies set successfully: ", cookieStore.getAll())
 }
 
 
