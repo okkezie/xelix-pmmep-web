@@ -19,10 +19,22 @@ export default function AuthLayout({
           <div className="lg:w-1/2 w-full h-full bg-green-950 dark:bg-green-100/9 lg:grid items-center hidden">
             <div className="relative items-center justify-center flex z-1 h-full">
               <div className="absolute right-0 top-0 -z-1 w-full max-w-[250px] xl:max-w-[450px]">
-                <Image src={GridShape} alt="Grid" className="w-full h-full object-contain" />
+                <Image
+                  width={500}
+                  height={300}
+                  src="/svgs/grid.svg"
+                  alt="Logo"
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div className="absolute bottom-0 left-0 -z-1 w-full max-w-[250px] rotate-180 xl:max-w-[450px]">
-                <Image src={GridShape} alt="Grid" className="w-full h-full object-contain" />
+                <Image
+                  width={500}
+                  height={300}
+                  src="/svgs/grid.svg"
+                  alt="Logo"
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div className="flex flex-col items-center">
                 <Link href="/" className="block mb-4">
@@ -31,7 +43,7 @@ export default function AuthLayout({
                     height={300}
                     src="/assets/images/logo/logo-icon.svg"
                     alt="Logo"
-                    className="w-full h-full object-contain"
+                    className="w-[300px] h-[300px] object-contain"
                   />
                 </Link>
                 <p className="text-center text-gray-400 dark:text-white/60 text-[30px] leading-[50px]">
