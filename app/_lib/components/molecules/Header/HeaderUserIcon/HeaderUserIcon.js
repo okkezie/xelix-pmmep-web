@@ -10,7 +10,7 @@ export default function HeaderUserIcon() {
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     useEffect(() => {
-        setUser(JSON.parse(getCookie(Constants.Cookies.USER)))
+        setUser(JSON.parse(getCookie(Constants.Cookies.USER) ?? '{}'))
     }, [])
 
     useLayoutEffect(() => {

@@ -9,18 +9,19 @@ const unAuthenticatedPaths
 export const config = { matcher: '/((?!.*\\.|api\\/).*)' }
 
 export async function middleware(request) {
+    const authenticated = await isAuthenticated()
     const pathname = getPathName(request)
 
     if (shouldSignout(pathname)) {
         return await signout(request)
     }
 
-    if (pathname === Constants.Paths.SignIn && isAuthenticated()) {
+    if (pathname === Constants.Paths.SignIn && authenticated) {
         return NextResponse.redirect(new URL(Constants.Paths.Dashboard, request.nextUrl))
     }
 
-    if (shouldAuthenticate(pathname)) {
-        return await authenticateRequest(request)
+    if (shouldAuthenticate(pathname) && !authenticated) {
+        return NextResponse.redirect(new URL(Constants.Paths.SignIn, request.nextUrl))
     }
 
     return NextResponse.next({request})
@@ -28,13 +29,6 @@ export async function middleware(request) {
 
 const shouldSignout = (pathname) => {
     return pathname === Constants.Paths.Logout
-}
-
-const authenticateRequest = async (request) => {
-    if (isAuthenticated()) {
-        return NextResponse.next({request})
-    }
-    return NextResponse.redirect(new URL(Constants.Paths.SignIn, request.nextUrl))
 }
 
 const getPathName = (request) => {
@@ -50,15 +44,17 @@ const isAuthenticated = async () => {
     const user = getUserObject(cookieStore)
     const token = cookieStore.get(Constants.Cookies.TOKEN)?.value
     const isAuthenticated = cookieStore.get(Constants.Cookies.IS_AUTHENTICATED)?.value
-    return user && typeof user === 'object' && 
-           typeof token === 'string' && token.length > 0 &&
-           isAuthenticated === 'true'
+    return user && 
+            typeof user === 'object' && 
+            typeof token === 'string' && 
+            token.length > 0 &&
+            !!isAuthenticated
 }
 
 const getUserObject = (cookieStore) => {
     try {
         const userCookie = cookieStore.get(Constants.Cookies.USER)?.value
-        return userCookie ? JSON.parse(userCookie) : null
+        return (typeof userCookie === 'string') ? JSON.parse(userCookie) : null
     } catch (error) {
         console.error("Error retrieving user object:", error)
         return null
