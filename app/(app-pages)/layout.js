@@ -3,6 +3,7 @@ import "@/app//globals.css"
 import PageLoader from "@/components/atoms/PageLoader/PageLoader"
 import { ThemeProvider } from "@/contexts/ThemeContext"
 import MainPageLayout from "@/components/templates/MainPageLayout/MainPageLayout"
+import { AuthProvider } from "@/contexts/AuthContext"
 
 const outfit = Outfit({
   variable: "--font-outfit-sans",
@@ -19,11 +20,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${outfit.variable} dark:bg-gray-900`}>
-        <ThemeProvider>
-          <PageLoader />
-          <MainPageLayout>
-            {children}
-          </MainPageLayout>
+        <ThemeProvider> 
+          <AuthProvider>
+            <PageLoader />
+            <MainPageLayout>
+              {children}
+            </MainPageLayout>
+          </AuthProvider>
         </ThemeProvider>
         
       </body>

@@ -11,6 +11,7 @@
       "@/contexts/*": ["app/_lib/contexts/*"],
       "@/hooks/*": ["app/_lib/hooks/*"],
       "@/actions/*": ["app/_lib/actions/*"],
+      "@/entities/*": ["app/_lib/entities/*"],
       "@/svgs/*": ["public/svgs/*"],
       "@/icons/*": ["app/_lib/icons/*"],
       "@/assets/*": ["public/assets/*"]
