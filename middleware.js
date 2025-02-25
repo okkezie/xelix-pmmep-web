@@ -15,6 +15,10 @@ export async function middleware(request) {
         return await signout(request)
     }
 
+    if (pathname === Constants.Paths.SignIn && isAuthenticated()) {
+        return NextResponse.redirect(new URL(Constants.Paths.Dashboard, request.nextUrl))
+    }
+
     if (shouldAuthenticate(pathname)) {
         return await authenticateRequest(request)
     }

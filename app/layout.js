@@ -1,35 +1,26 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import PageLoader from "@/components/atoms/PageLoader/PageLoader";
-import { ThemeProvider } from "@/contexts/ThemeContext";
+import { Outfit } from "next/font/google"
+import { ThemeProvider } from "@/contexts/ThemeContext"
+import '@/app/globals.css'
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const outfit = Outfit({
+  variable: "--font-outfit-sans",
   subsets: ["latin"],
 });
 
 export const metadata = {
   title: "Abia State Xelix PMMEP",
   description: "Abia StateXelix Project Management Monitoring and Evaluation Platform",
-};
+}
 
-export default function RootLayout({ children }) {
-
+export default function AuthLayout({
+  children,
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable}`}
-      >
+      <body className={`${outfit.variable} dark:bg-gray-900`}>
         <ThemeProvider>
-          <PageLoader />
           {children}
         </ThemeProvider>
-        
       </body>
     </html>
   )

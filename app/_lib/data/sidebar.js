@@ -8,67 +8,85 @@ import Files from "@/public/svgs/sidebar-icons/files"
 import Forms from "@/public/svgs/sidebar-icons/forms"
 import Engagements from "@/public/svgs/sidebar-icons/engagements"
 import Staff from "@/public/svgs/sidebar-icons/staff"
+import Roles from "@/public/svgs/sidebar-icons/role"
+import MDAs from "@/public/svgs/sidebar-icons/mdas"
+import Users from "@/public/svgs/sidebar-icons/users"
+import { Constants } from "@/utils/Constants"
 
 const sidebar = [
     {
         title: "MENU",
         links: [
             {
-                title: "Home",
-                icon: (path) => <Home isActive={path === "/"} />,
-                href: "/",
+                title: "Dashboard",
+                icon: (path) => <Home isActive={path === Constants.Paths.Dashboard} />,
+                href: Constants.Paths.Dashboard,
             },
             {
                 title: "Projects",
-                icon: (path) => <Projects isActive={path === "/projects"} />,
-                href: "/projects",
+                icon: (path) => <Projects isActive={path === Constants.Paths.Projects} />,
+                href: Constants.Paths.Projects,
             },
             {
                 title: "Initiatives",
-                icon: (path) => <Initiatives isActive={path === "/initiatives"} />,
-                href: "/initiatives",
+                icon: (path) => <Initiatives isActive={path === Constants.Paths.Initiatives} />,
+                href: Constants.Paths.Initiatives,
             },
             {
                 title: "Roadmaps",
-                icon: (path) => <Roadmaps isActive={path === "/roadmaps"} />,
-                href: "/roadmaps",
+                icon: (path) => <Roadmaps isActive={path === Constants.Paths.Roadmaps} />,
+                href: Constants.Paths.Roadmaps,
             },
             {
                 title: "Tasks",
-                icon: (path) => <Tasks isActive={path === "/tasks"} />,
-                href: "/tasks",
+                icon: (path) => <Tasks isActive={path === Constants.Paths.Tasks} />,
+                href: Constants.Paths.Tasks,
             },
             {
                 title: "Reports",
-                icon: (path) => <Reports isActive={path === "/reports"} />,
-                href: "/reports",
+                icon: (path) => <Reports isActive={path === Constants.Paths.Reports} />,
+                href: Constants.Paths.Reports,
             },
             {
                 title: "Files",
-                icon: (path) => <Files isActive={path === "/files"} />,
-                href: "/files",
+                icon: (path) => <Files isActive={path === Constants.Paths.Files} />,
+                href: Constants.Paths.Files,
             },
             {
                 title: "Forms",
-                icon: (path) => <Forms isActive={path === "/forms"} />,
-                href: "/forms",
+                icon: (path) => <Forms isActive={path === Constants.Paths.Forms} />,
+                href: Constants.Paths.Forms,
             },
             {
                 title: "Engagements",
-                icon: (path) => <Engagements isActive={path === "/engagements"} />,
-                href: "/engagements",
+                icon: (path) => <Engagements isActive={path === Constants.Paths.Engagements} />,
+                href: Constants.Paths.Engagements,
             },
             {
                 title: "Staff",
-                icon: (path) => <Staff isActive={path === "/staff"} />,
-                href: "/staff",
+                icon: (path) => <Staff isActive={path === Constants.Paths.Staff} />,
+                href: Constants.Paths.Staff,
             },
         ]
     },
     {
-        title: "Personal",
+        title: "Admin",
         links: [
-
+            {
+                title: "Users",
+                icon: (path) => <Users isActive={path === Constants.Paths.Users} />,
+                href: Constants.Paths.Users,
+            },
+            {
+                title: "Roles",
+                icon: (path) => <Roles isActive={path === Constants.Paths.Roles} />,
+                href: Constants.Paths.Roles,
+            },
+            {
+                title: "MDAs",
+                icon: (path) => <MDAs isActive={path === Constants.Paths.MDAs} />,
+                href: Constants.Paths.MDAs,
+            }
         ]
     }
 ]

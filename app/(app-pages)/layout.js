@@ -1,7 +1,8 @@
 import { Outfit } from "next/font/google"
+import "@/app//globals.css"
+import PageLoader from "@/components/atoms/PageLoader/PageLoader"
 import { ThemeProvider } from "@/contexts/ThemeContext"
-import AuthPageLayout from "@/components/templates/AuthPageLayout/AuthPageLayout"
-import '@/app/globals.css'
+import MainPageLayout from "@/components/templates/MainPageLayout/MainPageLayout"
 
 const outfit = Outfit({
   variable: "--font-outfit-sans",
@@ -9,21 +10,22 @@ const outfit = Outfit({
 });
 
 export const metadata = {
-  title: "Sign In | Abia State Xelix PMMEP",
+  title: "Abia State Xelix PMMEP",
   description: "Abia StateXelix Project Management Monitoring and Evaluation Platform",
 }
 
-export default function AuthLayout({
-  children,
-}) {
+export default function RootLayout({ children }) {
+
   return (
     <html lang="en">
       <body className={`${outfit.variable} dark:bg-gray-900`}>
         <ThemeProvider>
-          <AuthPageLayout>
+          <PageLoader />
+          <MainPageLayout>
             {children}
-          </AuthPageLayout>
+          </MainPageLayout>
         </ThemeProvider>
+        
       </body>
     </html>
   )

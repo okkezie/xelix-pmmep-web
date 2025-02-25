@@ -8,7 +8,7 @@ export default function SideNavBar({ sidebarToggle }) {
     return (
         <aside
             className={clsx(
-                "sidebar fixed left-0 top-0 z-9999 flex h-screen w-[290px] flex-col overflow-y-hidden border-r border-gray-200 bg-white px-5 dark:border-gray-800 dark:bg-gray-900 lg:static lg:translate-x-0",
+                "sidebar fixed left-0 top-0 z-[100] flex h-screen w-[290px] flex-col overflow-y-hidden border-r border-gray-200 bg-white px-5 dark:border-gray-800 dark:bg-gray-900 lg:static lg:translate-x-0",
                 sidebarToggle ? "translate-x-0 lg:w-[90px]" : "-translate-x-full"
             )}
         >
@@ -39,7 +39,7 @@ export default function SideNavBar({ sidebarToggle }) {
                             </h3>
                             <ul className="flex flex-col gap-4 mb-6">
                                 { section.links.map( link => 
-                                        <SidebarLink link={link} key={link.title} sidebarToggle={sidebarToggle} />
+                                    <SidebarLink link={link} key={link.title} sidebarToggle={sidebarToggle} />
                                 )}
                             </ul>
                         </div>

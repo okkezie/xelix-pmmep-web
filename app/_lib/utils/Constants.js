@@ -6,12 +6,22 @@ export class Constants {
         ForgotPassword: "/forgot-password",
         Dashboard: "/dashboard",
         Projects: "/projects",
-        ProjectDetails: "/projects/:id",
+        Initiatives: "/initiatives",
+        Roadmaps: "/roadmaps",
+        Tasks: "/tasks",
+        Reports: "/reports",
+        Engagements: "/engagements",
+        Files: "/files",
+        Forms: "/forms",
+        Staff: "/staff",
+        Roles: "/roles",
+        MDAs: "/mdas",
         Users: "/users",
-        UserDetails: "/users/:id",
         Settings: "/settings",
         Profile: "/profile",
         Logout: "/logout",
+        Support: "/support",
+        Account: "/account",
     }
 
     static UnProtectedPaths = [
@@ -60,6 +70,44 @@ export class Constants {
         X_PATH_NAME: 'x-path-name',
     }
 
+    static Permissions = {
+        Users: {
+
+        },
+        Roles: {
+
+        },
+        MDAs: {
+
+        },
+        Projects: {
+
+        },
+        Initiatives: {
+
+        },
+        Roadmaps: {
+
+        },
+        Tasks: {
+
+        },
+        Reports: {
+
+        },
+        Files: {
+
+        },
+        Forms: {
+
+        },
+        Engagements: {
+
+        },
+        Staff: {
+
+        },
+    }
 }
 
 

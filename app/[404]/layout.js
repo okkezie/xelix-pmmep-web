@@ -1,6 +1,5 @@
 import { Outfit } from "next/font/google"
 import { ThemeProvider } from "@/contexts/ThemeContext"
-import AuthPageLayout from "@/components/templates/AuthPageLayout/AuthPageLayout"
 import '@/app/globals.css'
 
 const outfit = Outfit({
@@ -9,7 +8,7 @@ const outfit = Outfit({
 });
 
 export const metadata = {
-  title: "Sign In | Abia State Xelix PMMEP",
+  title: "Not Found | Abia State Xelix PMMEP",
   description: "Abia StateXelix Project Management Monitoring and Evaluation Platform",
 }
 
@@ -20,9 +19,7 @@ export default function AuthLayout({
     <html lang="en">
       <body className={`${outfit.variable} dark:bg-gray-900`}>
         <ThemeProvider>
-          <AuthPageLayout>
-            {children}
-          </AuthPageLayout>
+          {children}
         </ThemeProvider>
       </body>
     </html>
