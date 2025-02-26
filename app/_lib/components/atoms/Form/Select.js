@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react"
 
 const Select = ({
   options,
@@ -7,14 +7,14 @@ const Select = ({
   className = "",
   defaultValue = "",
 }) => {
-  // Manage the selected value
-  const [selectedValue, setSelectedValue] = useState(defaultValue);
+
+  const [selectedValue, setSelectedValue] = useState(defaultValue)
 
   const handleChange = (e) => {
-    const value = e.target.value;
-    setSelectedValue(value);
-    onChange(value); // Trigger parent handler
-  };
+    const value = e.target.value
+    setSelectedValue(value)
+    onChange(value)
+  }
 
   return (
     <select
@@ -26,7 +26,6 @@ const Select = ({
       value={selectedValue}
       onChange={handleChange}
     >
-      {/* Placeholder option */}
       <option
         value=""
         disabled
@@ -34,7 +33,6 @@ const Select = ({
       >
         {placeholder}
       </option>
-      {/* Map over options */}
       {options.map((option) => (
         <option
           key={option.value}
@@ -45,7 +43,7 @@ const Select = ({
         </option>
       ))}
     </select>
-  );
-};
+  )
+}
 
-export default Select;
+export default Select

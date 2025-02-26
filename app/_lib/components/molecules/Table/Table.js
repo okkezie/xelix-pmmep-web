@@ -14,7 +14,7 @@ const Table = ({ children, className }) => {
   };
   
   // TableRow Component
-  const TableRow = ({ children, className }) => {
+  const TableRow = ({ children,  className}) => {
     return <tr className={className}>{children}</tr>;
   };
   
@@ -23,9 +23,11 @@ const Table = ({ children, className }) => {
     children,
     isHeader = false,
     className,
+    colSpan = 1,
+    rowSpan = 1,
   }) => {
     const CellTag = isHeader ? "th" : "td";
-    return <CellTag className={` ${className}`}>{children}</CellTag>;
+    return <CellTag className={` ${className}`} colSpan={colSpan} rowSpan={rowSpan}>{children}</CellTag>;
   };
   
   export { Table, TableHeader, TableBody, TableRow, TableCell };

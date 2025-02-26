@@ -17,7 +17,6 @@ export const authenticate = async (prevState, formData) => {
         rememberMe: !!rememberMe
     }
     const response = await post(Constants.ApiPaths.SignIn, data)
-    console.log("Response: ", response)
     if (!response?.success) {
         let state = {
             error: response.message,

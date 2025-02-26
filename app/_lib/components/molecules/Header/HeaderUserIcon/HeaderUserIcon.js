@@ -6,7 +6,7 @@ import { Constants } from "@/utils/Constants";
 
 export default function HeaderUserIcon() {
     const dropdownRef = useRef(null);
-    const [user, setUser] = useState({name: "John Doe", email: "john.doe@example.com"});
+    const [user, setUser] = useState({name: "Unknown User", email: "unknown.user@example.com"});
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     useEffect(() => {

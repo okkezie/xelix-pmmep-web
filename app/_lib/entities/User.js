@@ -10,8 +10,9 @@ const User = class {
     #jobTitle
     #gender
     #verified
-    #avatar
+    #avatar = new Avatar()
     #userType
+    #status
     #dateOfBirth = new Date()
     #roles = []
     #permissions = []
@@ -30,8 +31,9 @@ const User = class {
         this.#jobTitle = user?.jobTitle
         this.#gender = user?.gender
         this.#verified = user?.verified
-        this.#avatar = user?.avatar
+        this.#avatar = new Avatar(user?.avatar)
         this.#userType = user?.userType
+        this.#status = user?.status
         this.#dateOfBirth = user?.dateOfBirth
         this.#roles = user?.roles
         this.#permissions = user?.permissions
@@ -95,6 +97,34 @@ const User = class {
 
     getPermissions() {
         return this.#permissions
+    }
+
+    getStatus() {
+        return this.#status
+    }
+}
+
+export const Avatar = class {
+    #icon
+    #thumbnail
+    #full
+
+    constructor(avatar) {
+        this.#icon = avatar?.icon
+        this.#thumbnail = avatar?.thumbnail
+        this.#full = avatar?.full
+    }
+
+    getIcon() {
+        return this.#icon
+    }
+    
+    getThumbnail() {
+        return this.#thumbnail
+    }
+
+    getFull() {
+        return this.#full
     }
 }
 

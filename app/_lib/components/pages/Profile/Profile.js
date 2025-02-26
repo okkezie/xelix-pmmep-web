@@ -1,3 +1,4 @@
+'use client'
 import UserMetaCard from "@/components/organisms/Profile/UserMetaCard"
 import UserInfoCard from "@/components/organisms/Profile/UserInfoCard"
 import UserAddressCard from "@/components/organisms/Profile/UserAddressCard"
@@ -12,7 +13,7 @@ export default function ProfilePage() {
           <div className="space-y-6">
             <UserMetaCard />
             <UserInfoCard />
-            <UserAddressCard />
+            <UserAddressCard /> 
           </div>
         </div>
       </div>

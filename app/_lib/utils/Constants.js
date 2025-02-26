@@ -15,7 +15,7 @@ export class Constants {
         Forms: "/forms",
         Staff: "/staff",
         Roles: "/roles",
-        MDAs: "/mdas",
+        MDAs: "/MDAS",
         Users: "/users",
         Settings: "/settings",
         Profile: "/profile",
@@ -32,9 +32,23 @@ export class Constants {
     static ApiPaths = {
         SignIn: "/api/auth/login",
         ForgotPassword: "/api/auth/forgot-password",
-        ResetPassword: "/api/auth/reset-password",
-        VerifyEmail: "/api/auth/verify-email",
-        ChangePassword: "/api/auth/change-password",
+        
+        Permissions: "/api/admin/permissions",
+        Roles: "/api/admin/roles",
+        RoleAudiences: "/api/utils/role-audiences",
+        UserTypes: "/api/utils/user-types",
+        MDAs: "/api/admin/mdas",
+        Users: "/api/admin/users",
+        Projects: "/api/projects",
+        Initiatives: "/api/initiatives",
+        Roadmaps: "/api/roadmaps",
+        Tasks: "/api/tasks",
+        Reports: "/api/reports",
+        Files: "/api/files",
+        Forms: "/api/forms",
+        Engagements: "/api/engagements",
+        Staff: "/api/staff",
+        Settings: "/api/settings",
     }
 
     static ApiMethods = {
