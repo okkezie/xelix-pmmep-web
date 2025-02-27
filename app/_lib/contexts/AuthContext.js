@@ -1,5 +1,5 @@
 'use client'
-import { createContext, useContext, useEffect, useMemo, useState } from "react"
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react"
 import { getCookie } from "cookies-next"
 import { Constants } from "@/utils/Constants"
 import User from "@/entities/User"
@@ -30,6 +30,18 @@ export const AuthProvider = ({ children }) => {
         }
     }, [])
 
+    const isAuthorized = useCallback((authority) => {
+        if (!authority || authority === undefined || authority?.length == 0) {
+            return true
+        }
+        for (let permission in authority) {
+            if (permissions.contains(permission)) {
+                return true
+            }
+        }
+        return false
+    }, [permissions])
+
     const decodeToken = (token) => {
         const decoded = JSON.parse(atob(token.split('.')[1]))
         return decoded
@@ -40,9 +52,10 @@ export const AuthProvider = ({ children }) => {
             user, 
             isAuthenticated, 
             permissions, 
-            roles 
+            roles,
+            isAuthorized
         }
-    ), [user, isAuthenticated, permissions, roles])
+    ), [user, isAuthenticated, permissions, roles, isAuthorized])
 
     return (
         <AuthContext.Provider value={values}>

@@ -10,7 +10,8 @@ const PageBreadcrumb = () => {
 
     useEffect(() => {
         let page = pathname.split("/")[1]
-        page = page.charAt(0).toUpperCase() + page.slice(1)
+        page = page.replaceAll('_', " ").replaceAll('-', ' ')
+        page = page.split(' ').map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(' ')
         setPageTitle(page)
     }, [pathname])
 

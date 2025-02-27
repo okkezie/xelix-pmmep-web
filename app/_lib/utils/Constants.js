@@ -22,6 +22,8 @@ export class Constants {
         Logout: "/logout",
         Support: "/support",
         Account: "/account",
+        Contractors: '/contractors',
+        CreateContractor: '/create-contractor'
     }
 
     static UnProtectedPaths = [
@@ -84,24 +86,59 @@ export class Constants {
         X_PATH_NAME: 'x-path-name',
     }
 
-    static Permissions = {
+    static Authorizations = {
         Users: {
-
+            Create: ['user:create'],
+            Update: ['user:update'],
+            Delete: ['user:delete'],
+            List: ['user:list'],
+            Get: ['user:get'],
+            Approve: ['user:approve'],
+            AssignRoles: ['user:assign.role'],
+            AssignPermissions: ['user:assign.permission']
         },
         Roles: {
-
+            Create: ['role:create'],
+            Delete: ['role:delete'],
+            List: ['role:list'],
+            AssignPermissions: ['role:assign.permission']
+        },
+        Permissions: {
+            List: ['permissions:list'],
         },
         MDAs: {
-
+            Create: ['mda:create', 'mda:update'],
+            Manage: ['mda:update'],
+            Approve: ['mda:approve'],
+            Read: ['mda:get', 'mda:list']
+        },
+        Contractor: {
+            Create: ['contractor:create', 'contractor:update'],
+            Update: ['contractor:update'],
+            Delete: ['contractor:delete'],
+            Read: ['contractor:get'],
+            List: ['contractor:list'],
+            Approve: ['contractor:approve']
         },
         Projects: {
-
+            Create: ['project:create', 'project:update'],
+            Approve: ['project:approve'],
+            Read: ['project:get'],
+            List: ['project:list'],
+            Delete: ['project:delete']
         },
         Initiatives: {
-
+            Create: ['initiative:create'],
+            Update: ['initiative:updat'],
+            Approve: ['initiative:approve'],
+            Read: ['initiative:get', 'initiative:list'],
+            Delete: ['initiative:delete']
         },
         Roadmaps: {
-
+            CreateRoadmaps: ['roadmap:create', 'roadmap:update'],
+            ApproveRoadmaps: ['roadmap:approve'],
+            ReadRoadmaps: ['roadmap:list', 'roadmap:get'],
+            DeleteRoadmap: ['roadmap:delete']
         },
         Tasks: {
 

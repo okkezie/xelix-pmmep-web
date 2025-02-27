@@ -1,16 +1,17 @@
-import Home from "@/public/svgs/sidebar-icons/home"
-import Projects from "@/public/svgs/sidebar-icons/projects"
-import Initiatives from "@/public/svgs/sidebar-icons/initiatives"
-import Roadmaps from "@/public/svgs/sidebar-icons/roadmaps"
-import Tasks from "@/public/svgs/sidebar-icons/tasks"
-import Reports from "@/public/svgs/sidebar-icons/reports"
-import Files from "@/public/svgs/sidebar-icons/files"
-import Forms from "@/public/svgs/sidebar-icons/forms"
-import Engagements from "@/public/svgs/sidebar-icons/engagements"
-import Staff from "@/public/svgs/sidebar-icons/staff"
-import Roles from "@/public/svgs/sidebar-icons/role"
-import MDAs from "@/public/svgs/sidebar-icons/mdas"
-import Users from "@/public/svgs/sidebar-icons/users"
+import Home from "@/svgs/sidebar-icons/home"
+import Projects from "@/svgs/sidebar-icons/projects"
+import Initiatives from "@/svgs/sidebar-icons/initiatives"
+import Roadmaps from "@/svgs/sidebar-icons/roadmaps"
+import Tasks from "@/svgs/sidebar-icons/tasks"
+import Reports from "@/svgs/sidebar-icons/reports"
+import Files from "@/svgs/sidebar-icons/files"
+import Forms from "@/svgs/sidebar-icons/forms"
+import Engagements from "@/svgs/sidebar-icons/engagements"
+import Staff from "@/svgs/sidebar-icons/staff"
+import Roles from "@/svgs/sidebar-icons/role"
+import MDAs from "@/svgs/sidebar-icons/mdas"
+import Users from "@/svgs/sidebar-icons/users"
+import Contractors from '@/svgs/sidebar-icons/contractors'
 import { Constants } from "@/utils/Constants"
 
 const sidebar = [
@@ -86,6 +87,11 @@ const sidebar = [
                 title: "MDAs",
                 icon: (path) => <MDAs isActive={path === Constants.Paths.MDAs} />,
                 href: Constants.Paths.MDAs,
+            },
+            {
+                title: "Contractors",
+                icon: (path) => <Contractors isActive={path === Constants.Paths.Contractors} />,
+                href: Constants.Paths.Contractors,
             }
         ]
     }

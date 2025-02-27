@@ -29,10 +29,10 @@
 }
 
 .menu-item-icon-active {
-  @apply text-brand-500 dark:text-brand-400 fill-brand-50;
+  @apply text-brand-500 dark:text-brand-400 fill-brand-50 dark:fill-brand-400;
 }
 .menu-item-icon-inactive {
-  @apply text-gray-500 group-hover:text-gray-700 dark:text-gray-400 dark:group-hover:text-gray-300 fill-gray-700;
+  @apply text-gray-500 group-hover:text-gray-700 dark:group-hover:text-gray-300 fill-gray-700 dark:text-gray-500 dark:fill-white/80;
 }
 
 @layer components {
@@ -48,7 +48,6 @@
   .menu-item-icon {
     @apply text-gray-500 group-hover:text-gray-700 dark:text-gray-400;
   }
-
   .menu-item-arrow {
     @apply relative;
   }
@@ -58,7 +57,6 @@
   .menu-item-arrow-inactive {
     @apply text-gray-500 group-hover:text-gray-700 dark:text-gray-400 dark:group-hover:text-gray-300;
   }
-
   .menu-dropdown-item {
     @apply relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-theme-sm font-medium;
   }
@@ -68,7 +66,6 @@
   .menu-dropdown-item-inactive {
     @apply text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-white/5;
   }
-
   .menu-dropdown-badge {
     @apply block rounded-full px-2.5 py-0.5 text-xs font-medium uppercase text-brand-500 dark:text-brand-400;
   }
