@@ -33,11 +33,11 @@ export default function SignInForm() {
               Enter your email and password to sign in!
             </p>
           </div>
-          {(state.error || (state.errors && Object.keys(state.errors).length > 0)) && (
+          {(state?.error || (state?.errors && Object.keys(state?.errors)?.length > 0)) && (
             <Alert
               variant="error"
-              title={state.error}
-              message={state.errors && Object.entries(state.errors).map(([key, value]) => `${key}: ${value}`).join(" | ")}
+              title={state?.error}
+              message={state?.errors && Object.entries(state?.errors)?.map(([key, value]) => `${key}: ${value}`).join(" | ")}
             />
           )}
           <div className="mt-8">
@@ -51,8 +51,8 @@ export default function SignInForm() {
                     placeholder="info@gmail.com" 
                     type="email" 
                     name="email" 
-                    error={state.errors?.email || state.error} 
-                    hint={state.errors?.email} 
+                    error={state?.errors?.email || state?.error} 
+                    hint={state?.errors?.email} 
                   />
                 </div>
                 <div>
@@ -64,8 +64,8 @@ export default function SignInForm() {
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
                       name="password"
-                      error={state.errors?.password || state.error}
-                      hint={state.errors?.password}
+                      error={state?.errors?.password || state?.error}
+                      hint={state?.errors?.password}
                     />
                     <button
                       onClick={(e) => {
@@ -97,7 +97,7 @@ export default function SignInForm() {
                   </Link>
                 </div>
                 <div>
-                  <Button className="w-full" size="sm" disabled={pending}>
+                  <Button className="w-full" size="sm" isLoading={pending}>
                     Sign in
                   </Button>
                 </div>

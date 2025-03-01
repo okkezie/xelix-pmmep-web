@@ -28,7 +28,6 @@ export default function RootLayout({ children }) {
             </MainPageLayout>
           </AuthProvider>
         </ThemeProvider>
-        
       </body>
     </html>
   )

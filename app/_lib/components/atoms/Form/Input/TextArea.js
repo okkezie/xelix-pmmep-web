@@ -2,12 +2,14 @@
 const TextArea = ({
   placeholder = "Enter your message", // Default placeholder
   rows = 3, // Default number of rows
-  value = "", // Default value
+  defaultValue = "", // Default value
   onChange, // Callback for changes
   className = "", // Additional custom styles
   disabled = false, // Disabled state
+  readOnly = false, // readonly state
   error = false, // Error state
   hint = "", // Default hint text
+  name
 }) => {
   const handleChange = (e) => {
     if (onChange) {
@@ -30,10 +32,12 @@ const TextArea = ({
       <textarea
         placeholder={placeholder}
         rows={rows}
-        value={value}
+        defaultValue={defaultValue}
         onChange={handleChange}
         disabled={disabled}
+        readOnly={readOnly}
         className={textareaClasses}
+        name={name}
       />
       {hint && (
         <p

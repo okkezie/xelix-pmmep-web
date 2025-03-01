@@ -7,7 +7,12 @@ export class Constants {
         Dashboard: "/dashboard",
         Projects: "/projects",
         Initiatives: "/initiatives",
+
         Roadmaps: "/roadmaps",
+        RoadmapsCreate: '/roadmaps/create',
+        RoadmapsEdit: '/roadmaps/edit/:slug',
+        RoadmapsView: '/roadmaps/view/:slug',
+
         Tasks: "/tasks",
         Reports: "/reports",
         Engagements: "/engagements",
@@ -39,11 +44,14 @@ export class Constants {
         Roles: "/api/admin/roles",
         RoleAudiences: "/api/utils/role-audiences",
         UserTypes: "/api/utils/user-types",
+        Contractor: "/api/admin/contractors",
         MDAs: "/api/admin/mdas",
         Users: "/api/admin/users",
         Projects: "/api/projects",
         Initiatives: "/api/initiatives",
         Roadmaps: "/api/roadmaps",
+        RoadmapsApprove: "/api/roadmaps/approve/:slug",
+        RoadmapsReject: "/api/roadmaps/reject/:slug",
         Tasks: "/api/tasks",
         Reports: "/api/reports",
         Files: "/api/files",
@@ -57,6 +65,7 @@ export class Constants {
         POST: "POST",
         GET: "GET",
         PUT: "PUT",
+        PATCH: "PATCH",
         DELETE: "DELETE",
     }
 
@@ -158,6 +167,11 @@ export class Constants {
         Staff: {
 
         },
+    }
+
+    static FormAction = {
+        Submit: 'submit',
+        Save: 'save',
     }
 }
 

@@ -3,6 +3,8 @@ import { post } from "@/utils/Api"
 import { Constants } from "@/utils/Constants"
 import { redirect } from "next/navigation"
 import { cookies } from "next/headers"
+import { isNullOrEmptyString } from "@/utils/helpers"
+import { failedResponse } from "@/actions/actionUtils"
 
 export const authenticate = async (prevState, formData) => {
     const email = formData.get('email')
@@ -10,6 +12,19 @@ export const authenticate = async (prevState, formData) => {
     const rememberMe = formData.get('rememberMe')
     
     // Validate form data
+    let state = { error: false, errors: {}}
+    if (isNullOrEmptyString(email)) {
+        state.error = "Validation Error"
+        state.errors.email = "Email is required"
+    }
+    if (isNullOrEmptyString(password)) {
+        state.error = "Validation Error"
+        state.errors.password = "Password is required"
+    }
+    if (state.error) {
+        return state
+    }
+    // end validation
 
     const data = {
         email: email,
@@ -18,16 +33,7 @@ export const authenticate = async (prevState, formData) => {
     }
     const response = await post(Constants.ApiPaths.SignIn, data)
     if (!response?.success) {
-        let state = {
-            error: response.message,
-        }
-        if (response.errors && response.errors.length > 0) {
-            state['errors'] = {}
-            response.errors.forEach(error => {
-                state['errors'][error.field] = error.message
-            })
-        }
-        return state
+        return failedResponse(response)
     }
 
     await login(response, !!rememberMe)
@@ -46,7 +52,6 @@ const login = async (response, rememberMe) => {
     if (rememberMe) { 
         cookieStore.set(Constants.Cookies.REMEMBER_ME, "true");
     }
-    console.log("Cookies set successfully: ", cookieStore.getAll())
 }
 
 

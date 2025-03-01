@@ -4,6 +4,7 @@ import Header from "@/components/organisms/Header/Header"
 import BreadCrumb from "@/components/organisms/BreadCrumb/BreadCrumb"
 import { useState } from "react"
 import clsx from "clsx"
+import Footer from "@/components/organisms/Footer/Footer"
 
 export default function MainPageLayout({children}) {
     const [sidebarToggle, setSidebarToggle] = useState(false)
@@ -24,12 +25,14 @@ export default function MainPageLayout({children}) {
                     )}
                 ></div>
                 <Header sidebarToggle={sidebarToggle} toggleSideBar={toggleSidebar} />
-                <main>
-                    <div className="mx-auto max-w-screen-2xl p-4 md:p-6 text-gray-900 dark:text-white/90">
+                <main className="">
+                    <div className="mx-auto max-w-screen-2xl p-4 md:p-6 text-gray-900 dark:text-white/90 min-h-[calc(100vh-150px)]">
                         <BreadCrumb />
                         {children}
                     </div>
+                    <Footer />
                 </main>
+                
             </div>
         </div>
     )

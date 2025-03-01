@@ -11,6 +11,7 @@ const Input = ({
   max,
   step,
   disabled = false,
+  readOnly = false,
   success = false,
   error = false,
   hint,
@@ -46,6 +47,7 @@ const Input = ({
         max={max}
         step={step}
         disabled={disabled}
+        readOnly={readOnly}
         className={inputClasses}
       />
 

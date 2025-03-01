@@ -1,9 +1,9 @@
 'use client'
-import { useState, useEffect } from "react"
+import { useState, useLayoutEffect } from "react"
 
 export default function PageLoader() {
     const [loaded, setLoaded] = useState(false)
-    useEffect(() => {
+    useLayoutEffect(() => {
         if(document.readyState === "complete") {
             setLoaded(true)
         }

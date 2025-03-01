@@ -1,11 +1,11 @@
 
-export default function UnorderedList({ items, direction = "vertical", includeContainer = true }) {
+export default function UnorderedList({ items, direction = "vertical", includeContainer = true, className }) {
     const flexDirection = direction === 'vertical' ? '' : 'md:flex-row'
     const listClassName = direction === 'vertical' ? '' : ' md:border-b-0 md:border-r'
     const containerClass = includeContainer ? "rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] sm:w-fit" : ''
     return (
         <div
-            className={containerClass}
+            className={`${containerClass} ${className}`}
         >
             <ul className={`flex flex-col ${flexDirection}`}>
                 {items.map((item) => (

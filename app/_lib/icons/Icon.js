@@ -59,5 +59,6 @@ const Icons = {
 
 export default function Icon({ name, className }) {
   const IconComponent = Icons[name]
-  return IconComponent ? <IconComponent className={className} /> : <></>
+  return IconComponent ? <span className={className}><IconComponent /></span> : <></>
+  
 }

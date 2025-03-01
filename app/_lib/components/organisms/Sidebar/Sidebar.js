@@ -14,7 +14,7 @@ export default function SideNavBar({ sidebarToggle }) {
         >
             <SideBarLogo toggled={sidebarToggle} />
 
-            <div className="flex flex-col duration-300 ease-linear overflow-hidden hover:overflow-y-auto">
+            <div className="flex flex-col duration-300 ease-linear overflow-hidden hover:overflow-y-auto no-scrollbar">
                 <nav>
                     { links.map( section => (
                         section.links.length > 0 && (

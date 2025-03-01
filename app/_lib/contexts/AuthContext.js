@@ -26,7 +26,8 @@ export const AuthProvider = ({ children }) => {
         const token = getCookie(Constants.Cookies.TOKEN)
         if (token) {
             const decoded = decodeToken(token)
-            setPermissions(decoded?.scp?.split(" ") || []) 
+            const perms = decoded?.scp?.split(" ") || []
+            setPermissions(perms) 
         }
     }, [])
 
@@ -34,8 +35,11 @@ export const AuthProvider = ({ children }) => {
         if (!authority || authority === undefined || authority?.length == 0) {
             return true
         }
-        for (let permission in authority) {
-            if (permissions.contains(permission)) {
+        if (!permissions || permissions?.length <= 0) {
+            return false;
+        }
+        for (let permission of authority) {
+            if (permissions.includes(permission)) {
                 return true
             }
         }

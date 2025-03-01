@@ -1,17 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const notifications = [
-    {
-        id: 1,
-        name: "Terry Franci",
-        message: "requests permission to change Project - Nganter App",
-        image: "/assets/images/user/user-05.jpg",
-        time: "1 hr ago",
-        type: "Project",
-        link: "/",
-    }
-]
+const notifications = []
 export default function NotificationsDropdownList({ dropdownOpen, closeDropdown, ref }) {
     return (
         dropdownOpen && (
