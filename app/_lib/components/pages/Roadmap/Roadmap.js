@@ -3,17 +3,15 @@ import VerticalTabs from "@/components/organisms/Tabs/VerticalTab"
 import { useEffect, useState } from "react"
 import ButtonLink from "@/components/atoms/Form/ButtonLink/ButtonLink"
 import { Constants } from "@/utils/Constants"
-import { ApprovalStatus } from "@/entities/Roadmaps"
 
 export default function RoadmapPage({roadmaps}) {
     const [data, setData] = useState({})
 
     useEffect(() => {
-        console.log({roadmaps})
         const draft = [...roadmaps].filter(r => r.isDraft)
-        const pending = [...roadmaps].filter(r => r.approvalStatus === ApprovalStatus.PENDING && !r.isDraft)
-        const approved = [...roadmaps].filter(r => r.approvalStatus === ApprovalStatus.APPROVED && !r.isDraft)
-        const rejected = [...roadmaps].filter(r => r.approvalStatus === ApprovalStatus.REJECTED && !r.isDraft)
+        const pending = [...roadmaps].filter(r => r.approvalStatus === Constants.ApprovalStatus.PENDING && !r.isDraft)
+        const approved = [...roadmaps].filter(r => r.approvalStatus === Constants.ApprovalStatus.APPROVED && !r.isDraft)
+        const rejected = [...roadmaps].filter(r => r.approvalStatus === Constants.ApprovalStatus.REJECTED && !r.isDraft)
         const archived = [...roadmaps].filter(r => Date.parse(r.endDate) < Date.now())
 
         const tabs = [

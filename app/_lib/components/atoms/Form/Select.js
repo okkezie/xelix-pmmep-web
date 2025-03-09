@@ -6,6 +6,8 @@ const Select = ({
   onChange,
   className = "",
   defaultValue = "",
+  id,
+  name
 }) => {
 
   const [selectedValue, setSelectedValue] = useState(defaultValue)
@@ -13,7 +15,7 @@ const Select = ({
   const handleChange = (e) => {
     const value = e.target.value
     setSelectedValue(value)
-    onChange(value)
+    onChange?.(value)
   }
 
   return (
@@ -25,6 +27,8 @@ const Select = ({
       } ${className}`}
       value={selectedValue}
       onChange={handleChange}
+      id={id}
+      name={name}
     >
       <option
         value=""
@@ -37,6 +41,7 @@ const Select = ({
         <option
           key={option.value}
           value={option.value}
+          {...(option.value === selectedValue && {selected: true})}
           className="text-gray-700 dark:bg-gray-900 dark:text-gray-400"
         >
           {option.label}

@@ -5,7 +5,7 @@ import { Modal } from "@/components/templates/Modal/Modal"
 import NewUserForm from "@/components/organisms/NewUserForm/NewUserForm"
 import Card from "@/components/organisms/Card/Card"
 
-export default function Users({users, roles, permissions, userTypes}) {
+export default function UsersPage({users, roles, permissions, userTypes, mdas}) {
     const [newUserModalOpen, setNewUserModalOpen] = useState(false)
     const close = () => {
         setNewUserModalOpen(false)

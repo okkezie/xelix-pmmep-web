@@ -22,7 +22,6 @@ const PageBreadcrumb = () => {
         setPageTitle(sanitize(paths[0]))
 
         const slug = params?.slug
-        console.log(slug)
         if (slug) {
             paths.pop()
             if (paths.length > 1) {

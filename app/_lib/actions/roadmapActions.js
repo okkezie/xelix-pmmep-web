@@ -85,7 +85,7 @@ export const createRoadmap = async (prevState, formData) => {
         return failedResponse(response, state)
     }
     
-    return redirect(Constants.Paths.RoadmapsView.replace(':slug', response?.result?.id))
+    return redirect(Constants.Paths.RoadmapsView.replace(Constants.Slug, response?.result?.id))
 }
 
 export const deleteRoadMapAction = async (id) => {
@@ -96,12 +96,12 @@ export const approveRoadmap = async (id, reason) => {
     let data = {
         comment: reason
     }
-    return await patch(Constants.ApiPaths.RoadmapsApprove.replace(':slug', id), data, true)
+    return await patch(Constants.ApiPaths.RoadmapsApprove.replace(Constants.Slug, id), data, true)
 }
 
 export const rejectRoadmap = async (id, reason) => {
     let data = {
         comment: reason
     }
-    return await patch(Constants.ApiPaths.RoadmapsReject.replace(':slug', id), data, true)
+    return await patch(Constants.ApiPaths.RoadmapsReject.replace(Constants.Slug, id), data, true)
 }

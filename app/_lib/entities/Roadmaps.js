@@ -145,10 +145,4 @@ const Roadmap = class {
     }
 }
 
-export const ApprovalStatus = {
-    PENDING: 'PENDING',
-    APPROVED: 'APPROVED',
-    REJECTED: 'REJECTED'
-}
-
 export default Roadmap

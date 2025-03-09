@@ -1,41 +1,33 @@
 import Card from "@/components/organisms/Card/Card"
-import Button from "@/components/atoms/Form/Button/Button"
-import ButtonLink from "@/components/atoms/Form/ButtonLink/ButtonLink"
-import { ApprovalStatus } from "@/entities/Roadmaps"
 import { Constants } from "@/utils/Constants"
-import { getRoadmapDraftBadge, getRoadmapStatusBadge, deleteRoadMap, parseRoadmapDate } from "@/components/organisms/Tables/RoadmapsTable"
 import { useAuthContext } from "@/contexts/AuthContext"
-import Trash from '@/svgs/trash'
-import Pencil from '@/svgs/pencil'
-import PaperPlane from '@/svgs/paper-plane'
-import Download from '@/svgs/download'
-import Check from "@/svgs/check-line"
-import Close from "@/svgs/close-line"
 import ArrowRight from "@/svgs/arrow-right"
-import { downloadPage } from "@/utils/helpers"
-import ApproveRoadmap from "@/components/organisms/Dialog/ApproveRoadmap"
-import RejectRoadmap from "@/components/organisms/Dialog/RejectRoadmap"
+import { getDraftBadge, getStatusBadge, parseDateToMonthYear } from "@/utils/helpers"
 import { useState } from "react"
+import ActionsBar from "@/components/organisms/ActionsBar/ActionsBar"
+import Confirm from "@/components/organisms/Confirm/Confirm"
+import { approveRoadmap, deleteRoadMapAction, rejectRoadmap } from "@/actions/roadmapActions"
 
 export default function ViewRoadmap({ roadmap }) {
     const { isAuthorized } = useAuthContext()
     const [openApprove, setOpenApprove] = useState(false)
     const [openReject, setOpenReject] = useState(false)
+    const [openDelete, setOpenDelete] = useState(false)
 
-    const isApproved = roadmap?.approvalStatus === ApprovalStatus.APPROVED
-    const isRejected = roadmap?.approvalStatus === ApprovalStatus.REJECTED
+    const isApproved = roadmap?.approvalStatus === Constants.ApprovalStatus.APPROVED
+    const isRejected = roadmap?.approvalStatus === Constants.ApprovalStatus.REJECTED
     const isDraft = roadmap?.isDraft
     const id = roadmap?.id
 
-    const canView = isAuthorized(Constants.Authorizations.Roadmaps.ReadRoadmaps)
+    const canView = isAuthorized(Constants.Authorizations.Roadmaps.Read)
 
     if (!canView) {
         return <>Unauthorized</>
     }
 
-    const canApprove = isAuthorized(Constants.Authorizations.Roadmaps.ApproveRoadmaps)
-    const canEdit = isAuthorized(Constants.Authorizations.Roadmaps.CreateRoadmaps)
-    const canDelete = isAuthorized(Constants.Authorizations.Roadmaps.DeleteRoadmap)
+    const canApprove = isAuthorized(Constants.Authorizations.Roadmaps.Approve)
+    const canEdit = isAuthorized(Constants.Authorizations.Roadmaps.Create)
+    const canDelete = isAuthorized(Constants.Authorizations.Roadmaps.Delete)
 
     // console.log({isApproved}, {isRejected}, {isDraft}, {canApprove}, {canEdit})
 
@@ -58,53 +50,18 @@ export default function ViewRoadmap({ roadmap }) {
 
     return (
         <>
-        <Card className="mb-3" contentClass="w-full flex flex-row justify-end items-center gap-4">
-            <div className="flex flex-col sm:flex-row gap-4 justify-end w-full">
-                { ((isDraft || isRejected) && canEdit) &&
-                    <div>
-                        <ButtonLink
-                            size="sm"
-                            href={Constants.Paths.RoadmapsEdit.replace(':slug', roadmap?.id)} 
-                            className=""
-                            variant="outline_primary">
-                                <Pencil />
-                                Edit
-                        </ButtonLink>
-                    </div>
-                }
-                { (canDelete && !isApproved && !isRejected && isDraft) &&
-                    <div>
-                        <Button size="sm" variant="danger" onClick={() => deleteRoadMap(id)}>
-                            <Trash />Delete
-                        </Button>
-                    </div>
-                }
-                { ((!isApproved && !isRejected && !isDraft) && (canApprove)) && <>
-                <div>
-                    <Button size="sm" onClick={() => setOpenApprove(true)}>
-                        <Check />
-                        Approve
-                    </Button>
-                </div>
-                <div>
-                    <Button size="sm" variant="outline_danger" onClick={() => setOpenReject(true)}>
-                        <Close />
-                        Reject
-                    </Button>
-                </div>
-                </>}
-                <div>
-                    <Button size="sm" variant="outline_primary" onClick={downloadPage}>
-                        <Download /> Download
-                    </Button>
-                </div>
-                <div>
-                    <Button size="sm" variant="outline_primary">
-                        <PaperPlane /> Share
-                    </Button>
-                </div>
-            </div>
-        </Card>
+        <ActionsBar
+            openApprove={() => setOpenApprove(true)}
+            openReject={() => setOpenReject(true)}
+            openDelete={() => setOpenDelete(true)}
+            canApprove={canApprove}
+            canDelete={canDelete}
+            canEdit={canEdit}
+            isApproved={isApproved}
+            isRejected={isRejected}
+            isDraft={isDraft}
+            editPath={Constants.Paths.RoadmapsEdit.replace(':slug', id)}
+        />
         <div
             className="min-h-screen rounded-2xl border border-gray-200 bg-white px-5 py-7 dark:border-gray-800 dark:bg-white/[0.03] xl:px-10 xl:py-12"
         >
@@ -121,9 +78,9 @@ export default function ViewRoadmap({ roadmap }) {
                         <p className="flex flex-row gap-4"><b>Owner:</b> {roadmap?.mda}</p>
                         <p className="flex flex-row gap-4"><b>Period:</b> {roadmap?.period}</p>
                         <p className="flex flex-row gap-3 items-end justify-start w-full">
-                            <b>Start:</b> {parseRoadmapDate(roadmap?.startDate)} 
+                            <b>Start:</b> {parseDateToMonthYear(roadmap?.startDate)} 
                             <ArrowRight />
-                            <b>End: </b> {parseRoadmapDate(roadmap?.endDate)}
+                            <b>End: </b> {parseDateToMonthYear(roadmap?.endDate)}
                         </p>
                     </div>
                     <div>
@@ -134,7 +91,7 @@ export default function ViewRoadmap({ roadmap }) {
                             <b>Last Updated:</b>{ showDate(roadmap?.lastModifiedByDate) }
                         </p>
                         <p className="w-full flex flex-row items-center justify-start gap-3">
-                            <b>Status:</b> {getRoadmapStatusBadge(roadmap?.approvalStatus)} &nbsp; {getRoadmapDraftBadge(roadmap?.isDraft)}
+                            <b>Status:</b> {getStatusBadge(roadmap?.approvalStatus)} &nbsp; {getDraftBadge(roadmap?.isDraft)}
                         </p>
                         { isApproved && <>
                             <p className="flex flex-row gap-4"><b>Approved by:</b> {roadmap?.approvedBy}</p>
@@ -212,9 +169,33 @@ export default function ViewRoadmap({ roadmap }) {
             </div>
         </div>
         { canApprove && <>
-        <ApproveRoadmap closeCallback={() => setOpenApprove(false)} id={roadmap?.id} show={openApprove}/>
-        <RejectRoadmap closeCallback={() => setOpenReject(false)} id={roadmap?.id} show={openReject}/>
+        <Confirm
+            show={openReject}
+            close={() => setOpenReject(false)}
+            entity={'Roadmap'}
+            action={(reason) => rejectRoadmap(id, reason)}
+            actionType={Constants.ConfirmActionType.Reject}
+            redirect={Constants.Paths.RoadmapsView.replace(Constants.Slug, id)}
+        />
+        <Confirm
+            show={openApprove}
+            close={() => setOpenApprove(false)}
+            entity={'Roadmap'}
+            action={(reason) => approveRoadmap(id, reason)}
+            actionType={Constants.ConfirmActionType.Approve}
+            redirect={Constants.Paths.RoadmapsView.replace(Constants.Slug, id)}
+        />
         </>}
+        {canDelete && 
+        <Confirm
+            show={openDelete}
+            close={() => setOpenDelete(false)}
+            entity={'Roadmap'}
+            action={() => deleteRoadMapAction(id)}
+            actionType={Constants.ConfirmActionType.Delete}
+            redirect={Constants.Paths.RoadmapsView}
+        />
+        }
         </>
     )
 }

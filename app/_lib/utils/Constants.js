@@ -1,19 +1,29 @@
 
 export class Constants {
     
+    static Slug = ":slug"
+
     static Paths = {
         SignIn: "/signin",
         ForgotPassword: "/forgot-password",
         Dashboard: "/dashboard",
-        Projects: "/projects",
+        
         Initiatives: "/initiatives",
+        InitiativesCreate: "/initiatives/create",
+        InitiativesView: "/initiatives/view/:slug",
+        InitiativesEdit: "/initiatives/edit/:slug",
 
         Roadmaps: "/roadmaps",
         RoadmapsCreate: '/roadmaps/create',
         RoadmapsEdit: '/roadmaps/edit/:slug',
         RoadmapsView: '/roadmaps/view/:slug',
 
-        Tasks: "/tasks",
+        Projects: "/projects",
+        ProjectsCreate: "/projects/create",
+        ProjectsView: "/projects/view/:slug",
+        ProjectsEdit: "/projects/edit/:slug",
+
+        Analytics: "/analytics",
         Reports: "/reports",
         Engagements: "/engagements",
         Files: "/files",
@@ -39,7 +49,6 @@ export class Constants {
     static ApiPaths = {
         SignIn: "/api/auth/login",
         ForgotPassword: "/api/auth/forgot-password",
-        
         Permissions: "/api/admin/permissions",
         Roles: "/api/admin/roles",
         RoleAudiences: "/api/utils/role-audiences",
@@ -48,7 +57,11 @@ export class Constants {
         MDAs: "/api/admin/mdas",
         Users: "/api/admin/users",
         Projects: "/api/projects",
+        ProjectsApprove: "/api/projects/approve/:slug",
+        ProjectsReject: "/api/projects/reject/:slug",
         Initiatives: "/api/initiatives",
+        InitiativesApprove: "/api/initiatives/approve/:slug",
+        InitiativesReject: "/api/initiatives/reject/:slug",
         Roadmaps: "/api/roadmaps",
         RoadmapsApprove: "/api/roadmaps/approve/:slug",
         RoadmapsReject: "/api/roadmaps/reject/:slug",
@@ -59,6 +72,7 @@ export class Constants {
         Engagements: "/api/engagements",
         Staff: "/api/staff",
         Settings: "/api/settings",
+        FileUpload: "/api/files/upload",
     }
 
     static ApiMethods = {
@@ -89,6 +103,7 @@ export class Constants {
         CLIENT_IP_ADDRESS: 'clientIpAddress',
         DO_TOKEN_REFRESH: 'doTokenRefresh',
         IS_AUTHENTICATED: 'isAuthenticated',
+        REMEMBER_ME: 'rememberMe',
     }
 
     static Headers = {
@@ -130,7 +145,8 @@ export class Constants {
             Approve: ['contractor:approve']
         },
         Projects: {
-            Create: ['project:create', 'project:update'],
+            Create: ['project:create'],
+            Edit: ['project:update'],
             Approve: ['project:approve'],
             Read: ['project:get'],
             List: ['project:list'],
@@ -138,18 +154,18 @@ export class Constants {
         },
         Initiatives: {
             Create: ['initiative:create'],
-            Update: ['initiative:updat'],
+            Edit: ['initiative:updat'],
             Approve: ['initiative:approve'],
             Read: ['initiative:get', 'initiative:list'],
             Delete: ['initiative:delete']
         },
         Roadmaps: {
-            CreateRoadmaps: ['roadmap:create', 'roadmap:update'],
-            ApproveRoadmaps: ['roadmap:approve'],
-            ReadRoadmaps: ['roadmap:list', 'roadmap:get'],
-            DeleteRoadmap: ['roadmap:delete']
+            Create: ['roadmap:create', 'roadmap:update'],
+            Approve: ['roadmap:approve'],
+            Read: ['roadmap:list', 'roadmap:get'],
+            Delete: ['roadmap:delete']
         },
-        Tasks: {
+        Analytics: {
 
         },
         Reports: {
@@ -169,10 +185,23 @@ export class Constants {
         },
     }
 
+    static ConfirmActionType = {
+        Approve: 'approve',
+        Reject: 'reject',
+        Delete: 'delete'
+    }
+
     static FormAction = {
         Submit: 'submit',
         Save: 'save',
     }
+
+    static ApprovalStatus = {
+        PENDING: 'PENDING',
+        APPROVED: 'APPROVED',
+        REJECTED: 'REJECTED',
+    }
+    
 }
 
 

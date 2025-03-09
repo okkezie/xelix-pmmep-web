@@ -1,14 +1,14 @@
-import { Outfit } from "next/font/google"
-import "@/app//globals.css"
+import { Outfit, Inter } from "next/font/google"
+import "@/app/globals.css"
 import PageLoader from "@/components/atoms/PageLoader/PageLoader"
 import { ThemeProvider } from "@/contexts/ThemeContext"
 import MainPageLayout from "@/components/templates/MainPageLayout/MainPageLayout"
 import { AuthProvider } from "@/contexts/AuthContext"
+import 'react-date-picker/dist/DatePicker.css'
+import 'react-calendar/dist/Calendar.css'
 
-const outfit = Outfit({
-  variable: "--font-outfit-sans",
-  subsets: ["latin"],
-});
+const outfit = Outfit({subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: "Abia State Xelix PMMEP",
@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body className={`${outfit.variable} dark:bg-gray-900`}>
+      <body className={`${outfit.className} ${inter.className} dark:bg-gray-900`}>
         <ThemeProvider> 
           <AuthProvider>
             <PageLoader />

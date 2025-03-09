@@ -27,7 +27,7 @@ export default function ForgotPasswordForm() {
                 <Input placeholder="info@gmail.com" type="email" name="email" />
 
                 <div>
-                  <Button className="w-full" size="sm">
+                  <Button className="w-full" size="sm" type="submit">
                     Send Reset Link
                   </Button>
                 </div>

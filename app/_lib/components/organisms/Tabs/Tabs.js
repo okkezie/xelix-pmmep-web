@@ -22,7 +22,7 @@ import { useEffect, useState } from "react"
 
 */
 export default function Tabs({ data }) {
-  const [activeTab, setActiveTab] = useState()
+  const [activeTab, setActiveTab] = useState(0)
 
   useEffect(() => {
     setActiveTab(data?.activeTabId ?? 0)

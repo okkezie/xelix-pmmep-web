@@ -41,16 +41,16 @@ export const authenticate = async (prevState, formData) => {
 }
 
 const login = async (response, rememberMe) => {
-    const { token, user } = response?.result || {}
+    const { token, user } = response?.result ?? {}
     if (!token || !user) {
         throw new Error("Invalid response from server")
     }
     const cookieStore = await cookies()
-    cookieStore.set(Constants.Cookies.TOKEN, token);
-    cookieStore.set(Constants.Cookies.USER, JSON.stringify(user));
-    cookieStore.set(Constants.Cookies.IS_AUTHENTICATED, "true");
+    cookieStore.set(Constants.Cookies.TOKEN, token)
+    cookieStore.set(Constants.Cookies.USER, JSON.stringify(user))
+    cookieStore.set(Constants.Cookies.IS_AUTHENTICATED, "true")
     if (rememberMe) { 
-        cookieStore.set(Constants.Cookies.REMEMBER_ME, "true");
+        cookieStore.set(Constants.Cookies.REMEMBER_ME, "true")
     }
 }
 

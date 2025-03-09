@@ -2,8 +2,6 @@ import Home from "@/svgs/sidebar-icons/home"
 import Projects from "@/svgs/sidebar-icons/projects"
 import Initiatives from "@/svgs/sidebar-icons/initiatives"
 import Roadmaps from "@/svgs/sidebar-icons/roadmaps"
-import Tasks from "@/svgs/sidebar-icons/tasks"
-import Reports from "@/svgs/sidebar-icons/reports"
 import Files from "@/svgs/sidebar-icons/files"
 import Forms from "@/svgs/sidebar-icons/forms"
 import Engagements from "@/svgs/sidebar-icons/engagements"
@@ -13,6 +11,8 @@ import MDAs from "@/svgs/sidebar-icons/mdas"
 import Users from "@/svgs/sidebar-icons/users"
 import Contractors from '@/svgs/sidebar-icons/contractors'
 import { Constants } from "@/utils/Constants"
+import Analytics from "@/svgs/sidebar-icons/analytics"
+import Reports from "@/svgs/sidebar-icons/Reports"
 
 const sidebar = [
     {
@@ -39,9 +39,9 @@ const sidebar = [
                 href: Constants.Paths.Roadmaps,
             },
             {
-                title: "Tasks",
-                icon: (path) => <Tasks isActive={path === Constants.Paths.Tasks} />,
-                href: Constants.Paths.Tasks,
+                title: "Analytics",
+                icon: (path) => <Analytics isActive={path === Constants.Paths.Analytics} />,
+                href: Constants.Paths.Analytics,
             },
             {
                 title: "Reports",

@@ -8,7 +8,8 @@ const Button = ({
   className = "",
   disabled = false,
   name,
-  isLoading = false
+  isLoading = false,
+  type = 'button'
 }) => {
   // Size Classes
   const sizeClasses = {
@@ -21,7 +22,7 @@ const Button = ({
     primary:
       "bg-brand-800 text-white shadow-theme-xs hover:bg-green-900 disabled:bg-gray-300",
     outline:
-      "bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300",
+      "bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:ring-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-500 dark:hover:ring-gray-500",
     outline_primary:
       "bg-white text-brand-800 ring-1 ring-inset ring-brand-700 hover:bg-brand-800 hover:text-white dark:bg-gray-800 dark:text-brand-50 dark:ring-brand-700 dark:hover:bg-brand-700",
     danger:
@@ -41,6 +42,7 @@ const Button = ({
       onClick={onClick}
       disabled={disabled || isLoading}
       name={name}
+      type={type}
     >
       {
         isLoading ? <>

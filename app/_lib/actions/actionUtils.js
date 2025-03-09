@@ -28,3 +28,5 @@ export const failedResponse = (response, state) => {
 }
 
 export const token = async () => (await cookies()).get(Constants.Cookies.TOKEN)?.value
+
+export const rememberMe = async () => (await cookies()).get(Constants.Cookies.REMEMBER_ME)?.value
