@@ -4,7 +4,6 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import { Autoplay, Navigation, Pagination, Scrollbar, A11y } from "swiper/modules"
 import Image from "next/image"
 import 'swiper/css/bundle'
-import './Carousel.module.css'
  
 export default function Carousel({data}) {
   const swiperOptions = {
@@ -20,7 +19,7 @@ export default function Carousel({data}) {
   return (
     <div className="carouselOne rounded-lg border border-gray-200 dark:border-gray-800">
       <Swiper {...swiperOptions}>
-        {data && data?.map((item, i) => (
+        { data?.map?.((item, i) => (
           <SwiperSlide key={i + 1}>
             <div className="overflow-hidden rounded-lg">
               <Image

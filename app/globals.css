@@ -6,6 +6,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --swiper-theme-color: #04640a;
 }
 
 /* @media (prefers-color-scheme: dark) {
