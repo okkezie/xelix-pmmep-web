@@ -59,12 +59,15 @@ export const createInitiative = async (prevState, formData) => {
     }
     // end validate
 
+    data['mda'] = JSON.parse(data['mda'])
     if (isSave) {
         data['isDraft'] = true
     }
     else if (isSubmit) {
         data['isDraft'] = false
     }
+
+    console.log({data})
 
     let response
     if (data.id) {

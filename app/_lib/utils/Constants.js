@@ -5,6 +5,7 @@ export class Constants {
 
     static Paths = {
         SignIn: "/signin",
+        Logout: "/logout",
         ForgotPassword: "/forgot-password",
         Dashboard: "/dashboard",
         
@@ -29,12 +30,13 @@ export class Constants {
         Files: "/files",
         Forms: "/forms",
         Staff: "/staff",
+        AiChat: "/aichat",
         Roles: "/roles",
         MDAs: "/MDAS",
         Users: "/users",
         Settings: "/settings",
         Profile: "/profile",
-        Logout: "/logout",
+        
         Support: "/support",
         Account: "/account",
         Contractors: '/contractors',
@@ -48,6 +50,7 @@ export class Constants {
 
     static ApiPaths = {
         SignIn: "/api/auth/login",
+        RefreshAccessToken: "/api/auth/refresh-access-token",
         ForgotPassword: "/api/auth/forgot-password",
         Permissions: "/api/admin/permissions",
         Roles: "/api/admin/roles",
@@ -56,16 +59,23 @@ export class Constants {
         Contractor: "/api/admin/contractors",
         MDAs: "/api/admin/mdas",
         Users: "/api/admin/users",
+
         Projects: "/api/projects",
         ProjectsApprove: "/api/projects/approve/:slug",
         ProjectsReject: "/api/projects/reject/:slug",
+        ProjectsByMda: "/api/projects/mda/:slug",
+
         Initiatives: "/api/initiatives",
         InitiativesApprove: "/api/initiatives/approve/:slug",
         InitiativesReject: "/api/initiatives/reject/:slug",
+        InitiativesByMda: "/api/initiatives/mda/:slug",
+
         Roadmaps: "/api/roadmaps",
         RoadmapsApprove: "/api/roadmaps/approve/:slug",
         RoadmapsReject: "/api/roadmaps/reject/:slug",
-        Tasks: "/api/tasks",
+        RoadmapByMda: "/api/roadmaps/mda/:slug",
+
+        Analytics: "/api/tasks",
         Reports: "/api/reports",
         Files: "/api/files",
         Forms: "/api/forms",
@@ -104,6 +114,7 @@ export class Constants {
         DO_TOKEN_REFRESH: 'doTokenRefresh',
         IS_AUTHENTICATED: 'isAuthenticated',
         REMEMBER_ME: 'rememberMe',
+        REFRESH_TOKEN_EXPIRY: 'refreshTokenExpiry'
     }
 
     static Headers = {
@@ -200,6 +211,11 @@ export class Constants {
         PENDING: 'PENDING',
         APPROVED: 'APPROVED',
         REJECTED: 'REJECTED',
+    }
+
+    static Status = {
+        ACTIVE: "ACTIVE",
+        PENDING: "PENDING"
     }
     
 }

@@ -8,6 +8,7 @@ export default function InitiativesPage({initiatives}) {
     const [data, setData] = useState({})
 
     useEffect(() => {
+        console.log({initiatives})
         const draft = [...initiatives].filter(r => r.isDraft)
         const pending = [...initiatives].filter(r => r.approvalStatus === Constants.ApprovalStatus.PENDING && !r.isDraft)
         const approved = [...initiatives].filter(r => r.approvalStatus === Constants.ApprovalStatus.APPROVED && !r.isDraft)
@@ -19,49 +20,49 @@ export default function InitiativesPage({initiatives}) {
             {
                 id: 1,
                 title: "All",
-                content: <InitiativesTable projects={[...initiatives]} />,
+                content: <InitiativesTable initiatives={initiatives} />,
                 icon: <></>,
                 badge: initiatives.length
             },
             {
                 id: 2,
                 title: "Approved",
-                content: <InitiativesTable projects={approved} />,
+                content: <InitiativesTable initiatives={approved} />,
                 icon: <></>,
                 badge: approved.length
             },
             {
                 id: 3,
                 title: "Ongoing",
-                content: <InitiativesTable projects={ongoing} />,
+                content: <InitiativesTable initiatives={ongoing} />,
                 icon: <></>,
                 badge: ongoing.length
             },
             {
                 id: 4,
                 title: "Pending",
-                content: <InitiativesTable projects={pending} />,
+                content: <InitiativesTable initiatives={pending} />,
                 icon: <></>,
                 badge: pending.length
             },
             {
                 id: 5,
                 title: "Rejected",
-                content: <InitiativesTable projects={rejected} />,
+                content: <InitiativesTable initiatives={rejected} />,
                 icon: <></>,
                 badge: rejected.length
             },
             {
                 id: 6,
                 title: "Archived",
-                content: <InitiativesTable projects={archived} />,
+                content: <InitiativesTable initiatives={archived} />,
                 icon: <></>,
                 badge: archived.length
             },
             {
                 id: 7,
                 title: "Draft",
-                content: <InitiativesTable projects={draft} />,
+                content: <InitiativesTable initiatives={draft} />,
                 icon: <></>,
                 badge: draft.length
             }

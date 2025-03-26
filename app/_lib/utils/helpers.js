@@ -3,7 +3,7 @@ import { Constants } from "@/utils/Constants"
 import { format } from "date-fns"
 
 
-export const getPromiseData = (promise) => {
+export const getPromiseResult = (promise) => {
     return promise?.value?.success ? promise?.value?.result ?? [] : []
 }
 

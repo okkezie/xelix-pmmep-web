@@ -2,9 +2,8 @@
 import { post } from "@/utils/Api"
 import { Constants } from "@/utils/Constants"
 import { redirect } from "next/navigation"
-import { cookies } from "next/headers"
 import { isNullOrEmptyString } from "@/utils/helpers"
-import { failedResponse } from "@/actions/actionUtils"
+import { failedResponse, login } from "@/actions/actionUtils"
 
 export const authenticate = async (prevState, formData) => {
     const email = formData.get('email')
@@ -39,19 +38,4 @@ export const authenticate = async (prevState, formData) => {
     await login(response, !!rememberMe)
     return redirect(Constants.Paths.Dashboard)
 }
-
-const login = async (response, rememberMe) => {
-    const { token, user } = response?.result ?? {}
-    if (!token || !user) {
-        throw new Error("Invalid response from server")
-    }
-    const cookieStore = await cookies()
-    cookieStore.set(Constants.Cookies.TOKEN, token)
-    cookieStore.set(Constants.Cookies.USER, JSON.stringify(user))
-    cookieStore.set(Constants.Cookies.IS_AUTHENTICATED, "true")
-    if (rememberMe) { 
-        cookieStore.set(Constants.Cookies.REMEMBER_ME, "true")
-    }
-}
-
 

@@ -15,10 +15,10 @@ const tableData = [
     id: 1,
     user: {
       image: "/assets/images/user/user-17.jpg",
-      name: "Lindsey Curtis",
-      role: "Web Designer",
+      name: "A & B Construction Co.",
+      role: "Contractor",
     },
-    projectName: "Agency Website",
+    projectName: "School Renovation",
     team: {
       images: [
         "/assets/images/user/user-22.jpg",
@@ -26,45 +26,45 @@ const tableData = [
         "/assets/images/user/user-24.jpg",
       ],
     },
-    budget: "3.9K",
+    budget: "39M",
     status: "Active",
   },
   {
     id: 2,
     user: {
       image: "/assets/images/user/user-18.jpg",
-      name: "Kaiya George",
-      role: "Project Manager",
+      name: "CD Road Construction Co.",
+      role: "Contractor",
     },
-    projectName: "Technology",
+    projectName: "Road Rehabilitation",
     team: {
       images: ["/assets/images/user/user-25.jpg", "/assets/images/user/user-26.jpg"],
     },
-    budget: "24.9K",
+    budget: "249M",
     status: "Pending",
   },
   {
     id: 3,
     user: {
       image: "/assets/images/user/user-17.jpg",
-      name: "Zain Geidt",
-      role: "Content Writing",
+      name: "DC Development Co.",
+      role: "Contractor",
     },
-    projectName: "Blog Writing",
+    projectName: "Hospital Reconstruction",
     team: {
       images: ["/assets/images/user/user-27.jpg"],
     },
-    budget: "12.7K",
+    budget: "127M",
     status: "Active",
   },
   {
     id: 4,
     user: {
       image: "/assets/images/user/user-20.jpg",
-      name: "Abram Schleifer",
-      role: "Digital Marketer",
+      name: "ACME Medicals Inc",
+      role: "Suppliers",
     },
-    projectName: "Social Media",
+    projectName: "Medical Equipment Renewal",
     team: {
       images: [
         "/assets/images/user/user-28.jpg",
@@ -72,17 +72,17 @@ const tableData = [
         "/assets/images/user/user-30.jpg",
       ],
     },
-    budget: "2.8K",
+    budget: "28M",
     status: "Cancel",
   },
   {
     id: 5,
     user: {
       image: "/assets/images/user/user-21.jpg",
-      name: "Carla George",
-      role: "Front-end Developer",
+      name: "Ministry of Works",
+      role: "Project Manager",
     },
-    projectName: "Website",
+    projectName: "Government Offices Renovation",
     team: {
       images: [
         "/assets/images/user/user-31.jpg",
@@ -90,7 +90,7 @@ const tableData = [
         "/assets/images/user/user-33.jpg",
       ],
     },
-    budget: "4.5K",
+    budget: "45m",
     status: "Active",
   },
 ]
@@ -108,7 +108,7 @@ const TableOne = () => {
                   isHeader
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                 >
-                  User
+                  Owner
                 </TableCell>
                 <TableCell
                   isHeader
@@ -168,7 +168,7 @@ const TableOne = () => {
                     <div className="flex -space-x-2">
                       {order.team.images.map((teamImage, index) => (
                         <div
-                          key={index}
+                          key={index+1}
                           className="w-6 h-6 overflow-hidden border-2 border-white rounded-full dark:border-gray-900"
                         >
                           <Image

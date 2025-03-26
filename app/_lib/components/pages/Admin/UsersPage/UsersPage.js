@@ -1,35 +1,30 @@
 import UsersTable from "@/components/organisms/Tables/UsersTable"
 import Button from "@/components/atoms/Form/Button/Button"
-import { useState } from "react"
 import { Modal } from "@/components/templates/Modal/Modal"
 import NewUserForm from "@/components/organisms/NewUserForm/NewUserForm"
 import Card from "@/components/organisms/Card/Card"
+import { useModal } from "@/hooks/useModal"
 
 export default function UsersPage({users, roles, permissions, userTypes, mdas}) {
-    const [newUserModalOpen, setNewUserModalOpen] = useState(false)
-    const close = () => {
-        setNewUserModalOpen(false)
-    }
-    
-    const submitNewUser = (data) => {
-        console.log(data)
-        alert("User created")
-    }
-    
+    const {isOpen, closeModal, openModal} = useModal()
+    console.log({mdas})
+    console.log({userTypes})
     return (
         <>
         <Card className="flex flex-col gap-4">
             <div className="flex flex-row gap-4 items-center justify-end">
-                <Button variant="outline" className="mb-4" onClick={() => setNewUserModalOpen(true)}>Create New User</Button>
+                <Button variant="outline" className="mb-4" onClick={openModal}>
+                    Create New User
+                </Button>
             </div>
-            <UsersTable users={users} />
+            <UsersTable users={users} userTypes={userTypes} mdas={mdas} />
         </Card>
         <Modal
-            isOpen={newUserModalOpen}
-            onClose={close}
+            isOpen={isOpen}
+            onClose={closeModal}
             className="max-w-[700px] m-4"
         >
-            <NewUserForm closeModal={close} submitAction={submitNewUser} roles={roles} permissions={permissions} userTypes={userTypes} />
+            <NewUserForm userTypes={userTypes} mdas={mdas} close={closeModal} />
         </Modal>
         </>
     )

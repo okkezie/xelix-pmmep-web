@@ -1,13 +1,11 @@
 'use client'
-
 import { get } from "@/utils/Api"
 import { Constants } from "@/utils/Constants"
 import { useEffect, useState } from "react"
 import ViewInitiative from "@/components/pages/Initiatives/ViewInitiative"
 import LoadingInitiativePage from "./loading"
 
-export default function ViewProjectPage({ params }) {
-
+export default function ViewInitiativePage({ params }) {
     const [initiative, setInitiative] = useState([])
     const [loading, setLoading] = useState(true)
 

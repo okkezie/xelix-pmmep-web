@@ -1,16 +1,8 @@
 
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/molecules/Table/Table"
 
-export default function SimpleTable({name, headers, body}) {
+export default function SimpleTable({name, headers, body, showSN = true}) {
 
-/*
-    headers: ['a', 'b']
-    body: [
-        [<>1</>, <>2</>],
-        [<>3</>, <>4</>],
-    ],
-    name: "Numbers"
-*/
     return (
         <div className="rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03] h-full">
             <div className="max-w-full h-full overflow-x-auto lg:overflow-x-visible">
@@ -19,17 +11,17 @@ export default function SimpleTable({name, headers, body}) {
                         {headers && 
                         <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
                             <TableRow>
-                                <TableCell
+                                {showSN && <TableCell
                                     isHeader
-                                    className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                                    className="px-4 py-4 font-medium text-gray-500 text-start text-md dark:text-gray-400"
                                 >
                                     SN
-                                </TableCell>
+                                </TableCell>}
                                 { headers?.map((h, index) => 
                                 <TableCell
                                     key={index+1}
                                     isHeader
-                                    className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                                    className="px-4 py-4 font-medium text-gray-500 text-start text-md dark:text-gray-400"
                                 >
                                     {h}
                                 </TableCell>
@@ -42,14 +34,14 @@ export default function SimpleTable({name, headers, body}) {
                             {body?.length > 0 ? (
                                 body?.map((item, index) => (
                                 <TableRow key={index+ 1}>
-                                    <TableCell className="px-5 py-4 sm:px-6 text-start">
+                                    {showSN && <TableCell className="px-2 py-3 sm:px-4 text-start">
                                         { index + 1 }
-                                    </TableCell>
+                                    </TableCell>}
                                     { item?.map((i, j) => 
                                     <TableCell
                                         key={j+1}
                                         isHeader
-                                        className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                                        className="px-2 py-3 font-medium text-gray-500 text-start dark:text-gray-400 text-sm"
                                     >
                                         {i}
                                     </TableCell>

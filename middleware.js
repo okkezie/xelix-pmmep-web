@@ -1,7 +1,7 @@
 import { Constants } from "@/utils/Constants"
 import { NextResponse } from 'next/server'
 import { cookies } from "next/headers"
-import { deleteCookie } from "cookies-next"
+import { logout } from "@/actions/actionUtils"
 
 const unAuthenticatedPaths 
     = Object.values(Constants.UnProtectedPaths) 
@@ -10,9 +10,9 @@ export const config = { matcher: '/((?!.*\\.|api\\/).*)' }
 
 export async function middleware(request) {
     const authenticated = await isAuthenticated()
-    const pathname = getPathName(request)
+    const pathname = '/'+request.nextUrl.pathname.split('/')[1].split('?')[0].split('#')[0]
 
-    if (shouldSignout(pathname)) {
+    if (pathname === Constants.Paths.Logout) {
         return await signout(request)
     }
 
@@ -20,23 +20,11 @@ export async function middleware(request) {
         return NextResponse.redirect(new URL(Constants.Paths.Dashboard, request.nextUrl))
     }
 
-    if (shouldAuthenticate(pathname) && !authenticated) {
+    if (!unAuthenticatedPaths.includes(pathname) && !authenticated) {
         return NextResponse.redirect(new URL(Constants.Paths.SignIn, request.nextUrl))
     }
 
     return NextResponse.next({request})
-}
-
-const shouldSignout = (pathname) => {
-    return pathname === Constants.Paths.Logout
-}
-
-const getPathName = (request) => {
-    return '/'+request.nextUrl.pathname.split('/')[1].split('?')[0].split('#')[0]
-}
-
-const shouldAuthenticate = (pathname) => {
-    return !unAuthenticatedPaths.includes(pathname)
 }
 
 const isAuthenticated = async () => {
@@ -68,24 +56,6 @@ const signout = async (request) => {
         new URL(Constants.Paths.SignIn, request.url),
         { headers }
     )
-
-    response.cookies.set(Constants.Cookies.TOKEN, '', { maxAge: 0 })
-    response.cookies.set(Constants.Cookies.USER, '', { maxAge: 0 })
-    response.cookies.set(Constants.Cookies.USER_ID, '', { maxAge: 0 })
-    response.cookies.set(Constants.Cookies.DO_TOKEN_REFRESH, '', { maxAge: 0 })
-    response.cookies.set(Constants.Cookies.REFRESH_TOKEN, '', { maxAge: 0 })
-    response.cookies.set(Constants.Cookies.CLIENT_IP_ADDRESS, '', {maxAge: 0})
-    response.cookies.set(Constants.Cookies.REMEMBER_ME, '', { maxAge: 0 })
-    response.cookies.set(Constants.Cookies.IS_AUTHENTICATED, '', { maxAge: 0 })
-
-    deleteCookie(Constants.Cookies.TOKEN)
-    deleteCookie(Constants.Cookies.USER)
-    deleteCookie(Constants.Cookies.USER_ID)
-    deleteCookie(Constants.Cookies.DO_TOKEN_REFRESH)
-    deleteCookie(Constants.Cookies.REFRESH_TOKEN)
-    deleteCookie(Constants.Cookies.CLIENT_IP_ADDRESS)
-    deleteCookie(Constants.Cookies.REMEMBER_ME)
-    deleteCookie(Constants.Cookies.IS_AUTHENTICATED)
-
+    await logout()
     return response
 }

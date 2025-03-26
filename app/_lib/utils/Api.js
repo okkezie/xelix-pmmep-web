@@ -1,7 +1,7 @@
 'use server'
 
 import { Constants } from "@/utils/Constants"
-import { rememberMe, token } from "@/actions/actionUtils"
+import { login, logout, refreshToken, rememberMe, token } from "@/actions/actionUtils"
 import { redirect } from "next/navigation"
 
 export const get = async(path, auth = false) => {
@@ -25,56 +25,48 @@ export const deleteRequest = async (path, auth = false) => {
 }
 
 export const upload = async (data) => {
+    let response = {}
     try {
-        const response = await send(
+        response = await send(
             Constants.ApiPaths.FileUpload, 
             Constants.ApiMethods.POST,
             data,
             true,
             Constants.ApiContentTypes.FormData)
-        if (!response.ok) {
-            return await handleErrorResponse(response)
-        }
-        if (response.status === 204) {
-            return {
-                success: true,
-                message: "Request successful"
-            }
-        }
-        return await response.json()
     }
     catch (error) {
-        console.error("Error sending request:", {error})
+        return errorResponse(error)
+    }
+    if (!response.ok) {
+        return await handleErrorResponse(response)
+    }
+    if (response.status === 204) {
         return {
-            success: false,
-            message: error.message,
-            code: error.status
+            success: true,
+            message: "Request successful"
         }
     }
+    return await response.json()
 }
 
-const sendRequest = async (path, method, data, auth = false) => {
+const sendRequest = async (path, method, data, auth = false, repeat = true) => {
+    let response = {}
     try {
-        const response = await send(path, method, data, auth)
-        if (!response.ok) {
-            return await handleErrorResponse(response)
-        }
-        if (response.status === 204) {
-            return {
-                success: true,
-                message: "Request successful"
-            }
-        }
-        return await response.json()
+        response = await send(path, method, data, auth)
     }
     catch (error) {
-        console.error("Error sending request:", {error})
+        return errorResponse(error)
+    }
+    if (!response.ok && repeat) {
+        return await handleErrorResponse(response, {path, method, data, auth, repeat: false})
+    }
+    if (response.status === 204) {
         return {
-            success: false,
-            message: error.message,
-            code: error.status
+            success: true,
+            message: "Request successful"
         }
     }
+    return await response.json()
 }
 
 const send = async (path, method, data, auth = false, contentType = Constants.ApiContentTypes.Json) => {
@@ -91,14 +83,26 @@ const send = async (path, method, data, auth = false, contentType = Constants.Ap
     return await fetch(`${apiUrl}${path}`, request)
 }
 
-const handleErrorResponse = async (response) => {
-    if (response.status === 401) {
+const errorResponse = (error) => {
+    console.error("Error sending request:", {error})
+    return {
+        success: false,
+        message: error.message,
+        code: error.status
+    }
+}
+
+const handleErrorResponse = async (response, request = null) => {
+    if (response.status === 401 && response.headers?.get('www-authenticate')?.includes('Jwt expired')) {
+        console.log('Token expired...................')
         const remember = await rememberMe()
         if (remember) {
-            return await refreshToken()
+            console.log("Remember me set. Refreshing token...")
+            return await refreshAccessToken(request)
         }
         else {
-            return redirect(Constants.Paths.Logout)
+            console.log("Logging out...")
+            redirect(Constants.Paths.Logout)
         }        
     }
 
@@ -129,6 +133,27 @@ const handleErrorResponse = async (response) => {
     }
 }
 
-const refreshToken = async () => {
-    // refresh token...
+const refreshAccessToken = async (request) => {
+    const jwt = await token()
+    const refresh = await refreshToken()
+    if (token && refreshToken) {
+        const response = await send(
+            Constants.ApiPaths.RefreshAccessToken,
+            Constants.ApiMethods.POST, 
+            {
+                'jwt': jwt, 
+                'refreshToken': refresh
+            }
+        )
+        if (response?.ok) {
+            const result = await response.json()
+            await logout()
+            await login(result, true)
+            if (request) {
+                return sendRequest(request?.path, request?.method, request?.data, request?.auth, request?.repeat)
+            }
+            return(Constants.Paths.Dashboard)
+        }
+    }
+    redirect(Constants.Paths.Logout)
 }

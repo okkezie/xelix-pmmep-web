@@ -4,31 +4,48 @@ import Label from "@/components/atoms/Form/Label"
 import Input from "@/components/atoms/Form/Input/InputField"
 import Select from "@/components/atoms/Form/Select"
 import { genderOptions } from "@/data/genderOptions"
-import { useModal } from "@/hooks/useModal"
 import { useActionState } from "react"
-import { saveUser } from "@/app/_lib/actions/userActions"
+import { saveUser } from "@/actions/userActions"
+import Alert from "@/components/molecules/Alert/Alert"
 
-export default function NewUserForm( { userTypes, mdas } ) {
-    const { closeModal } = useModal()
+export default function NewUserForm( { userTypes, mdas, close, user } ) {
     const [state, formAction, pending] = useActionState(saveUser, {errors: {}})
-
+    console.log({state})
+    if (state?.success) {
+        alert(state?.message)
+        close()
+    }
+    if (user && !state?.prev) {
+        state.prev = user
+    }
     const userTypeOptions = userTypes.map(ut => ({
         value: ut,
         label: ut?.replaceAll("_", " ")
     }))
 
-    const mdaOptions = mdas?.map(mda => ({
-        value: mda.id,
+    const mdaOptions = mdas?.map?.(m => ({id: m.id, name: m.name}))?.map?.(mda => ({
+        value: JSON.stringify(mda),
         label: mda.name
     }))
   
+    const id = user?.id
+
     return (
         <form 
             action={formAction}
-            className="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11">
+            className="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11"
+        >
             <h4 className="mb-6 text-lg font-medium text-gray-800 dark:text-white/90">
                 Create New User
             </h4>
+
+            { state.error && 
+            <div className="mb-6">
+                <Alert variant="error" title={state.error} />
+            </div> 
+            }
+
+            {id && <input type='hidden' name='id' value={id} />}
 
             <div className="grid grid-cols-1 gap-x-6 gap-y-5">
                 <div className="col-span-1">
@@ -74,7 +91,7 @@ export default function NewUserForm( { userTypes, mdas } ) {
                     <Input
                         id="phone"
                         name="phone"
-                        type="text"
+                        type="tel"
                         placeholder="Phone Number"
                         defaultValue={state?.prev?.phone}
                         error={state?.errors?.phone}
@@ -136,10 +153,11 @@ export default function NewUserForm( { userTypes, mdas } ) {
             <div className="flex items-center justify-end w-full gap-3 mt-6">
                 <Button
                     variant="outline"
-                    onClick={closeModal}
+                    onClick={close}
                     isLoading={pending}
+                    type="button"
                 >
-                    Close
+                    Cancel
                 </Button>
                 <Button
                     variant="primary"

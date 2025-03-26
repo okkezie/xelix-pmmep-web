@@ -3,7 +3,7 @@ import Roles from "@/components/pages/Admin/Roles/Roles"
 import { get } from "@/utils/Api"
 import { Constants } from "@/utils/Constants"
 import { useState, useEffect } from "react"
-import { getPromiseData } from "@/utils/helpers"
+import { getPromiseResult } from "@/utils/helpers"
 
 export default function RolesPage() {
   const [roles, setRoles] = useState([])  
@@ -17,9 +17,9 @@ export default function RolesPage() {
       const roleAudiencesPromise = get(Constants.ApiPaths.RoleAudiences, true)
       const [rolesResult, permissionsResult, roleAudiencesResult] = await Promise.allSettled([rolesPromise, permissionsPromise, roleAudiencesPromise])
 
-      setRoles(getPromiseData(rolesResult))
-      setPermissions(getPromiseData(permissionsResult))
-      setRoleAudiences(getPromiseData(roleAudiencesResult))
+      setRoles(getPromiseResult(rolesResult))
+      setPermissions(getPromiseResult(permissionsResult))
+      setRoleAudiences(getPromiseResult(roleAudiencesResult))
     }
     fetchData()
   }, [])

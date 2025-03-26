@@ -1,4 +1,3 @@
-
 import { useActionState, useEffect, useRef, useState } from "react"
 import Card from "@/components/organisms/Card/Card"
 import Label from "@/components/atoms/Form/Label"
@@ -12,19 +11,30 @@ import Select from "@/components/atoms/Form/Select"
 import DatePicker from 'react-date-picker'
 import { format } from "date-fns"
 import { createInitiative } from "@/actions/initiativeActions"
+import { useAuthContext } from "@/contexts/AuthContext"
 
-export default function CreateInitiative({ initiative }) {
+export default function CreateInitiative({ initiative, roadmaps, projects }) {
+    const { userMda } = useAuthContext()
     const [state, formAction, pending] = useActionState(createInitiative, { errors: {}})
     const [submitAction, setSubmitAction] = useState(Constants.FormAction.Save)
     const [startDate, setStartDate] = useState(initiative?.startDate)
     const [endDate, setEndDate] = useState(initiative?.endDate)
     const formRef = useRef()
     const goBack = useGoBack()
-    const mda = "Default MDA"
 
     if (initiative && !state?.prev ) {
         state['prev'] = initiative
     }
+
+    const roadmapsOptions = roadmaps?.map((roadmap) => ({
+        label: roadmap.name,
+        value: roadmap.id
+    }))
+
+    const projectsOptions = projects?.map((project) => ({
+        label: project.name,
+        value: project.id
+    }))
 
     const id = initiative ? initiative.id : null
 
@@ -74,7 +84,7 @@ export default function CreateInitiative({ initiative }) {
                                     error={state?.errors?.name || state?.errors?.Name}
                                     hint={state?.errors?.name}
                                 />
-                                <input type='hidden' value={mda} name='mda' />
+                                <input type='hidden' value={JSON.stringify(userMda)} name='mda' />
                                 <input type='hidden' value={submitAction} name='action' />
                                 { startDate && <input type='hidden' value={format(startDate, "yyy-LL-dd")} name='startDate' /> }
                                 { endDate && <input type='hidden' value={format(endDate, "yyyy-LL-dd")} name='endDate' /> }
@@ -173,7 +183,7 @@ export default function CreateInitiative({ initiative }) {
                                     defaultValue={state?.prev?.roadmap}
                                     error={state?.errors?.roadmap}
                                     hint={state?.errors?.roadmap}
-                                    options={[]}
+                                    options={roadmapsOptions}
                                 />
                             </div>
                             <div className="">
@@ -192,7 +202,7 @@ export default function CreateInitiative({ initiative }) {
                                     defaultValue={state?.prev?.project}
                                     error={state?.errors?.project}
                                     hint={state?.errors?.project}
-                                    options={[]}
+                                    options={projectsOptions}
                                 />
                             </div>
                         </Card>

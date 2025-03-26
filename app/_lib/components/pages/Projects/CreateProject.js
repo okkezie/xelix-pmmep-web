@@ -13,16 +13,24 @@ import Select from "@/components/atoms/Form/Select"
 import Alert from "@/components/molecules/Alert/Alert"
 import { useModal } from "@/hooks/useModal"
 import { Modal } from "@/components/templates/Modal/Modal"
-import { Table, TableHeader, TableBody, TableCell, TableRow } from "@/components/molecules/Table/Table"
-import Plus from "@/svgs/plus"
+import { 
+    Table, 
+    TableHeader, 
+    TableBody, 
+    TableCell, 
+    TableRow 
+} from "@/components/molecules/Table/Table"
 import MilestoneForm from "@/components/organisms/Forms/MilestoneForm"
-import Close from "@/svgs/close-line"
 import { randomBytes } from "crypto"
-import Pencil from "@/svgs/pencil"
 import DatePicker from 'react-date-picker'
 import { format } from "date-fns"
+import { useAuthContext } from "@/contexts/AuthContext"
+import Plus from "@/svgs/plus"
+import Close from "@/svgs/close-line"
+import Pencil from "@/svgs/pencil"
 
 export default function CreateProject({ project }) {
+    const { userMda } = useAuthContext()
     const {closeModal, isOpen, openModal} = useModal()
     const [milestones, setMilestones] = useState(project?.milestones ?? [])
     const [state, formAction, pending] = useActionState(createProject, { errors: {}})
@@ -33,7 +41,6 @@ export default function CreateProject({ project }) {
 
     const formRef = useRef(null)
     const goBack = useGoBack()
-    const mda = "Default MDA"
 
     if (project && !state?.prev ) {
         state['prev'] = project
@@ -92,7 +99,6 @@ export default function CreateProject({ project }) {
         if (!endDate && project?.endDate) {
             setEndDate(project?.endDate)
         }
-        console.log({milestones})
     }, [endDate, milestones, project, startDate])
 
     return (
@@ -115,7 +121,7 @@ export default function CreateProject({ project }) {
                                     error={state?.errors?.name || state?.errors?.Name}
                                     hint={state?.errors?.name}
                                 />
-                                <input type='hidden' value={mda} name='mda' />
+                                <input type='hidden' value={JSON.stringify(userMda)} name='mda' />
                                 <input type='hidden' value={submitAction} name='action' />
                                 <input type="hidden" value={JSON.stringify(milestones)} name='milestones' />
                                 { startDate && <input type='hidden' value={format(startDate, "yyy-LL-dd")} name='startDate' /> }

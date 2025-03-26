@@ -68,8 +68,7 @@ export const createProject = async (prevState, formData) => {
     else if (isSubmit) {
         data['isDraft'] = false
     }
-
-    console.log({data})
+    data['mda'] = JSON.parse(data['mda'])
 
     let response
     if (data.id) {

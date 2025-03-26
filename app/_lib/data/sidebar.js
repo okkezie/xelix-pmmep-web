@@ -13,6 +13,7 @@ import Contractors from '@/svgs/sidebar-icons/contractors'
 import { Constants } from "@/utils/Constants"
 import Analytics from "@/svgs/sidebar-icons/analytics"
 import Reports from "@/svgs/sidebar-icons/Reports"
+import AiChat from "@/public/svgs/sidebar-icons/aichat"
 
 const sidebar = [
     {
@@ -67,6 +68,11 @@ const sidebar = [
                 title: "Staff",
                 icon: (path) => <Staff isActive={path === Constants.Paths.Staff} />,
                 href: Constants.Paths.Staff,
+            },
+            {
+                title: "Ai Chat",
+                icon: (path) => <AiChat isActive={path === Constants.Paths.AiChat} />,
+                href: Constants.Paths.AiChat,
             },
         ]
     },
