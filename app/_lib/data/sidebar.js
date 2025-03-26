@@ -12,8 +12,8 @@ import Users from "@/svgs/sidebar-icons/users"
 import Contractors from '@/svgs/sidebar-icons/contractors'
 import { Constants } from "@/utils/Constants"
 import Analytics from "@/svgs/sidebar-icons/analytics"
-import Reports from "@/public/svgs/sidebar-icons/reports"
-import AiChat from "@/public/svgs/sidebar-icons/aichat"
+import Reports from "@/svgs/sidebar-icons/reports"
+import AiChat from "@/svgs/sidebar-icons/aichat"
 
 const sidebar = [
     {
