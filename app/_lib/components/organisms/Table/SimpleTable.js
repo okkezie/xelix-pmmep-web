@@ -13,7 +13,7 @@ export default function SimpleTable({name, headers, body, showSN = true}) {
                             <TableRow>
                                 {showSN && <TableCell
                                     isHeader
-                                    className="px-4 py-4 font-medium text-gray-500 text-start text-md dark:text-gray-400"
+                                    className="px-4 py-4 font-medium text-gray-500 text-start text-md dark:text-gray-400  "
                                 >
                                     SN
                                 </TableCell>}
