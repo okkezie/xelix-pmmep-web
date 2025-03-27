@@ -29,61 +29,95 @@ export default function Dashboard() {
             width: 380,
             type: 'donut',
         },
+        colors: ["#9b8afb", "#fd853a", "#fdb022", "#32d583", "gray"],
         labels: ['Ministry of Information', 'Ministry of Agriculture', 'Ministry of Education', 'Ministry of Works', 'Ministry of Health'],
+        stroke: {
+            show: false,
+        },
         plotOptions: {
             pie: {
-                startAngle: -90,
-                endAngle: 270
+                donut: {
+                    lineCap: "smooth",
+                    size: "65%",
+                    background: "transparent",
+                    labels: {
+                        show: true,
+                        name: {
+                            show: true,
+                            offsetY: 0,
+                            fontSize: "12px",
+                            fontWeight: "normal",
+                            text: "Total 135GB"
+                        },
+                        value: {
+                            show: true,
+                            offsetY: 10,
+                            fontSize: "14px",
+                            formatter: () => "Used of 135 GB"
+                        },
+                        total: {
+                            show: true,
+                            label: "Total 135 GB",
+                            fontSize: "24px",
+                            fontWeight: "bold"
+                        }
+                    }
+                },
+                expandOnClick: false
             }
         },
         dataLabels: {
             enabled: false
         },
+        tooltip: {
+            enabled: false
+        },
+        legend: {
+            show: true,
+            position: "bottom",
+            horizontalAlign: "left",
+            fontFamily: "Outfit",
+            fontSize: "14px",
+            fontWeight: 400,
+            markers: {
+                size: 5,
+                shape: "circle",
+                radius: 999,
+                strokeWidth: 0
+            },
+            itemMargin: {
+                horizontal: 10,
+                vertical: 6
+            }
+        },
         fill: {
             type: 'gradient',
         },
-        legend: {
-            formatter: function(val, opts) {
-                return val + " - " + opts.w.globals.series[opts.seriesIndex]
-            }
-        },
-        title: {
-            text: 'Projects Distribution by MDA'
-        },
-        responsive: [{
-            breakpoint: 480,
-            options: {
-                chart: {
-                    width: 200
-                },
-                legend: {
-                    position: 'bottom'
-                }
-            }
-        }]
     }
 
     const pieSeries2 = [47, 18, 35]
     const pieOptions2 = {
         chart: {
-        width: 380,
-        type: 'pie',
+            width: 380,
+            type: 'pie',
+        },
+        stroke: {
+            show: false,
         },
         labels: ['Ongoing', 'Completed', 'Delayed'],
         title: {
             text: 'Projects status breakdown'
         },
-        responsive: [{
-            breakpoint: 480,
-            options: {
-                chart: {
-                    width: 200
-                },
-                legend: {
-                    position: 'bottom'
-                }
-            }
-        }]
+        startAngle: 0,
+        endAngle: 360,
+        expandOnClick: true,
+        offsetX: 0,
+        offsetY: 0,
+        customScale: 1,
+        dataLabels: {
+            offset: 0,
+            minAngleToShowLabel: 10
+        }
     }
 
     return (
