@@ -1,4 +1,4 @@
-
+'use client'
 import { Modal } from "@/components/templates/Modal/Modal"
 import Card from "@/components/organisms/Card/Card"
 import TextArea from "@/components/atoms/Form/Input/TextArea"
@@ -6,22 +6,31 @@ import { useState } from "react"
 import Button from "@/components/atoms/Form/Button/Button"
 import { Constants } from "@/utils/Constants"
 import { toLowerCase, toTitleCase } from "@/utils/helpers"
+import {toast} from 'react-toastify'
+import { useRouter } from "next/navigation"
 
 export default function Confirm({
     close, 
     show, 
-    action, 
+    action = async () => {}, 
     entity, 
     actionType, 
     redirect = Constants.Paths.Dashboard
 }) {
-
+    const router = useRouter()
     const [reason, setReason] = useState()
 
     const act = async () => {
-        await action(reason)
-        close?.()
-        window.location.href = redirect
+        action(reason).then(({success, message, result}) => {
+            close?.()
+            if (success) {
+                toast.success(message ?? `${getVerb()} successful!`)
+            }
+            else {
+                toast.error(message ?? `${getVerb()} failed!`)
+            }
+            router.push(redirect)
+        })
     }
 
     const getVerb = () => {

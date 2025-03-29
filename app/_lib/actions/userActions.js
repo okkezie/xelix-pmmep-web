@@ -81,7 +81,7 @@ export const unAssignPermission = async (userId, permissionId) => {
 }
 
 export const assignRole = async (userId, roleId) => {
-    const path = Constants.ApiPaths.AssignRole.replace(":userId", userId).replace(":roleId", roleId)
+    const path = Constants.ApiPaths.AssignRoleToUser.replace(":userId", userId).replace(":roleId", roleId)
     const response = await put(path, null, true)
     if (!response?.success) {
         return failedResponse(response)
@@ -90,7 +90,7 @@ export const assignRole = async (userId, roleId) => {
 }
 
 export const unAssignRole = async (userId, roleId) => {
-    const path = Constants.ApiPaths.RemoveRole.replace(":userId", userId).replace(":roleId", roleId)
+    const path = Constants.ApiPaths.RemoveRoleFromUser.replace(":userId", userId).replace(":roleId", roleId)
     const response = await deleteRequest(path, true)
     if (!response?.success) {
         return failedResponse(response)

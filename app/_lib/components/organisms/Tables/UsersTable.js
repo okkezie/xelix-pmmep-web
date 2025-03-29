@@ -6,7 +6,7 @@ import { Constants } from "@/utils/Constants"
 import { useAuthContext } from "@/contexts/AuthContext"
 import { useState } from "react"
 import Dropdown from "@/components/molecules/Dropdown/Dropdown"
-import NewUserForm from "@/components/organisms/NewUserForm/NewUserForm"
+import UserForm from "@/components/organisms/UserForm/UserForm"
 import { Modal } from "@/components/templates/Modal/Modal"
 import Confirm from "@/components/organisms/Confirm/Confirm"
 import { deleteUser } from "@/actions/userActions"
@@ -155,7 +155,7 @@ const UserActions = ({user, userTypes, mdas, roles, permissions}) => {
                 onClose={() => setShowEditModal(false)}
                 className="max-w-[700px] m-4"
             >
-                <NewUserForm userTypes={userTypes} mdas={mdas} close={() => setShowEditModal(false)} user={user} />
+                <UserForm userTypes={userTypes} mdas={mdas} close={() => setShowEditModal(false)} user={user} />
             </Modal>
             <Confirm 
                 action={() => {
@@ -173,7 +173,7 @@ const UserActions = ({user, userTypes, mdas, roles, permissions}) => {
                 onClose={() => setShowViewModal(false)}
                 className="max-w-[700px] m-4"
             >
-                <Card title={user?.name} description={`Details for ${user?.name}`}>
+                <Card title={user?.name} description={`Details for User: ${user?.name}`}>
                     <UserDetails user={user} />
                 </Card>
             </Modal>
@@ -182,7 +182,7 @@ const UserActions = ({user, userTypes, mdas, roles, permissions}) => {
                 onClose={() => setShowPermissionsModal(false)}
                 className="max-w-[800px] m-4"
             >
-                <Card title={user?.name} description={`Permissions for ${user?.name}`}>
+                <Card title={user?.name} description={`Permissions for User: ${user?.name}`}>
                     <UserPermissions user={user} availablePermissions={permissions} />
                 </Card>
             </Modal>
@@ -191,7 +191,7 @@ const UserActions = ({user, userTypes, mdas, roles, permissions}) => {
                 onClose={() => setShowRolesModal(false)}
                 className="max-w-[800px] m-4"
             >
-                <Card title={user?.name} description={`Roles for ${user?.name}`}>
+                <Card title={user?.name} description={`Roles for User: ${user?.name}`}>
                     <UserRoles user={user} availableRoles={roles} />
                 </Card>
             </Modal>

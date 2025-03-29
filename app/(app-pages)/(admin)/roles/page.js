@@ -4,8 +4,10 @@ import { get } from "@/utils/Api"
 import { Constants } from "@/utils/Constants"
 import { useState, useEffect } from "react"
 import { getPromiseResult } from "@/utils/helpers"
+import RolesLoading from "./loading"
 
 export default function RolesPage() {
+  const [loading, setLoading] = useState(true)
   const [roles, setRoles] = useState([])  
   const [permissions, setPermissions] = useState([])
   const [roleAudiences, setRoleAudiences] = useState([])
@@ -20,11 +22,14 @@ export default function RolesPage() {
       setRoles(getPromiseResult(rolesResult))
       setPermissions(getPromiseResult(permissionsResult))
       setRoleAudiences(getPromiseResult(roleAudiencesResult))
+      setLoading(false)
     }
     fetchData()
   }, [])
 
   return (
+    loading ? 
+    <RolesLoading /> :
     <Roles roles={roles} permissions={permissions} roleAudiences={roleAudiences} />
   )
 }

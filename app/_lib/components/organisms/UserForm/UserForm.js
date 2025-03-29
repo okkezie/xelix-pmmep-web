@@ -8,7 +8,8 @@ import { useActionState } from "react"
 import { saveUser } from "@/actions/userActions"
 import Alert from "@/components/molecules/Alert/Alert"
 
-export default function NewUserForm( { userTypes, mdas, close, user } ) {
+export default function UserForm( { userTypes, mdas, close, user } ) {
+    const title = user ? "Edit User" : "Create New User"
     const [state, formAction, pending] = useActionState(saveUser, {errors: {}})
     console.log({state})
     if (state?.success) {
@@ -36,7 +37,7 @@ export default function NewUserForm( { userTypes, mdas, close, user } ) {
             className="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11"
         >
             <h4 className="mb-6 text-lg font-medium text-gray-800 dark:text-white/90">
-                Create New User
+                {title}
             </h4>
 
             { state.error && 

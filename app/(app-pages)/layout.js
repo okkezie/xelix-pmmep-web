@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
             <PageLoader />
             <MainPageLayout>
               { children }
-              <ToastContainer />
+              <ToastContainer style={{zIndex: '100000'}}/>
             </MainPageLayout>
           </AuthProvider>
         </ThemeProvider>

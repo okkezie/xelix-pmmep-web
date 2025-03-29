@@ -1,7 +1,7 @@
 "use client"
 import RolesTable from "@/components/organisms/Tables/RolesTable"
 import Button from "@/components/atoms/Form/Button/Button"
-import NewRoleForm from "@/components/organisms/NewRoleForm/NewRoleForm"
+import RoleForm from "@/components/organisms/RoleForm/RoleForm"
 import { Modal } from "@/components/templates/Modal/Modal"
 import { useState } from "react"
 import PermissionsTable from "@/components/organisms/Tables/PermissionsTable"
@@ -15,11 +15,6 @@ export default function Roles({ roles, permissions, roleAudiences }) {
         setNewRoleModalOpen(false)
     }
 
-    const submitNewRole = (data) => {
-        console.log(data)
-        alert("Role created")
-    }
-
     return (
         <>
         <Card className="flex flex-col gap-4">
@@ -27,14 +22,14 @@ export default function Roles({ roles, permissions, roleAudiences }) {
                 <Button variant="outline" className="mb-4" onClick={() => setPermissionsModalOpen(true)}>View All Permissions</Button>
                 <Button variant="outline" className="mb-4" onClick={() => setNewRoleModalOpen(true)}>Add New Role</Button>
             </div>
-            <RolesTable roles={roles} />
+            <RolesTable roles={roles} permissions={permissions} audiences={roleAudiences} />
         </Card>
         <Modal
             isOpen={newRoleModalOpen}
             onClose={close}
             className="max-w-[700px] m-4"
         >
-            <NewRoleForm closeModal={close} submitAction={submitNewRole} audiences={roleAudiences} />
+            <RoleForm closeModal={close} audiences={roleAudiences} />
         </Modal>
         <Modal
             isOpen={permissionsModalOpen}

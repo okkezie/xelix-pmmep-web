@@ -4,25 +4,53 @@ import Label from "@/components/atoms/Form/Label"
 import Input from "@/components/atoms/Form/Input/InputField"
 import TextArea from "@/components/atoms/Form/Input/TextArea"
 import Select from "@/components/atoms/Form/Select"
+import { useActionState, useEffect } from "react"
+import { saveRole } from "@/actions/roleActions"
+import Alert from "@/components/molecules/Alert/Alert"
+import {toast} from 'react-toastify'
+import { useRouter } from "next/navigation"
+import { Constants } from "@/utils/Constants"
 
-export default function NewRoleForm( { closeModal, submitAction, audiences } ) {
-
+export default function RoleForm( { role, closeModal, audiences } ) {
+    const [state, formAction, pending] = useActionState(saveRole, {errors: {}})
+    const router = useRouter()
+    
+    const id = role?.id
+    const title = role ? "Edit Role" : "Create New Role"
+    if (role && !state?.prev) {
+        state.prev = role
+    }
     const audienceOptions = audiences.map(a => ({
         value: a,
         label: a.replace('GOVERNOR', "GOVERNOR'S").replace("_", " ").replace(/\b\w/g, char => char.toUpperCase())
     }))
 
-    const handleAudienceChange = (value) => {
-        console.log(value)
-    }
+    useEffect(() => {
+        if (state?.success) {
+            close()
+            toast.success(state?.message)
+            router.push(Constants.Paths.Roles)
+            router.refresh()
+        }
+    }, [state?.success, router, state?.message])
 
     return (
         <form 
-            action={submitAction}
+            action={formAction}
             className="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11">
             <h4 className="mb-6 text-lg font-medium text-gray-800 dark:text-white/90">
-                Create New Role
+                { title }
             </h4>
+
+            { state.error && 
+            <div className="mb-6">
+                <Alert variant="error" title={state.error} />
+            </div> 
+            }
+
+            { state.success && <Alert variant="success" title='Role saved successfully' />}
+
+            {id && <input type='hidden' name='id' value={id} />}
 
             <div className="grid grid-cols-1 gap-x-6 gap-y-5">
                 <div className="col-span-1">
@@ -36,6 +64,9 @@ export default function NewRoleForm( { closeModal, submitAction, audiences } ) {
                         name="name"
                         type="text"
                         placeholder="Role Name"
+                        defaultValue={state?.prev?.name}
+                        error={state?.errors?.name}
+                        hint={state?.errors?.name}
                     />                    
                 </div>
 
@@ -50,6 +81,9 @@ export default function NewRoleForm( { closeModal, submitAction, audiences } ) {
                         name="description"
                         placeholder="Role description"
                         rows={4}
+                        defaultValue={state?.prev?.description}
+                        error={state?.errors?.description}
+                        hint={state?.errors?.description}
                     />
                 </div>
 
@@ -64,7 +98,9 @@ export default function NewRoleForm( { closeModal, submitAction, audiences } ) {
                         name="audience"
                         placeholder="Select Audience"
                         options={audienceOptions}
-                        onChange={handleAudienceChange}
+                        defaultValue={state?.prev?.audience}
+                        error={state?.errors?.audience}
+                        hint={state?.errors?.audience}
                     />
                 </div>
             </div>
@@ -73,12 +109,14 @@ export default function NewRoleForm( { closeModal, submitAction, audiences } ) {
                 <Button
                     variant="outline"
                     onClick={closeModal}
+                    isLoading={pending}
                 >
                     Close
                 </Button>
                 <Button
                     variant="primary"
                     type="submit"
+                    isLoading={pending}
                 >
                     Save Changes
                 </Button>
