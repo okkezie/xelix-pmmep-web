@@ -120,9 +120,7 @@ const RoleActions = ({role, permissions,audiences}) => {
                 onClose={() => setShowViewModal(false)}
                 className="max-w-[700px] m-4"
             >
-                <Card title={role?.name} description={`Details for Role: ${role?.name}`}>
-                    <h2>Role details</h2>
-                </Card>
+                <RoleDetails role={role} />
             </Modal>
             <Modal
                 isOpen={showPermissionsModal}
@@ -134,5 +132,32 @@ const RoleActions = ({role, permissions,audiences}) => {
                 </Card>
             </Modal>
         </>
+    )
+}
+
+const RoleDetails = ({role}) => {
+    return (
+        <Card title={role?.name} description={`Details for Role: ${role?.name}`}>
+            <div className="flex flex-col gap-4 divide-y divide-gray-300 dark:divide-gray-700 max-h-[600px] overflow-y-auto">
+                <div className="grid grid-cols-2 gap-2 pt-3 pl-4">
+                    <h3 className="text-sm text-gray-500 col-span-1">Description</h3>
+                    <p className="col-span-1">{role?.description}</p>
+                </div>
+                <div className="grid grid-cols-2 gap-2 pt-3 pl-4">
+                    <h3 className="text-sm text-gray-500 col-span-1">Audience</h3>
+                    <p className="col-span-1">{role?.audience}</p>
+                </div>
+                { role?.permissions?.length > 0 && 
+                    <div className="grid grid-cols-2 gap-2 pt-3 pl-4">
+                        <h3 className="text-sm text-gray-500 col-span-1">Permissions</h3>
+                        <div className="col-span-1">
+                        {role?.permissions?.map((permission) => (
+                            <div key={permission} className="m-2 p-2"><Badge>{permission}</Badge></div>
+                        ))}
+                        </div>
+                    </div>
+                }
+            </div>
+        </Card>
     )
 }
