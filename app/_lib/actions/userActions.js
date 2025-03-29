@@ -1,6 +1,6 @@
 "use server"
 import { Constants } from "@/utils/Constants"
-import { deleteRequest, post, put } from "@/utils/Api"
+import { deleteRequest, get, post, put } from "@/utils/Api"
 import { failedResponse, validate } from "@/actions/actionUtils"
 import { isNullOrEmptyString } from "@/utils/helpers"
 
@@ -60,4 +60,58 @@ export const deleteUser = async (id) => {
         return failedResponse(response)
     }
     return { success: true, message: response?.message, result: response?.result }
+}
+
+export const assignPermission = async (userId, permissionId) => {
+    const path = Constants.ApiPaths.AssignPermission.replace(":userId", userId).replace(":permissionId", permissionId)
+    const response = await put(path, null, true)
+    if (!response?.success) {
+        return failedResponse(response)
+    }
+    return { success: true, message: response?.message, result: response?.result }
+}
+
+export const unAssignPermission = async (userId, permissionId) => {
+    const path = Constants.ApiPaths.RemovePermission.replace(":userId", userId).replace(":permissionId", permissionId)
+    const response = await deleteRequest(path, true)
+    if (!response?.success) {
+        return failedResponse(response)
+    }
+    return { success: true, message: response?.message, result: response?.result }
+}
+
+export const assignRole = async (userId, roleId) => {
+    const path = Constants.ApiPaths.AssignRole.replace(":userId", userId).replace(":roleId", roleId)
+    const response = await put(path, null, true)
+    if (!response?.success) {
+        return failedResponse(response)
+    }
+    return { success: true, message: response?.message, result: response?.result }
+}
+
+export const unAssignRole = async (userId, roleId) => {
+    const path = Constants.ApiPaths.RemoveRole.replace(":userId", userId).replace(":roleId", roleId)
+    const response = await deleteRequest(path, true)
+    if (!response?.success) {
+        return failedResponse(response)
+    }
+    return { success: true, message: response?.message, result: response?.result }
+}
+
+export const getUserPermissions = async (userId) => {
+    const path = Constants.ApiPaths.GetUserPermissions.replace(":userId", userId)
+    const response = await get(path, true)
+    if (!response?.success) {
+        return failedResponse(response)
+    }
+    return response?.result ?? []
+}
+
+export const getUserRoles = async (userId) => {
+    const path = Constants.ApiPaths.GetUserRoles.replace(":userId", userId)
+    const response = await get(path, true)
+    if (!response?.success) {
+        return failedResponse(response)
+    }
+    return response?.result ?? []
 }

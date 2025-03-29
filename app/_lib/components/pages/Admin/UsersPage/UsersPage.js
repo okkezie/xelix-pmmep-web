@@ -17,7 +17,7 @@ export default function UsersPage({users, roles, permissions, userTypes, mdas}) 
                     Create New User
                 </Button>
             </div>
-            <UsersTable users={users} userTypes={userTypes} mdas={mdas} />
+            <UsersTable users={users} userTypes={userTypes} mdas={mdas} roles={roles} permissions={permissions} />
         </Card>
         <Modal
             isOpen={isOpen}

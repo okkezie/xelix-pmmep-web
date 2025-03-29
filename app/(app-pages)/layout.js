@@ -4,6 +4,7 @@ import PageLoader from "@/components/atoms/PageLoader/PageLoader"
 import { ThemeProvider } from "@/contexts/ThemeContext"
 import MainPageLayout from "@/components/templates/MainPageLayout/MainPageLayout"
 import { AuthProvider } from "@/contexts/AuthContext"
+import { ToastContainer } from 'react-toastify';
 import 'react-date-picker/dist/DatePicker.css'
 import 'react-calendar/dist/Calendar.css'
 
@@ -24,7 +25,8 @@ export default function RootLayout({ children }) {
           <AuthProvider>
             <PageLoader />
             <MainPageLayout>
-              {children}
+              { children }
+              <ToastContainer />
             </MainPageLayout>
           </AuthProvider>
         </ThemeProvider>

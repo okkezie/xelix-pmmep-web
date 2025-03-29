@@ -52,9 +52,18 @@ export class Constants {
         SignIn: "/api/auth/login",
         RefreshAccessToken: "/api/auth/refresh-access-token",
         ForgotPassword: "/api/auth/forgot-password",
+
         Permissions: "/api/admin/permissions",
+        AssignPermission: "/api/admin/users/:userId/permission/:permissionId",
+        RemovePermission: "/api/admin/users/:userId/permission/:permissionId",
+        GetUserPermissions: "/api/admin/permissions/:userId",
+
         Roles: "/api/admin/roles",
+        GetUserRoles: "/api/admin/roles/:userId",
         RoleAudiences: "/api/utils/role-audiences",
+        AssignRole: "/api/admin/users/:userId/role/:roleId",
+        RemoveRole: "/api/admin/users/:userId/role/:roleId",
+
         UserTypes: "/api/utils/user-types",
         Contractor: "/api/admin/contractors",
         MDAs: "/api/admin/mdas",

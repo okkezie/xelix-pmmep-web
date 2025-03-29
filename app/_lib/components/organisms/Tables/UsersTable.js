@@ -9,8 +9,13 @@ import Dropdown from "@/components/molecules/Dropdown/Dropdown"
 import NewUserForm from "@/components/organisms/NewUserForm/NewUserForm"
 import { Modal } from "@/components/templates/Modal/Modal"
 import Confirm from "@/components/organisms/Confirm/Confirm"
+import { deleteUser } from "@/actions/userActions"
+import Card from "@/components/organisms/Card/Card"
+import UserDetails from "@/components/pages/Admin/UsersPage/UserDetails"
+import UserPermissions from "@/components/pages/Admin/UsersPage/UserPermissions"
+import UserRoles from "@/components/pages/Admin/UsersPage/UserRoles"
 
-export default function UsersTable({ users, userTypes, mdas }) {
+export default function UsersTable({ users, userTypes, mdas, roles, permissions }) {
 
     const tableHeader = ['User', 'Type', 'Roles', 'Status', 'Actions']
     const tableBody = []
@@ -20,9 +25,10 @@ export default function UsersTable({ users, userTypes, mdas }) {
             user.userType,
             <UserRolesBadges user={user} key={user?.id+'2'} />,
             <UserStatusBadge user={user} key={user?.id+'3'} />, 
-            <UserActions user={user} key={user?.id+'4'} userTypes={userTypes} mdas={mdas} />
+            <UserActions user={user} key={user?.id+'4'} userTypes={userTypes} mdas={mdas} roles={roles} permissions={permissions} />
         ])
     })
+
     const tableName = 'Users'
     
     return (
@@ -88,17 +94,20 @@ const UserStatusBadge = ({user}) => {
     )
 }
 
-const UserActions = ({user, userTypes, mdas}) => {
+const UserActions = ({user, userTypes, mdas, roles, permissions}) => {
     const [showViewModal, setShowViewModal] = useState(false)
     const [showEditModal, setShowEditModal] = useState(false)
     const [showDeleteModal, setShowDeleteModal] = useState(false)
+    const [showPermissionsModal, setShowPermissionsModal] = useState(false)
+    const [showRolesModal, setShowRolesModal] = useState(false)
     const { isAuthorized, user: authUser } = useAuthContext()
 
     const getDropDownItems = () => {
-        let canEdit, canView, canDelete
-        canEdit = isAuthorized(Constants.Authorizations.Users.Create)
-        canDelete = isAuthorized(Constants.Authorizations.Users.Delete)
-        canView = isAuthorized(Constants.Authorizations.Users.List)
+        const canEdit = isAuthorized(Constants.Authorizations.Users.Create)
+        const canDelete = isAuthorized(Constants.Authorizations.Users.Delete)
+        const canView = isAuthorized(Constants.Authorizations.Users.List)
+        const canAssignPermissions = isAuthorized(Constants.Authorizations.Users.AssignPermissions)
+        const canAssignRoles = isAuthorized(Constants.Authorizations.Users.AssignRoles)
 
         const items = []
         if (canView) {
@@ -120,6 +129,20 @@ const UserActions = ({user, userTypes, mdas}) => {
                 label: 'Delete',
                 icon: <></>,
                 onClick: () => setShowDeleteModal(true)
+            })
+        }
+        if (canAssignPermissions && user?.id !== authUser?.getId()) {
+            items.push({
+                label: 'Permissions',
+                icon: <></>,
+                onClick: () => setShowPermissionsModal(true)
+            })
+        }
+        if (canAssignRoles && user?.id !== authUser?.getId()) {
+            items.push({
+                label: 'Roles',
+                icon: <></>,
+                onClick: () => setShowRolesModal(true)
             })
         }
         return items
@@ -150,7 +173,27 @@ const UserActions = ({user, userTypes, mdas}) => {
                 onClose={() => setShowViewModal(false)}
                 className="max-w-[700px] m-4"
             >
-                <h2>User details!</h2>
+                <Card title={user?.name} description={`Details for ${user?.name}`}>
+                    <UserDetails user={user} />
+                </Card>
+            </Modal>
+            <Modal
+                isOpen={showPermissionsModal}
+                onClose={() => setShowPermissionsModal(false)}
+                className="max-w-[800px] m-4"
+            >
+                <Card title={user?.name} description={`Permissions for ${user?.name}`}>
+                    <UserPermissions user={user} availablePermissions={permissions} />
+                </Card>
+            </Modal>
+            <Modal
+                isOpen={showRolesModal}
+                onClose={() => setShowRolesModal(false)}
+                className="max-w-[800px] m-4"
+            >
+                <Card title={user?.name} description={`Roles for ${user?.name}`}>
+                    <UserRoles user={user} availableRoles={roles} />
+                </Card>
             </Modal>
         </>
     )

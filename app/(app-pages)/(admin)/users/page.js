@@ -47,7 +47,8 @@ export default function Users() {
   }, [])
 
   return (
-    loading ? <UsersLoading /> :
-      <UsersPage users={users} roles={roles} permissions={permissions} userTypes={userTypes} mdas={mdas} />
+    loading ? 
+    <UsersLoading /> :
+    <UsersPage users={users} roles={roles} permissions={permissions} userTypes={userTypes} mdas={mdas} />
   )
 }

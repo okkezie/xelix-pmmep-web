@@ -136,7 +136,7 @@ export default function NewUserForm( { userTypes, mdas, close, user } ) {
                     <Label
                         htmlFor="mda"
                     >
-                        User Type
+                        User MDA
                     </Label>
                     <Select
                         id="mda"
