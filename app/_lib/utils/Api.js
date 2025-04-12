@@ -94,40 +94,37 @@ const errorResponse = (error) => {
 
 const handleErrorResponse = async (response, request = null) => {
     if (response.status === 401 && response.headers?.get('www-authenticate')?.includes('Jwt expired')) {
-        console.log('Token expired...................')
-        const remember = await rememberMe()
-        if (remember) {
-            console.log("Remember me set. Refreshing token...")
-            return await refreshAccessToken(request)
-        }
-        else {
-            console.log("Logging out...")
-            redirect(Constants.Paths.Logout)
-        }        
+        return handleTokenExpired(request)
     }
-
-    let responseTxt = await response.text()
-    let responseObj;
-    if (responseTxt) {
-        try {
-            responseObj = JSON.parse(responseTxt)
-        }
-        catch (error){
-            console.log(error)
-            console.log("Response text: ", responseTxt)
-        }
-    }
-    else if (response.status === 403) {
+    let responseObj, responseText
+    if (response.status === 403) {
         responseObj = {
             error: "Unauthorized",
             code: response.status
         }
     }
+    else {
+        try {
+            responseObj = await response.json()
+            responseText = await response.text()
+        } catch {
+            console.log("Invalid response body")
+        }
+        if (!responseObj && responseText) {
+            try {
+                responseObj = JSON.parse(responseText)
+            }
+            catch (error){
+                console.log(error)
+                console.log("Response text: ", responseText)
+            }
+        }
+    }
 
     return {
         success: false,
-        message: responseObj ? responseObj?.error ?? `${responseObj?.title} - ${responseObj?.detail}` : responseTxt,
-        code: responseObj?.code ?? responseObj?.status ?? response.sttus,
+        message: responseObj ? (responseObj?.message ?? responseObj?.error) ?? `${responseObj?.title} - ${responseObj?.detail}` : responseText,
+        code: responseObj?.code ?? responseObj?.status ?? response.status,
         errors: responseObj?.errors,
         result: responseObj?.result
     }
@@ -155,5 +152,20 @@ const refreshAccessToken = async (request) => {
             return(Constants.Paths.Dashboard)
         }
     }
-    redirect(Constants.Paths.Logout)
+    await logout()
+    return redirect(Constants.Paths.SignIn)
+}
+
+const handleTokenExpired = async (request) => {
+    console.log('Token expired...................')
+    const remember = await rememberMe()
+    if (remember) {
+        console.log("Remember me set. Refreshing token...")
+        return await refreshAccessToken(request)
+    }
+    else {
+        console.log("Logging out...")
+        await logout()
+        return redirect(Constants.Paths.SignIn)
+    }
 }

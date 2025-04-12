@@ -1,6 +1,6 @@
 "use server"
 import { Constants } from "@/utils/Constants"
-import { deleteRequest, get, post, put } from "@/utils/Api"
+import { deleteRequest, get, patch, post, put } from "@/utils/Api"
 import { failedResponse, validate } from "@/actions/actionUtils"
 import { isNullOrEmptyString } from "@/utils/helpers"
 
@@ -11,6 +11,7 @@ const fields = [
     'phone',
     'gender',
     'mda',
+    'contractor',
     'userType'
 ]
 
@@ -19,7 +20,6 @@ const validated = [
     'email',
     'phone',
     'gender',
-    'mda',
     'userType'
 ]
 
@@ -38,8 +38,9 @@ export const saveUser = async (_, formData) => {
         return state
     }
     // end validate
-    data.mda = JSON.parse(data.mda)
-
+    if (data.mda) data.mda = JSON.parse(data.mda)
+    if (data.contractor) data.contractor = JSON.parse(data.contractor)
+    
     let response
     if (isNullOrEmptyString(data.id)) {
         response = await post(Constants.ApiPaths.Users, data, true)
@@ -63,7 +64,7 @@ export const deleteUser = async (id) => {
 }
 
 export const assignPermission = async (userId, permissionId) => {
-    const path = Constants.ApiPaths.AssignPermission.replace(":userId", userId).replace(":permissionId", permissionId)
+    const path = Constants.ApiPaths.AssignPermissionToUser.replace(":userId", userId).replace(":permissionId", permissionId)
     const response = await put(path, null, true)
     if (!response?.success) {
         return failedResponse(response)
@@ -72,7 +73,7 @@ export const assignPermission = async (userId, permissionId) => {
 }
 
 export const unAssignPermission = async (userId, permissionId) => {
-    const path = Constants.ApiPaths.RemovePermission.replace(":userId", userId).replace(":permissionId", permissionId)
+    const path = Constants.ApiPaths.RemovePermissionFromUser.replace(":userId", userId).replace(":permissionId", permissionId)
     const response = await deleteRequest(path, true)
     if (!response?.success) {
         return failedResponse(response)
@@ -114,4 +115,31 @@ export const getUserRoles = async (userId) => {
         return failedResponse(response)
     }
     return response?.result ?? []
+}
+
+export const approveUser = async (userId) => {
+    const path = Constants.ApiPaths.ApproveUser.replace(":userId", userId)
+    const response = await patch(path, {}, true)
+    if (!response?.success) {
+        return failedResponse(response)
+    }
+    return { success: true, message: response?.message, result: response?.result }
+}
+
+export const rejectUser = async (userId) => {
+    const path = Constants.ApiPaths.RejectUser.replace(":userId", userId)
+    const response = await patch(path, {}, true)
+    if (!response?.success) {
+        return failedResponse(response)
+    }
+    return { success: true, message: response?.message, result: response?.result }
+}
+
+export const disableUser = async (userId) => {
+    const path = Constants.ApiPaths.DisableUser.replace(":userId", userId)
+    const response = await patch(path, {}, true)
+    if (!response?.success) {
+        return failedResponse(response)
+    }
+    return { success: true, message: response?.message, result: response?.result }
 }

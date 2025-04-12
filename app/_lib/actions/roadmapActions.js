@@ -26,18 +26,9 @@ const validated = [
 export const createRoadmap = async (prevState, formData) => {
     const data = {}
     const action = formData.get('action')
-
-    console.log({prevState})
-    console.log({formData})
-    console.log({action})
-
     const isSubmit = action === Constants.FormAction.Submit
     const isSave = action === Constants.FormAction.Save
     const id = formData.get('id')
-
-    console.log({id})
-    console.log({isSave})
-    console.log({isSubmit})
 
     for(const pair of formData.entries()) {
         if(validated.includes(pair[0])) {
@@ -72,8 +63,7 @@ export const createRoadmap = async (prevState, formData) => {
         data['isDraft'] = false
     }
 
-    console.log({data})
-
+    data.mda = JSON.parse(data.mda)
     let response
     if (id) {
         response = await put(`${Constants.ApiPaths.Roadmaps}/${id}`, data, true)

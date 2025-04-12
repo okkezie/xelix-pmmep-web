@@ -1,8 +1,7 @@
-import { logout } from "@/actions/actionUtils";
-import { Constants } from "@/utils/Constants";
-import { redirect } from "next/navigation";
+import { logout } from "@/actions/actionUtils"
+import { Constants } from "@/utils/Constants"
 
 export default async function Logout() {
     await logout()
-    redirect(Constants.Paths.SignIn)
+    window?.location?.href = Constants.Paths.SignIn
 }

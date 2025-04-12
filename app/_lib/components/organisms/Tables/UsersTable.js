@@ -1,24 +1,29 @@
+
+import { 
+    getDefaultUserAvatar, 
+    isNullOrEmptyString, 
+    UserRolesBadges
+} from "@/utils/helpers"
+import { useState } from "react"
+import { Constants } from "@/utils/Constants"
+import { disableUser } from "@/actions/userActions"
+import { useAuthContext } from "@/contexts/AuthContext"
+import { Modal } from "@/components/templates/Modal/Modal"
 import Image from "next/image"
 import Badge from "@/components/atoms/Badge/Badge"
-import { getDefaultUserAvatar, isNullOrEmptyString } from "@/utils/helpers"
-import SimpleTable from "@/components/organisms/Table/SimpleTable"
-import { Constants } from "@/utils/Constants"
-import { useAuthContext } from "@/contexts/AuthContext"
-import { useState } from "react"
-import Dropdown from "@/components/molecules/Dropdown/Dropdown"
-import UserForm from "@/components/organisms/UserForm/UserForm"
-import { Modal } from "@/components/templates/Modal/Modal"
-import Confirm from "@/components/organisms/Confirm/Confirm"
-import { deleteUser } from "@/actions/userActions"
 import Card from "@/components/organisms/Card/Card"
+import Confirm from "@/components/organisms/Confirm/Confirm"
+import Dropdown from "@/components/molecules/Dropdown/Dropdown"
+import UserForm from "@/app/_lib/components/pages/Admin/UsersPage/UserForm"
+import SimpleTable from "@/components/organisms/Table/SimpleTable"
+import UserRoles from "@/components/pages/Admin/UsersPage/UserRoles"
 import UserDetails from "@/components/pages/Admin/UsersPage/UserDetails"
 import UserPermissions from "@/components/pages/Admin/UsersPage/UserPermissions"
-import UserRoles from "@/components/pages/Admin/UsersPage/UserRoles"
 
 export default function UsersTable({ users, userTypes, mdas, roles, permissions }) {
-
     const tableHeader = ['User', 'Type', 'Roles', 'Status', 'Actions']
     const tableBody = []
+
     users.map(user => {
         tableBody.push([
             <UserImageCell user={user} key={user?.id+'1'} />,
@@ -32,7 +37,7 @@ export default function UsersTable({ users, userTypes, mdas, roles, permissions 
     const tableName = 'Users'
     
     return (
-        <SimpleTable body={tableBody} headers={tableHeader} name={tableName}  />
+        <SimpleTable body={tableBody} headers={tableHeader} name={tableName} />
     )
 }
 
@@ -59,37 +64,20 @@ const UserImageCell = ({user}) => {
     )
 }
 
-const UserRolesBadges = ({user}) => {
-    return (
-        <div className="flex -space-x-2">
-            {user?.roles?.map((role) => (
-                <Badge
-                    key={role}
-                    size="sm"
-                    className="mr2"
-                >
-                    {role}
-                </Badge>
-            ))}
-        </div>
-    )
-}
-
 const UserStatusBadge = ({user}) => {
     const getUserStatusColor = (status) => {
-        if (status === Constants.Status.ACTIVE) return "success"
+        if (status === Constants.Status.ACTIVE || status === Constants.Status.APPROVED) return "success"
         if (status === Constants.Status.PENDING) return "warning"
         return "error"
     }
-
     return (
         <Badge
             size="sm"
             color={
-                getUserStatusColor(user?.status)
+                getUserStatusColor(user?.approvalStatus)
             }
         >
-            {user?.status}
+            {user?.approvalStatus}
         </Badge>
     )
 }
@@ -100,7 +88,7 @@ const UserActions = ({user, userTypes, mdas, roles, permissions}) => {
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [showPermissionsModal, setShowPermissionsModal] = useState(false)
     const [showRolesModal, setShowRolesModal] = useState(false)
-    const { isAuthorized, user: authUser } = useAuthContext()
+    const {isAuthorized, user: authUser} = useAuthContext()
 
     const getDropDownItems = () => {
         const canEdit = isAuthorized(Constants.Authorizations.Users.Create)
@@ -108,8 +96,8 @@ const UserActions = ({user, userTypes, mdas, roles, permissions}) => {
         const canView = isAuthorized(Constants.Authorizations.Users.List)
         const canAssignPermissions = isAuthorized(Constants.Authorizations.Users.AssignPermissions)
         const canAssignRoles = isAuthorized(Constants.Authorizations.Users.AssignRoles)
-
         const items = []
+
         if (canView) {
             items.push({
                 label: 'View',
@@ -126,7 +114,7 @@ const UserActions = ({user, userTypes, mdas, roles, permissions}) => {
         }
         if (canDelete && user?.id !== authUser?.getId()) {
             items.push({
-                label: 'Delete',
+                label: 'Disable',
                 icon: <></>,
                 onClick: () => setShowDeleteModal(true)
             })
@@ -147,6 +135,7 @@ const UserActions = ({user, userTypes, mdas, roles, permissions}) => {
         }
         return items
     }
+
     return (
         <>
             <Dropdown label='Actions' items={getDropDownItems()} />
@@ -158,16 +147,17 @@ const UserActions = ({user, userTypes, mdas, roles, permissions}) => {
                 <UserForm userTypes={userTypes} mdas={mdas} close={() => setShowEditModal(false)} user={user} />
             </Modal>
             <Confirm 
-                action={() => {
-                    deleteUser(user?.id)
+                action={async () => {
                     setShowDeleteModal(false)
+                    return await disableUser(user?.id)
                 }}
                 entity={'User'}
-                actionType={Constants.ConfirmActionType.Delete}
+                actionType={Constants.ConfirmActionType.Disable}
                 close={() => setShowDeleteModal(false)}
                 show={showDeleteModal}
                 redirect={Constants.Paths.Users}
             />
+            
             <Modal
                 isOpen={showViewModal}
                 onClose={() => setShowViewModal(false)}

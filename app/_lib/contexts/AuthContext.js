@@ -12,17 +12,21 @@ export const AuthProvider = ({ children }) => {
     const [permissions, setPermissions] = useState([])
     const [userType, setUserType] = useState()
     const [roles, setRoles] = useState([])
-    const [userMda, setUserMda] = useState()
+    const [userMda, setUserMda] = useState({})
+    const [userContractor, setUserContractor] = useState({})
+    const [userOffice, setUserOffice] = useState('')
 
     useEffect(() => {
         const userCookie = getCookie(Constants.Cookies.USER)
-        let utype, uMda = ''
+        let utype, uMda = '', uContractor = {}, uOffice = ''
         if (userCookie) {
             const userObject = new User(userCookie, true)
             setUser(userObject)
             setRoles(userObject.getRoles())
             utype = userObject.getUserType()
             uMda = userObject.getMda()
+            uContractor = userObject.getContractor()
+            uOffice = userObject.getOffice()
         }
         const isAuthenticated = getCookie(Constants.Cookies.IS_AUTHENTICATED)
         if (isAuthenticated) {
@@ -39,6 +43,13 @@ export const AuthProvider = ({ children }) => {
             const dmda = JSON.parse(decoded?.mda ?? "{}")
             if (dmda?.id === uMda?.id) {
                 setUserMda(uMda)
+            }
+            const dcontractor = JSON.parse(decoded?.contractor ?? "{}")
+            if (dcontractor?.id === uContractor?.id) {
+                setUserContractor(uContractor)
+            }
+            if (decoded?.office === uOffice) {
+                setUserOffice(uOffice)
             }
         }
     }, [])
@@ -70,8 +81,10 @@ export const AuthProvider = ({ children }) => {
         roles,
         userType,
         userMda,
+        userContractor,
+        userOffice,
         isAuthorized
-    }), [user, isAuthenticated, permissions, roles, isAuthorized, userType, userMda])
+    }), [user, isAuthenticated, permissions, roles, isAuthorized, userType, userMda, userContractor, userOffice])
 
     return (
         <AuthContext.Provider value={values}>

@@ -13,6 +13,7 @@ export default function Users() {
   const [permissions, setPermissions] = useState([])
   const [userTypes, setUserTypes] = useState([])
   const [mdas, setMdas] = useState([]);
+  const [contractors, setContractors] = useState([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,19 +22,23 @@ export default function Users() {
       const permissionsPromise = get(Constants.ApiPaths.Permissions, true)
       const userTypesPromise = get(Constants.ApiPaths.UserTypes, true)
       const mdasPromise = get(Constants.ApiPaths.MDAs, true)
+      const contractorsPromise = get(Constants.ApiPaths.Contractors, true)
+      
       const [
         usersResult, 
         rolesResult, 
         permissionsResult, 
         userTypesResult, 
-        mdasResult
+        mdasResult,
+        contractorsResult
       ] = await Promise.allSettled(
         [
           usersPromise, 
           rolesPromise, 
           permissionsPromise, 
           userTypesPromise, 
-          mdasPromise
+          mdasPromise,
+          contractorsPromise
         ]
       )
       setUsers(getPromiseResult(usersResult))
@@ -41,6 +46,7 @@ export default function Users() {
       setPermissions(getPromiseResult(permissionsResult))
       setUserTypes(getPromiseResult(userTypesResult))
       setMdas(getPromiseResult(mdasResult))
+      setContractors(getPromiseResult(contractorsResult))
       setLoading(false)
     }
     fetchData()
@@ -49,6 +55,6 @@ export default function Users() {
   return (
     loading ? 
     <UsersLoading /> :
-    <UsersPage users={users} roles={roles} permissions={permissions} userTypes={userTypes} mdas={mdas} />
+    <UsersPage users={users} roles={roles} permissions={permissions} userTypes={userTypes} mdas={mdas} contractors={contractors} />
   )
 }

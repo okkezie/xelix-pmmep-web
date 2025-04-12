@@ -58,6 +58,7 @@ export const logout = async () => {
     cookieStore.delete(Constants.Cookies.USER_ID)
     cookieStore.delete(Constants.Cookies.DO_TOKEN_REFRESH)
     cookieStore.delete(Constants.Cookies.REFRESH_TOKEN)
+    cookieStore.delete(Constants.Cookies.REFRESH_TOKEN_EXPIRY)
     cookieStore.delete(Constants.Cookies.CLIENT_IP_ADDRESS)
     cookieStore.delete(Constants.Cookies.REMEMBER_ME)
     cookieStore.delete(Constants.Cookies.IS_AUTHENTICATED)

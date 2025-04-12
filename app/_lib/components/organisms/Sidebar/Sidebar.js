@@ -2,8 +2,18 @@ import SideBarLogo from "@/components/molecules/Sidebar/SidebarLogo/SidebarLogo"
 import links from '@/data/sidebar'
 import SidebarLink from "@/components/molecules/Sidebar/SidebarLink/SidebarLink"
 import clsx from "clsx"
+import { useAuthContext } from "@/contexts/AuthContext"
+import { Constants } from "@/utils/Constants"
 
 export default function SideNavBar({ sidebarToggle }) {
+    const { userType } = useAuthContext()
+
+    const showMenuItem = (menuItem) => {
+        if (menuItem?.hide?.includes(userType)) {
+            return false
+        }
+        return menuItem?.show?.includes(userType) || menuItem?.show?.includes(Constants.UserTypes.ALL);
+    }
 
     return (
         <aside
@@ -17,7 +27,7 @@ export default function SideNavBar({ sidebarToggle }) {
             <div className="flex flex-col duration-300 ease-linear overflow-hidden hover:overflow-y-auto no-scrollbar">
                 <nav>
                     { links.map( section => (
-                        section.links.length > 0 && (
+                        section.links.length > 0 && showMenuItem(section) && (
                         <div key={section.title}>
                             <h3 className="mb-4 text-xs uppercase leading-[20px] text-gray-400">
                                 <span className={clsx(
@@ -39,9 +49,9 @@ export default function SideNavBar({ sidebarToggle }) {
                             </h3>
                             <ul className="flex flex-col gap-4 mb-6">
                                 { section.links.map( link => 
-                                    <SidebarLink link={link} key={link.title} sidebarToggle={sidebarToggle} />
+                                    showMenuItem(link) && <SidebarLink link={link} key={link.title} sidebarToggle={sidebarToggle} />
                                 )}
-                            </ul>
+                            </ul> 
                         </div>
                     )
                     ))}

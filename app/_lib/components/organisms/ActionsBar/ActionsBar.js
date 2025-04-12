@@ -2,12 +2,11 @@
 import Button from "@/components/atoms/Form/Button/Button"
 import ButtonLink from "@/components/atoms/Form/ButtonLink/ButtonLink"
 import Card from "@/components/organisms/Card/Card"
-import { downloadPage, printPage } from "@/utils/helpers"
+import { printPage } from "@/utils/helpers"
 import Pencil from "@/svgs/pencil"
 import Trash from "@/svgs/trash"
 import Check from "@/svgs/check-line"
 import Close from "@/svgs/close-line"
-import Download from "@/svgs/download"
 import File from "@/svgs/file"
 
 export default function ActionsBar({
@@ -20,7 +19,8 @@ export default function ActionsBar({
     isApproved,
     canEdit,
     canApprove,
-    canDelete
+    canDelete,
+    isAuthor
 }) {
 
     return (
@@ -38,7 +38,7 @@ export default function ActionsBar({
                         </ButtonLink>
                     </div>
                 }
-                { (canDelete && !isApproved && !isRejected && isDraft) &&
+                { (canDelete && !isApproved && !isRejected && isDraft && isAuthor) &&
                     <div>
                         <Button size="sm" variant="danger" onClick={openDelete}>
                             <Trash />Delete
@@ -59,11 +59,6 @@ export default function ActionsBar({
                     </Button>
                 </div>
                 </>}
-                {/* <div>
-                    <Button size="sm" variant="outline_primary" onClick={downloadPage}>
-                        <Download /> Download
-                    </Button>
-                </div> */}
                 <div>
                     <Button size="sm" variant="outline_primary" onClick={printPage}>
                         <File /> Print

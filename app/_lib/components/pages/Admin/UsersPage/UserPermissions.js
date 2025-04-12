@@ -17,7 +17,7 @@ export default function UserPermissions({user, availablePermissions}) {
     useEffect(() => {
         const fetchUserPermissions = async () => {
             const userPermissions = await getUserPermissions(user?.id) 
-            setPermissions(userPermissions)
+            setPermissions(userPermissions ?? [])
             setLoading(false)
         }
         fetchUserPermissions()
@@ -53,7 +53,7 @@ export default function UserPermissions({user, availablePermissions}) {
                 <h4 className="text-lg font-bold block border-b border-gray-200 pb-2">Assigned Permissions</h4>
                 <div className="max-h-[400px] overflow-y-auto overflow-x-hidden flex flex-wrap gap-2">
                     { loading ? <Spinner />
-                    : permissions.map((permission, index) =>
+                    : permissions?.map((permission, index) =>
                         <Tooltip title={permission?.description} key={permission?.id} position={getToolTipPosition(index)}>
                             <span 
                                 className="flex flex-row w-fit items-center gap-2 p-2 border border-gray-200 rounded-md" 
@@ -70,7 +70,7 @@ export default function UserPermissions({user, availablePermissions}) {
                 <h4 className="text-lg font-bold block border-b border-gray-200 pb-2">Available Permissions</h4>
                 <div className=" max-h-[400px] overflow-y-auto flex flex-wrap gap-2">
                 { loading ? <Spinner /> 
-                : permissionsToAssign.map((permission) =>
+                : permissionsToAssign?.map((permission) =>
                     isAssigned(permission) ? null
                     : 
                     <Tooltip title={permission?.description} position="bottom" key={permission?.id}>

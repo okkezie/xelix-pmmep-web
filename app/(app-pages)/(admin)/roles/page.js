@@ -28,8 +28,8 @@ export default function RolesPage() {
   }, [])
 
   return (
-    loading ? 
-    <RolesLoading /> :
-    <Roles roles={roles} permissions={permissions} roleAudiences={roleAudiences} />
+    loading
+    ? <RolesLoading />
+    : <Roles roles={roles} permissions={permissions} roleAudiences={roleAudiences} />
   )
 }

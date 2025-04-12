@@ -17,7 +17,7 @@ export default function UserRoles({user, availableRoles}) {
     useEffect(() => {
         const fetchUserRoles = async () => {
             const userRoles = await getUserRoles(user?.id) 
-            setRoles(userRoles)
+            setRoles(userRoles ?? [])
             setLoading(false)
         }
         fetchUserRoles()
@@ -53,7 +53,7 @@ export default function UserRoles({user, availableRoles}) {
                 <h4 className="text-lg font-bold block border-b border-gray-200 pb-2">Assigned Roles</h4>
                 <div className="max-h-[400px] overflow-y-auto overflow-x-hidden flex flex-wrap gap-2">
                     { loading ? <Spinner />
-                    : roles.map((role, index) =>
+                    : roles?.map((role, index) =>
                         <Tooltip title={role?.description} key={role?.id} position={getToolTipPosition(index)}>
                             <span 
                                 className="flex flex-row w-fit items-center gap-2 p-2 border border-gray-200 rounded-md" 
@@ -70,7 +70,7 @@ export default function UserRoles({user, availableRoles}) {
                 <h4 className="text-lg font-bold block border-b border-gray-200 pb-2">Available Roles</h4>
                 <div className=" max-h-[400px] overflow-y-auto flex flex-wrap gap-2">
                 { loading ? <Spinner /> 
-                : rolesToAssign.map((role) =>
+                : rolesToAssign?.map((role) =>
                     isAssigned(role) ? null
                     : 
                     <Tooltip title={role?.description} position="bottom" key={role?.id}>

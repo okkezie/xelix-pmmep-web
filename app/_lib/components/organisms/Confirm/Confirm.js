@@ -53,6 +53,7 @@ export default function Confirm({
             case Constants.ConfirmActionType.Reject:
                 return "outline_danger"
             case Constants.ConfirmActionType.Delete:
+            case Constants.ConfirmActionType.Disable:
                 return "danger"
             default:
                 return "outline"

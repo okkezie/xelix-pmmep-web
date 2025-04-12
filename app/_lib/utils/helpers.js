@@ -120,3 +120,20 @@ export const formatBytes = (bytes, decimals = 2) => {
 
     return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
 }
+
+export const UserRolesBadges = ({user}) => {
+    return (
+        <div className="flex -space-x-2">
+            {user?.roles?.map((role) => (
+                <Badge
+                    key={role}
+                    size="sm"
+                    className="mr2"
+                    color="info"
+                >
+                    {role}
+                </Badge>
+            ))}
+        </div>
+    )
+}

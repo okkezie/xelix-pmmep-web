@@ -1,4 +1,3 @@
-
 export class Constants {
     
     static Slug = ":slug"
@@ -40,7 +39,11 @@ export class Constants {
         Support: "/support",
         Account: "/account",
         Contractors: '/contractors',
-        CreateContractor: '/create-contractor'
+        ContractorCreate: '/contractors/create',
+        ContractorEdit: '/contractors/edit/:slug',
+        ContractorView: '/contractors/view/:slug',
+
+        NotFound: '/404'
     }
 
     static UnProtectedPaths = [
@@ -53,10 +56,14 @@ export class Constants {
         RefreshAccessToken: "/api/auth/refresh-access-token",
         ForgotPassword: "/api/auth/forgot-password",
 
+        Users: "/api/admin/users",
         Permissions: "/api/admin/permissions",
         AssignPermissionToUser: "/api/admin/users/:userId/permission/:permissionId",
         RemovePermissionFromUser: "/api/admin/users/:userId/permission/:permissionId",
         GetUserPermissions: "/api/admin/permissions/:userId/user",
+        ApproveUser: "/api/admin/users/:userId/approve",
+        RejectUser: "/api/admin/users/:userId/reject",
+        DisableUser: "/api/admin/users/:userId/disable",
 
         Roles: "/api/admin/roles",
         GetUserRoles: "/api/admin/roles/:userId",
@@ -70,10 +77,16 @@ export class Constants {
         RemoveSinglePermissionFromRole: "/api/admin/roles/:roleId/permission/:permissionId",
 
         UserTypes: "/api/utils/user-types",
-        Contractor: "/api/admin/contractors",
-        MDAs: "/api/admin/mdas",
-        Users: "/api/admin/users",
 
+        Contractors: "/api/admin/contractors",
+        ContractorById: "/api/admin/contractors/:contractorId",
+        ApproveContractor: "/api/admin/contractors/:contractorId/approve",
+        RejectContractor: "/api/admin/contractors/:contractorId/reject",
+        DisableContractor: "/api/admin/contractors/:contractorId/disable",
+
+        MDAs: "/api/admin/mdas",
+        MDAById: "/api/admin/mdas/:mdaId",
+        
         Projects: "/api/projects",
         ProjectsApprove: "/api/projects/approve/:slug",
         ProjectsReject: "/api/projects/reject/:slug",
@@ -213,7 +226,8 @@ export class Constants {
     static ConfirmActionType = {
         Approve: 'approve',
         Reject: 'reject',
-        Delete: 'delete'
+        Delete: 'delete',
+        Disable: 'disable'
     }
 
     static FormAction = {
@@ -229,9 +243,20 @@ export class Constants {
 
     static Status = {
         ACTIVE: "ACTIVE",
-        PENDING: "PENDING"
+        PENDING: "PENDING",
+        APPROVED: 'APPROVED'
     }
-    
+
+    static UserTypes = {
+        MDA_USER: 'MDA_USER',
+        MDA_ADMIN: 'MDA_ADMIN',
+        PROJECT_USER: 'PROJECT_USER',
+        PROJECT_ADMIN: 'PROJECT_ADMIN',
+        CONTRACTOR_USER: 'CONTRACTOR_USER',
+        CONTRACTOR_ADMIN: 'CONTRACTOR_ADMIN',
+        GOVERNOR: 'GOVERNOR',
+        ALL: 'ALL'
+    }
 }
 
 

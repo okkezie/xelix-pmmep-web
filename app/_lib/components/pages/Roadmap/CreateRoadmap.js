@@ -10,13 +10,14 @@ import Button from "@/components/atoms/Form/Button/Button"
 import { createRoadmap } from '@/actions/roadmapActions'
 import UnorderedList from "@/components/molecules/List/UnorderedList"
 import { Constants } from "@/utils/Constants"
+import { useAuthContext } from "@/contexts/AuthContext"
 
 export default function CreateRoadmap({roadmap}) {
     const [state, formAction, pending] = useActionState(createRoadmap, { errors: {}})
     const [submitAction, setSubmitAction] = useState(Constants.FormAction.Save)
     const roadmapRef = useRef(null)
+    const { userMda } = useAuthContext()
     const currentPeriod = RoadmapPeriods.current
-    const mda = "Default MDA"
     const goBack = useGoBack()
 
     if (roadmap && !state?.prev ) {
@@ -64,7 +65,7 @@ export default function CreateRoadmap({roadmap}) {
                                 <input type="hidden" value={`${currentPeriod.type}`} name="periodType" />
                                 <input type="hidden" value={`${currentPeriod.start}`} name="startDate" />
                                 <input type="hidden" value={`${currentPeriod.end}`} name="endDate" />
-                                <input type='hidden' value={mda} name='mda' />
+                                <input type='hidden' value={JSON.stringify(userMda)} name='mda' />
                                 <input type='hidden' value={submitAction} name='action' />
                                 {id && <input type="hidden" value={id} name="id" />}
                             </div>
@@ -160,7 +161,7 @@ export default function CreateRoadmap({roadmap}) {
                         </Card>
                     </div>
                     <div className='flex flex-col w-full gap-4'>
-                        <Card title={'Factors / Conditions'}>
+                        <Card title={'Factors'}>
                             <div className="">
                                 <Label
                                     htmlFor="assumptions"
@@ -219,7 +220,7 @@ export default function CreateRoadmap({roadmap}) {
                                 />
                             </div>
                         </Card>
-                        <Card title={'Hard Requirements'}>
+                        <Card title={'Requirements'}>
                             <div className="">
                                 <Label
                                     htmlFor="financialRequirements"

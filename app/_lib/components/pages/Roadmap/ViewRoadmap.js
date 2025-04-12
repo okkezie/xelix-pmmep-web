@@ -9,7 +9,7 @@ import Confirm from "@/components/organisms/Confirm/Confirm"
 import { approveRoadmap, deleteRoadMapAction, rejectRoadmap } from "@/actions/roadmapActions"
 
 export default function ViewRoadmap({ roadmap }) {
-    const { isAuthorized } = useAuthContext()
+    const { isAuthorized, user } = useAuthContext()
     const [openApprove, setOpenApprove] = useState(false)
     const [openReject, setOpenReject] = useState(false)
     const [openDelete, setOpenDelete] = useState(false)
@@ -17,6 +17,7 @@ export default function ViewRoadmap({ roadmap }) {
     const isApproved = roadmap?.approvalStatus === Constants.ApprovalStatus.APPROVED
     const isRejected = roadmap?.approvalStatus === Constants.ApprovalStatus.REJECTED
     const isDraft = roadmap?.isDraft
+    const isAuthor = roadmap?.createdBy === user?.id
     const id = roadmap?.id
 
     const canView = isAuthorized(Constants.Authorizations.Roadmaps.Read)
@@ -60,6 +61,7 @@ export default function ViewRoadmap({ roadmap }) {
             isApproved={isApproved}
             isRejected={isRejected}
             isDraft={isDraft}
+            isAuthor={isAuthor}
             editPath={Constants.Paths.RoadmapsEdit.replace(':slug', id)}
         />
         <div
@@ -75,7 +77,7 @@ export default function ViewRoadmap({ roadmap }) {
                     contentClass="flex flex-col md:flex-row items-end justify-between text-sm text-gray-500 dark:text-gray-400 sm:text-base p-2"
                 >
                     <div>
-                        <p className="flex flex-row gap-4"><b>Owner:</b> {roadmap?.mda}</p>
+                        <p className="flex flex-row gap-4"><b>Owner:</b> {roadmap?.mda?.name}</p>
                         <p className="flex flex-row gap-4"><b>Period:</b> {roadmap?.period}</p>
                         <p className="flex flex-row gap-3 items-end justify-start w-full">
                             <b>Start:</b> {parseDateToMonthYear(roadmap?.startDate)} 

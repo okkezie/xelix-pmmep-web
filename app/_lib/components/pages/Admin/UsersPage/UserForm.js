@@ -4,20 +4,27 @@ import Label from "@/components/atoms/Form/Label"
 import Input from "@/components/atoms/Form/Input/InputField"
 import Select from "@/components/atoms/Form/Select"
 import { genderOptions } from "@/data/genderOptions"
-import { useActionState } from "react"
+import { useActionState, useEffect, useState } from "react"
 import { saveUser } from "@/actions/userActions"
 import Alert from "@/components/molecules/Alert/Alert"
 
-export default function UserForm( { userTypes, mdas, close, user } ) {
+export default function UserForm( { userTypes, mdas, close, user, contractors } ) {
+    const [selectedUserType, setSelectedUserType] = useState(null)
+    const [isContractor, setIsContractor] = useState(false)
+    const [isProject, setIsProject] = useState(false)
+    const [isMda, setIsMda] = useState(true)
+    const [isGovernor, setIsGovernor] = useState(false)
+
     const title = user ? "Edit User" : "Create New User"
     const [state, formAction, pending] = useActionState(saveUser, {errors: {}})
-    console.log({state})
     if (state?.success) {
+        console.log({state})
         alert(state?.message)
         close()
     }
     if (user && !state?.prev) {
         state.prev = user
+        state.prev.mda = JSON.stringify(user?.mda ?? '{}')
     }
     const userTypeOptions = userTypes.map(ut => ({
         value: ut,
@@ -28,8 +35,40 @@ export default function UserForm( { userTypes, mdas, close, user } ) {
         value: JSON.stringify(mda),
         label: mda.name
     }))
+
+    const contractorOptions = contractors?.map?.(c => ({id: c.id, name: c.name}))?.map?.(contractor => ({
+        value: JSON.stringify(contractor),
+        label: contractor.name
+    }))
   
     const id = user?.id
+
+    useEffect(() => {
+        if (selectedUserType?.toLowerCase().includes("contractor")) {
+            setIsGovernor(false);
+            setIsMda(false)
+            setIsProject(false)
+            setIsContractor(true)
+        }
+        else if (selectedUserType?.toLowerCase().includes("project")) {
+            setIsGovernor(false);
+            setIsMda(false)
+            setIsProject(true)
+            setIsContractor(false)
+        }
+        else if (selectedUserType?.toLowerCase().includes("mda")) {
+            setIsGovernor(false);
+            setIsMda(true)
+            setIsProject(false)
+            setIsContractor(false)
+        }
+        else if (selectedUserType?.toLowerCase().includes("governor")) {
+            setIsGovernor(true);
+            setIsMda(false)
+            setIsProject(false)
+            setIsContractor(false)
+        }
+    }, [selectedUserType])
 
     return (
         <form 
@@ -131,24 +170,81 @@ export default function UserForm( { userTypes, mdas, close, user } ) {
                         defaultValue={state?.prev?.userType}
                         error={state?.errors?.userType}
                         hint={state?.errors?.userType}
+                        onChange={value => setSelectedUserType(value)}
                     />
                 </div>
-                <div className="col-span-1">
-                    <Label
-                        htmlFor="mda"
-                    >
-                        User MDA
-                    </Label>
-                    <Select
-                        id="mda"
-                        name="mda"
-                        placeholder="Select MDA"
-                        options={mdaOptions}
-                        defaultValue={state?.prev?.mda}
-                        error={state?.errors?.mda}
-                        hint={state?.errors?.mda}
-                    />
-                </div>
+                { isMda && 
+                    <div className="col-span-1">
+                        <Label
+                            htmlFor="mda"
+                        >
+                            User MDA
+                        </Label>
+                        <Select
+                            id="mda"
+                            name="mda"
+                            placeholder="Select MDA"
+                            options={mdaOptions}
+                            defaultValue={state?.prev?.mda}
+                            error={state?.errors?.mda}
+                            hint={state?.errors?.mda}
+                        />
+                    </div>
+                }
+                { isContractor && 
+                    <div className="col-span-1">
+                        <Label
+                            htmlFor="contractor"
+                        >
+                            Company Name
+                        </Label>
+                        <Select
+                            id="contractor"
+                            name="contractor"
+                            placeholder="Select Company"
+                            options={contractorOptions}
+                            defaultValue={state?.prev?.contractor}
+                            error={state?.errors?.contractor}
+                            hint={state?.errors?.contractor}
+                        />
+                    </div>
+                }
+                {(isGovernor || isProject) && 
+                    <div className="col-span-1">
+                        <Label
+                            htmlFor="office"
+                        >
+                            Office Name
+                        </Label>
+                        { isGovernor && <Input
+                                id="office"
+                                type="text"
+                                name="office"
+                                placeholder="Office Name"
+                                defaultValue="Governor's Office"
+                            />
+                        }
+                        { isProject && <Input
+                                id="office"
+                                type="text"
+                                name="office"
+                                placeholder="Office Name"
+                                defaultValue="Project Office"
+                            />
+                        }
+                        { isMda && <Input
+                                id="office"
+                                type="text"
+                                name="office"
+                                placeholder="Office Name"
+                                defaultValue={state?.prev?.office}
+                                error={state?.errors?.office}
+                                hint={state?.errors?.office}
+                            />
+                        }
+                    </div>
+                }
+                
             </div>
 
             <div className="flex items-center justify-end w-full gap-3 mt-6">
@@ -165,7 +261,7 @@ export default function UserForm( { userTypes, mdas, close, user } ) {
                     type="submit"
                     isLoading={pending}
                 >
-                    Create User
+                    {id ? 'Update User' : 'Create User'}
                 </Button>
             </div>
         </form >

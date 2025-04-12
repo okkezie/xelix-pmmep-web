@@ -6,8 +6,7 @@ const User = class {
     #phone
     #mda
     #office
-    #gradeLevel
-    #jobTitle
+    #contractor
     #gender
     #verified
     #avatar = new Avatar()
@@ -27,8 +26,7 @@ const User = class {
         this.#phone = user?.phone
         this.#mda = user?.mda
         this.#office = user?.office
-        this.#gradeLevel = user?.gradeLevel
-        this.#jobTitle = user?.jobTitle
+        this.#contractor = user?.contractor
         this.#gender = user?.gender
         this.#verified = user?.verified
         this.#avatar = new Avatar(user?.avatar)
@@ -63,12 +61,8 @@ const User = class {
         return this.#office
     }
 
-    getGradeLevel() {
-        return this.#gradeLevel
-    }
-
-    getJobTitle() {
-        return this.#jobTitle
+    getContractor() {
+        return this.#contractor
     }
 
     getGender() {
