@@ -1,6 +1,7 @@
 import Badge from "@/components/atoms/Badge/Badge"
 import { Constants } from "@/utils/Constants"
 import { format } from "date-fns"
+import Tooltip from "../components/molecules/Tooltip/Tooltip"
 
 
 export const getPromiseResult = (promise) => {
@@ -61,15 +62,27 @@ export const getDraftBadge = (isDraft) => {
             fill="currentColor"
         />
     </svg>
-    return <Badge variant="solid" color="light" startIcon={icon}><em>Draft</em></Badge>
+    return <Tooltip title={'Item is in draft mode'}><Badge variant="solid" color="light">{icon}</Badge></Tooltip>
 }
 
 export const getStatusBadge = (status) => {
-    let color = ''
+    let color = 'info'
     if (status === Constants.ApprovalStatus.APPROVED) color = 'success'
     if (status === Constants.ApprovalStatus.PENDING) color = 'warning'
     if (status === Constants.ApprovalStatus.REJECTED) color = 'error'
-    return <Badge variant="light" color={color}>{status}</Badge>
+    return <Badge variant="light" color={color}>{status ?? 'UNKNOWN'}</Badge>
+}
+
+export const getEntityApprovalStatusBadges = (entity) => {
+    return (
+        <div className="flex flex-row items-center justify-start gap-3">
+            <div className="flex flex-col gap-2">
+                <span>MDA: { getStatusBadge(entity.approvalStatus) }</span>
+                <span>PME: { getStatusBadge(entity.finalApprovalStatus) }</span>
+            </div>
+            <div>{ getDraftBadge(entity.isDraft) }</div>
+        </div>
+    )
 }
 
 export const parseDateToMonthYear = (date) => {
@@ -136,4 +149,56 @@ export const UserRolesBadges = ({user}) => {
             ))}
         </div>
     )
+}
+
+export const getEntitiesTabsTableData = (entities, userType, TableComponent) => {
+    const isProjectUser = userType === Constants.UserTypes.PROJECT_ADMIN || userType === Constants.UserTypes.PROJECT_USER
+    const draft = [...entities].filter(r => r.isDraft)
+    const pending = [...entities].filter(r => r.approvalStatus === Constants.ApprovalStatus.PENDING && !r.isDraft)
+    const finalPending = [...entities].filter(r => r.approvalStatus === Constants.ApprovalStatus.APPROVED && r.finalApprovalStatus === Constants.ApprovalStatus.PENDING && !r.isDraft)
+    const finalApproved = [...entities].filter(r => r.finalApprovalStatus === Constants.ApprovalStatus.APPROVED && !r.isDraft)
+    const finalRejected = [...entities].filter(r => r.finalApprovalStatus === Constants.ApprovalStatus.REJECTED && !r.isDraft)
+    const approved = [...entities].filter(r => r.approvalStatus === Constants.ApprovalStatus.APPROVED && !r.isDraft)
+    const rejected = [...entities].filter(r => r.approvalStatus === Constants.ApprovalStatus.REJECTED && !r.isDraft)
+    const tabs = []
+    tabs.push({
+        id: 1,
+        title: "All",
+        content: <TableComponent entities={[...entities]} />,
+        icon: <></>,
+        badge: entities.length
+    })
+    tabs.push({
+        id: 2,
+        title: "Approved",
+        content: <TableComponent entities={isProjectUser ? finalApproved : approved} />,
+        icon: <></>,
+        badge: approved.length
+    })
+    tabs.push({
+        id: 3,
+        title: "Pending",
+        content: <TableComponent entities={isProjectUser ? finalPending : pending} />,
+        icon: <></>,
+        badge: pending.length
+    })
+    if (userType !== Constants.UserTypes.PROJECT_ADMIN && userType != Constants.UserTypes.PROJECT_USER) {
+        tabs.push({
+            id: 4,
+            title: "Rejected",
+            content: <TableComponent entities={isProjectUser ? finalRejected : rejected} />,
+            icon: <></>,
+            badge: rejected.length
+        })
+    }
+    if (userType !== Constants.UserTypes.PROJECT_ADMIN && userType != Constants.UserTypes.PROJECT_USER) {
+            tabs.push({
+            id: 6,
+            title: "Draft",
+            content: <TableComponent entities={draft} />,
+            icon: <></>,
+            badge: draft.length
+        })
+    }
+    return tabs
 }

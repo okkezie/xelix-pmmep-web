@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Logo from "@/assets/images/logo/logo.svg"
 import LogoDark from "@/assets/images/logo/logo-dark.svg"
-import LogoIcon from "@/assets/images/logo/logo-icon.svg"
 import Image from "next/image"
+import LogoIcon from "@/public/assets/images/logo/logo-icon";
 
 export default function SidebarLogo({ toggled = false }) {
     return (
@@ -12,7 +12,9 @@ export default function SidebarLogo({ toggled = false }) {
                     <Image src={Logo} alt="Logo" className="dark:hidden" />
                     <Image src={LogoDark} alt="Logo" className="hidden dark:block" />
                 </span>
-                <Image src={LogoIcon} alt="Logo" className={`logo-icon ${toggled ? 'lg:block' : 'hidden'}`} />
+                <span className={`logo-icon ${toggled ? 'lg:block' : 'hidden'}`} >
+                    <LogoIcon />
+                </span>
             </Link>
         </div>
     )

@@ -1,24 +1,26 @@
 'use client'
 import Link from "next/link"
-import Image from "next/image"
+import Light from "@/public/svgs/404"
+import Dark from "@/public/svgs/404-dark"
+import Grid from "@/public/svgs/grid"
 
 export default function NotFound() {
     return (
         <div className="relative z-1 flex min-h-screen flex-col items-center justify-center overflow-hidden p-6">
             <div className="absolute right-0 top-0 -z-1 w-full max-w-[250px] xl:max-w-[450px]">
-                <Image src='/svgs/grid.svg' alt="Grid" className="w-full h-full object-contain" width={500} height={300} />
+                <Grid />
             </div>
             <div className="absolute bottom-0 left-0 -z-1 w-full max-w-[250px] rotate-180 xl:max-w-[450px]">
-                <Image src='/svgs/grid.svg' alt="Grid" className="w-full h-full object-contain" width={500} height={300} />
+                <Grid />
             </div>
 
             <div className="mx-auto w-full max-w-[242px] text-center sm:max-w-[472px]">
                 <h1 className="mb-8 text-[72px] leading-[90px] font-bold text-gray-800 dark:text-white/90 xl:text-title-2xl">
                     ERROR
                 </h1>
-
-                <Image src='/svgs/404.svg' alt="Light" className="dark:hidden" width={500} height={300} />
-                <Image src='/svgs/404-dark.svg' alt="Dark" className="hidden dark:block" width={500} height={300} />
+                
+                <div className="dark:hidden"><Light /></div>
+                <div className="hidden dark:block"><Dark /></div>
 
                 <p className="mb-6 mt-10 text-base text-gray-700 dark:text-gray-400 sm:text-lg">
                     We can&apos;t seem to find the page you are looking for!

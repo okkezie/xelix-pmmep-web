@@ -3,77 +3,32 @@ import VerticalTabs from "@/components/organisms/Tabs/VerticalTab"
 import { useEffect, useState } from "react"
 import ButtonLink from "@/components/atoms/Form/ButtonLink/ButtonLink"
 import { Constants } from "@/utils/Constants"
+import { useAuthContext } from "@/contexts/AuthContext"
+import { getEntitiesTabsTableData } from "@/utils/helpers"
 
 export default function RoadmapPage({roadmaps}) {
+    const { isAuthorized, userType } = useAuthContext()
     const [data, setData] = useState({})
+    const canCreateRoadmap = isAuthorized(Constants.Authorizations.Roadmaps.Create)
 
     useEffect(() => {
-        const draft = [...roadmaps].filter(r => r.isDraft)
-        const pending = [...roadmaps].filter(r => r.approvalStatus === Constants.ApprovalStatus.PENDING && !r.isDraft)
-        const approved = [...roadmaps].filter(r => r.approvalStatus === Constants.ApprovalStatus.APPROVED && !r.isDraft)
-        const rejected = [...roadmaps].filter(r => r.approvalStatus === Constants.ApprovalStatus.REJECTED && !r.isDraft)
-        const archived = [...roadmaps].filter(r => Date.parse(r.endDate) < Date.now())
-
-        const tabs = [
-            {
-                id: 1,
-                title: "All",
-                content: <RoadmapsTable roadmaps={[...roadmaps]} />,
-                icon: <></>,
-                badge: roadmaps.length
-            },
-            {
-                id: 2,
-                title: "Approved",
-                content: <RoadmapsTable roadmaps={approved} />,
-                icon: <></>,
-                badge: approved.length
-            },
-            {
-                id: 3,
-                title: "Pending",
-                content: <RoadmapsTable roadmaps={pending} />,
-                icon: <></>,
-                badge: pending.length
-            },
-            {
-                id: 4,
-                title: "Rejected",
-                content: <RoadmapsTable roadmaps={rejected} />,
-                icon: <></>,
-                badge: rejected.length
-            },
-            {
-                id: 5,
-                title: "Archived",
-                content: <RoadmapsTable roadmaps={archived} />,
-                icon: <></>,
-                badge: archived.length
-            },
-            {
-                id: 6,
-                title: "Draft",
-                content: <RoadmapsTable roadmaps={draft} />,
-                icon: <></>,
-                badge: draft.length
-            }
-        ]
-    
         const data = {
             activeTabId: 1,
             showTabTitles: true,
-            tabs: tabs
+            tabs: getEntitiesTabsTableData(roadmaps, userType, RoadmapsTable)
         }
 
         setData(data)
 
-    }, [roadmaps])
+    }, [roadmaps, userType])
 
     return (
         <>
+            { canCreateRoadmap &&
             <div className="flex flex-row gap-4 items-center justify-end">
                 <ButtonLink href={Constants.Paths.RoadmapsCreate} variant="outline" className="mb-4">New Roadmap</ButtonLink>
             </div>
+            }
             <VerticalTabs data={data} />
         </>
     )

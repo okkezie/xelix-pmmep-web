@@ -5,15 +5,20 @@ import { Constants } from "@/utils/Constants"
 import { parseDateToMonthYear, getStatusBadge, getDraftBadge } from '@/utils/helpers'
 import ArrowRight from "@/svgs/arrow-right"
 import { useAuthContext } from "@/contexts/AuthContext"
-import { useState } from "react"
-import Confirm from "../Confirm/Confirm"
-import { deleteProject } from "@/app/_lib/actions/projectActions"
+import { useEffect, useState } from "react"
+import Confirm from "@/components/organisms/Confirm/Confirm"
+import { deleteProject } from "@/actions/projectActions"
 
-export default function ProjectsTable({ projects }) {
+export default function ProjectsTable({ entities }) {
     const { isAuthorized } = useAuthContext()
     const [showDeleteDialog, setShowDeleteDialog] = useState(false)
     const [idForDelete, setIdForDelete] = useState()
+    const [projects, setProjects] = useState(entities)
 
+    useEffect(() => {
+        setProjects(entities)
+    }, [entities])
+    
     const getDropDownItems = (id, isDraft, status) => {
         let canEdit, canView, canDelete, isRejected
         canEdit = isAuthorized(Constants.Authorizations.Projects.Create)

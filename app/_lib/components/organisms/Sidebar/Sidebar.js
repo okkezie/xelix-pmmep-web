@@ -12,7 +12,7 @@ export default function SideNavBar({ sidebarToggle }) {
         if (menuItem?.hide?.includes(userType)) {
             return false
         }
-        return menuItem?.show?.includes(userType) || menuItem?.show?.includes(Constants.UserTypes.ALL);
+        return menuItem?.show?.includes(Constants.UserTypes.ALL) || menuItem?.show?.includes(userType) ;
     }
 
     return (
@@ -27,7 +27,7 @@ export default function SideNavBar({ sidebarToggle }) {
             <div className="flex flex-col duration-300 ease-linear overflow-hidden hover:overflow-y-auto no-scrollbar">
                 <nav>
                     { links.map( section => (
-                        section.links.length > 0 && showMenuItem(section) && (
+                        ((section.links.length > 0) && showMenuItem(section)) && (
                         <div key={section.title}>
                             <h3 className="mb-4 text-xs uppercase leading-[20px] text-gray-400">
                                 <span className={clsx(

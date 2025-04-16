@@ -3,11 +3,12 @@ import Checkbox from "@/components/atoms/Form/Input/Checkbox"
 import Input from "@/components/atoms/Form/Input/InputField"
 import Label from "@/components/atoms/Form/Label"
 import Button from "@/components/atoms/Form/Button/Button"
-import Image from "next/image"
 import Link from "next/link"
 import { useActionState, useState } from "react"
 import { authenticate } from "@/actions/authenticate"
 import Alert from "@/components/molecules/Alert/Alert"
+import Eye from "@/svgs/eye"
+import EyeClose from "@/svgs/eye-close"
 
 const initialState = {
   error: null,
@@ -75,9 +76,9 @@ export default function SignInForm() {
                       className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
                     >
                       {showPassword ? (
-                        <Image src='/svgs/eye.svg' alt="Eye" className="fill-gray-500 dark:fill-gray-400" width={20} height={20} />
+                        <Eye />
                       ) : (
-                        <Image src='/svgs/eye-close.svg' alt="Eye" className="fill-gray-500 dark:fill-gray-400" width={20} height={20} />
+                        <EyeClose />
                       )}
                     </button>
                   </div>

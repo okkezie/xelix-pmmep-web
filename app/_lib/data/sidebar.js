@@ -77,7 +77,6 @@ const sidebar = [
                 icon: (path) => <Engagements isActive={path === Constants.Paths.Engagements} />,
                 href: Constants.Paths.Engagements,
                 show: [Constants.UserTypes.ALL],
-                hide: [Constants.UserTypes.CONTRACTOR_ADMIN, Constants.UserTypes.CONTRACTOR_USER]
             },
             {
                 title: "Staff",

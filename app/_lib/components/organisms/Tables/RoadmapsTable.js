@@ -4,11 +4,21 @@ import { Constants } from "@/utils/Constants"
 import { deleteRoadMapAction } from "@/actions/roadmapActions"
 import ArrowRight from "@/svgs/arrow-right"
 import { useAuthContext } from "@/contexts/AuthContext"
-import { getDraftBadge, getStatusBadge, parseDateToMonthYear } from "@/utils/helpers"
-import SimpleTable from "../Table/SimpleTable"
+import { getEntityApprovalStatusBadges, parseDateToMonthYear } from "@/utils/helpers"
+import SimpleTable from "@/components/organisms/Table/SimpleTable"
+import Confirm from "@/components/organisms/Confirm/Confirm"
+import { useEffect, useState } from "react"
 
-export default function RoadmapsTable({ roadmaps }) {
+export default function RoadmapsTable({ entities }) {
+    const [roadmaps, setRoadmaps] = useState(entities)
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+    const [idForDelete, setIdForDelete] = useState()
     const { isAuthorized } = useAuthContext()
+
+    useEffect(() => {
+        setRoadmaps(entities)
+    }, [entities])
+
     const getDropDownItems = (id, isDraft, status) => {
         let canEdit, canView, canDelete, isRejected
         canEdit = isAuthorized(Constants.Authorizations.Roadmaps.Create)
@@ -35,12 +45,15 @@ export default function RoadmapsTable({ roadmaps }) {
             items.push({
                 label: 'Delete',
                 icon: <></>,
-                onClick: (id) => deleteRoadMap(id)
+                onClick: () => {
+                    setIdForDelete(id)
+                    setShowDeleteDialog(true)
+                }
             })
         }
         return items
     }
-    const headers = ['Title', 'MDA', 'Period', 'Status', 'Actions']
+    const headers = ['Title', 'MDA', 'Period', 'Approvals', 'Actions']
     const body = []
     if (roadmaps?.length > 0 ) {
         roadmaps?.map((roadmap, index) => (
@@ -48,30 +61,27 @@ export default function RoadmapsTable({ roadmaps }) {
                 roadmap.title,
                 roadmap.mda?.name,
                 <div key={index+1}>{parseDateToMonthYear(roadmap.startDate)} <ArrowRight /> {parseDateToMonthYear(roadmap.endDate)}</div>,
-                <div className="flex flex-col lg:flex-row items-center justify-start gap-3" key={index+1}>
-                    <span>{ getStatusBadge(roadmap.approvalStatus) }</span>
-                    <span>{ getDraftBadge(roadmap.isDraft) }</span>
-                </div>,
+                getEntityApprovalStatusBadges(roadmap),
                 <Dropdown label='Actions' items={getDropDownItems(roadmap?.id, roadmap?.isDraft, roadmap?.approvalStatus)} key={index+1}/>
             ])
         ))
     }
 
-    return (
-        <SimpleTable headers={headers} body={body} name='Roadmaps' />
-    )
-}
-
-export const deleteRoadMapDialog = async (id) => {
-    const pathname = window.location.pathname
-    if (confirm("ARE YOU SURE YOU WANT TO DELETE THIS ROADMAP? \r\nTHIS ACTION CANNOT BE UNDONE.")) {
-        const response = await deleteRoadMapAction(id)
-        if (response?.success) {
-            alert("Roadmap deleted successfully!")
-            if (pathname === Constants.Paths.Roadmaps)
-                location.reload()
-            else
-                location.href = Constants.Paths.Roadmaps
-        }
+    const closeDeleteModal = () => {
+        setShowDeleteDialog(false)
     }
+
+    return (
+        <>
+        <Confirm
+            actionType={Constants.ConfirmActionType.Delete}
+            close={closeDeleteModal}
+            show={showDeleteDialog}
+            entity={'Roadmap'}
+            redirect={Constants.Paths.Roadmaps}
+            action={async () => await deleteRoadMapAction(idForDelete)}
+        />
+        <SimpleTable headers={headers} body={body} name='Roadmap' />
+        </>
+    )
 }

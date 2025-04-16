@@ -7,11 +7,17 @@ import { useAuthContext } from "@/contexts/AuthContext"
 import { deleteInitiative } from "@/actions/initiativeActions"
 import SimpleTable from "@/components/organisms/Table/SimpleTable"
 import Confirm from "@/components/organisms/Confirm/Confirm"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-export default function InitiativesTable({ initiatives }) {
+export default function InitiativesTable({ entities }) {
     const { isAuthorized } = useAuthContext()
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
+    const [initiatives, setInitiatives] = useState(entities)
+
+    useEffect(() => {
+        setInitiatives(entities)
+    }, [entities])
+
     const getDropDownItems = (id, isDraft) => {
         let canEdit, canView, canDelete
         canEdit = isAuthorized(Constants.Authorizations.Initiatives.Create)
